@@ -21,7 +21,6 @@ class _AppWidgetState extends State<AppWidget> {
       title: 'My Dreams AI',
       debugShowCheckedModeBanner: false,
       navigatorKey: GlobalContext.navigatorKey,
-      theme: lightThemeApp,
       darkTheme: darkThemeApp,
       themeMode: ThemeMode.dark,
       initialRoute: NamedRoutes.splash.route,

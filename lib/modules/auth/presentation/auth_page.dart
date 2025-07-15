@@ -63,7 +63,10 @@ class _AuthPageState extends State<AuthPage> {
 
     return Text(
       'Entrar com o Google',
-      style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+      style: context.textTheme.bodyLarge?.copyWith(
+        fontWeight: FontWeight.bold,
+        color: context.myTheme.surface,
+      ),
     );
   }
 

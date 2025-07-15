@@ -41,6 +41,7 @@ class AppCustomButton extends StatelessWidget {
               backgroundColor: backgroundColor,
               textStyle: context.textTheme.bodyLarge?.copyWith(
                 fontWeight: FontWeight.bold,
+                color: context.myTheme.onPrimaryContainer,
               ),
               fixedSize: expands ? Size(context.screenWidth, height) : null,
               shape: RoundedRectangleBorder(
@@ -57,6 +58,7 @@ class AppCustomButton extends StatelessWidget {
               backgroundColor: backgroundColor,
               textStyle: context.textTheme.bodyLarge?.copyWith(
                 fontWeight: FontWeight.bold,
+                color: context.myTheme.onPrimaryContainer,
               ),
               padding: EdgeInsets.zero,
               fixedSize: expands ? Size(context.screenWidth, height) : null,
