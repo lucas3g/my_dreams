@@ -18,7 +18,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Green Map',
+      title: 'My Dreams AI',
       debugShowCheckedModeBanner: false,
       navigatorKey: GlobalContext.navigatorKey,
       theme: lightThemeApp,
