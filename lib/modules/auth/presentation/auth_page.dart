@@ -108,14 +108,14 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'Marque onde você plantou uma árvore',
+                      'Registre aqui os sonhos que você teve',
                       style: context.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 10),
-                    Text('Ajude a mapear um mundo mais verde'),
+                    Text('Descubra significados e compartilhe'),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -150,7 +150,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'Suas plantações. Nosso planeta.',
+                      'Seus sonhos, nosso universo.',
                       style: context.textTheme.bodyLarge?.copyWith(),
                       textAlign: TextAlign.center,
                     ),
