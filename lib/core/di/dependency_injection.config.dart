@@ -12,7 +12,6 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../modules/auth/data/datasources/auth_datasource.dart' as _i655;
 import '../../modules/auth/data/datasources/auth_datasource_impl.dart' as _i275;
@@ -36,16 +35,12 @@ import 'dependency_injection.dart' as _i9;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  Future<_i174.GetIt> init({
+  _i174.GetIt init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) async {
+  }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
-    await gh.factoryAsync<_i460.SharedPreferences>(
-      () => registerModule.prefs,
-      preResolve: true,
-    );
     gh.factory<_i361.Dio>(() => registerModule.dio);
     gh.singleton<_i86.ISupabaseClient>(() => _i788.SupabaseClientImpl());
     gh.factory<_i824.ILocalStorage>(() => _i755.SharedPreferencesService());
