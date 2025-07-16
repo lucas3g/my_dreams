@@ -7,10 +7,10 @@ import '../../../core/constants/constants.dart';
 import '../../../core/di/dependency_injection.dart';
 import '../../../core/domain/entities/app_global.dart';
 import '../../../core/domain/entities/named_routes.dart';
+import '../../../modules/auth/domain/entities/user_entity.dart';
 import '../../../modules/auth/presentation/controller/auth_bloc.dart';
 import '../../../modules/auth/presentation/controller/auth_events.dart';
 import '../../../modules/auth/presentation/controller/auth_states.dart';
-import '../../../modules/auth/domain/entities/user_entity.dart';
 import '../../../shared/components/app_circular_indicator_widget.dart';
 import '../../../shared/components/app_snackbar.dart';
 import '../../../shared/components/spacer_height_widget.dart';
@@ -36,14 +36,9 @@ class _HomePageState extends State<HomePage> {
       if (state is LogoutAccountState) {
         AppGlobal.instance.setUser(null);
 
-        await Future.delayed(const Duration(milliseconds: 350));
-
         if (!mounted) return;
 
-        Navigator.pushReplacementNamed(
-          context,
-          NamedRoutes.auth.route,
-        );
+        Navigator.pushReplacementNamed(context, NamedRoutes.auth.route);
       }
       if (state is AuthFailureState) {
         if (!mounted) return;
@@ -116,10 +111,6 @@ class _HomePageState extends State<HomePage> {
     final user = _user;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        centerTitle: true,
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(AppThemeConstants.padding),
@@ -127,18 +118,22 @@ class _HomePageState extends State<HomePage> {
             children: [
               if (user != null)
                 Card(
+                  color: context.myTheme.primaryContainer,
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(AppThemeConstants.mediumBorderRadius),
+                    borderRadius: BorderRadius.circular(
+                      AppThemeConstants.mediumBorderRadius,
+                    ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
+                    padding: const EdgeInsets.all(
+                      AppThemeConstants.mediumPadding,
+                    ),
                     child: Row(
                       children: [
                         CircleAvatar(
                           backgroundImage: user.imageUrl.value.isNotEmpty
                               ? NetworkImage(user.imageUrl.value)
-                                  as ImageProvider
+                                    as ImageProvider
                               : null,
                           radius: 22,
                           child: user.imageUrl.value.isEmpty
@@ -157,7 +152,9 @@ class _HomePageState extends State<HomePage> {
                           builder: (context, state) {
                             return IconButton(
                               icon: _handleLogoutIcon(state),
-                              onPressed: state is AuthLoadingState ? null : _confirmLogout,
+                              onPressed: state is AuthLoadingState
+                                  ? null
+                                  : _confirmLogout,
                             );
                           },
                         ),
@@ -166,9 +163,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               const SpacerHeight(),
-              const Center(
-                child: Text('Home Page'),
-              ),
+              const Center(child: Text('Home Page')),
             ],
           ),
         ),
