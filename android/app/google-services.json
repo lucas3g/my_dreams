@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "814114370004",
+    "project_id": "my-dreams-3c8bd",
+    "storage_bucket": "my-dreams-3c8bd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814114370004:android:98587bef02801bbd85a641",
+        "android_client_info": {
+          "package_name": "com.maktub.mydreams"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "814114370004-j0lff2gb8cev45ro57mdse8cqu2aci89.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.maktub.mydreams",
+            "certificate_hash": "452a58f90f12986d059df1b97c2d2b7bbd3be7b9"
+          }
+        },
+        {
+          "client_id": "814114370004-8t1g9jhjicv5425p974ncnjpppbjegs4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAesbE5DJ7vkKY4cHw7-GzBE0ccwurjZpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "814114370004-8t1g9jhjicv5425p974ncnjpppbjegs4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

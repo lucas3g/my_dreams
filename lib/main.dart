@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_dreams/app_widget.dart';
 import 'package:my_dreams/core/constants/constants.dart';
@@ -9,7 +10,7 @@ void main() async {
 
   await Supabase.initialize(url: SUPABASE_URL, anonKey: SUPABASE_ANON_KEY);
 
-  //await Firebase.initializeApp();
+  await Firebase.initializeApp();
 
   await configureDependencies();
 
