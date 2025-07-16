@@ -176,18 +176,19 @@ class _HomePageState extends State<HomePage> {
                   bloc: _dreamBloc,
                   builder: (context, state) {
                     if (state is DreamLoadingState) {
-                      return const Center(
-                        child: AppCircularIndicatorWidget(),
-                      );
+                      return const Center(child: AppCircularIndicatorWidget());
                     }
                     if (state is DreamListLoadedState) {
-                      if (state.dreams.isEmpty) {
-                        return const Center(child: Text('Nenhum sonho registrado'));
+                      if (state.dreamsList.isEmpty) {
+                        return const Center(
+                          child: Text('Nenhum sonho registrado'),
+                        );
                       }
                       return ListView.builder(
-                        itemCount: state.dreams.length,
+                        itemCount: state.dreamsList.length,
                         itemBuilder: (context, index) {
-                          final dream = state.dreams[index];
+                          final dream = state.dreamsList[index];
+
                           return ListTile(
                             title: Text(dream.message.value),
                             subtitle: Text(dream.answer.value),

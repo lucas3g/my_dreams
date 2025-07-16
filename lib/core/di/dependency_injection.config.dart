@@ -23,6 +23,19 @@ import '../../modules/auth/domain/usecases/login_with_google_account.dart'
     as _i854;
 import '../../modules/auth/domain/usecases/logout_account.dart' as _i720;
 import '../../modules/auth/presentation/controller/auth_bloc.dart' as _i311;
+import '../../modules/dream/data/datasources/chatgpt_datasource.dart' as _i1068;
+import '../../modules/dream/data/datasources/chatgpt_datasource_impl.dart'
+    as _i434;
+import '../../modules/dream/data/datasources/dream_datasource.dart' as _i735;
+import '../../modules/dream/data/datasources/dream_datasource_impl.dart'
+    as _i866;
+import '../../modules/dream/data/repositories/dream_repository_impl.dart'
+    as _i648;
+import '../../modules/dream/domain/repositories/dream_repository.dart' as _i563;
+import '../../modules/dream/domain/usecases/analyze_dream.dart' as _i357;
+import '../../modules/dream/domain/usecases/get_dreams.dart' as _i1037;
+import '../../modules/dream/presentation/controller/dream_bloc.dart' as _i933;
+import '../data/clients/chatgpt/chat_gpt_client.dart' as _i969;
 import '../data/clients/http/client_http.dart' as _i777;
 import '../data/clients/http/dio_http_client_impl.dart' as _i14;
 import '../data/clients/shared_preferences/local_storage_interface.dart'
@@ -44,8 +57,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i361.Dio>(() => registerModule.dio);
     gh.singleton<_i86.ISupabaseClient>(() => _i788.SupabaseClientImpl());
     gh.factory<_i824.ILocalStorage>(() => _i755.SharedPreferencesService());
+    gh.factory<_i969.ChatGptClient>(
+      () => _i969.ChatGptClient(dio: gh<_i361.Dio>()),
+    );
     gh.singleton<_i777.ClientHttp>(
       () => _i14.DioClientHttpImpl(dio: gh<_i361.Dio>()),
+    );
+    gh.factory<_i1068.ChatGptDatasource>(
+      () => _i434.ChatGptDatasourceImpl(client: gh<_i969.ChatGptClient>()),
+    );
+    gh.factory<_i735.DreamDatasource>(
+      () =>
+          _i866.DreamDatasourceImpl(supabaseClient: gh<_i86.ISupabaseClient>()),
     );
     gh.factory<_i655.AuthDatasource>(
       () =>
@@ -54,6 +77,21 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i779.AuthRepository>(
       () =>
           _i817.AuthRepositoryImpl(authDatasource: gh<_i655.AuthDatasource>()),
+    );
+    gh.factory<_i563.DreamRepository>(
+      () => _i648.DreamRepositoryImpl(
+        datasource: gh<_i735.DreamDatasource>(),
+        chatGptDatasource: gh<_i1068.ChatGptDatasource>(),
+      ),
+    );
+    gh.factory<_i357.AnalyzeDreamUseCase>(
+      () => _i357.AnalyzeDreamUseCase(
+        dreamRepository: gh<_i563.DreamRepository>(),
+      ),
+    );
+    gh.factory<_i1037.GetDreamsUseCase>(
+      () =>
+          _i1037.GetDreamsUseCase(dreamRepository: gh<_i563.DreamRepository>()),
     );
     gh.factory<_i51.AutoLoginUseCase>(
       () => _i51.AutoLoginUseCase(authRepository: gh<_i779.AuthRepository>()),
@@ -66,6 +104,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i720.LogoutAccountUsecase>(
       () => _i720.LogoutAccountUsecase(
         authRepository: gh<_i779.AuthRepository>(),
+      ),
+    );
+    gh.factory<_i933.DreamBloc>(
+      () => _i933.DreamBloc(
+        analyzeDreamUseCase: gh<_i357.AnalyzeDreamUseCase>(),
+        getDreamsUseCase: gh<_i1037.GetDreamsUseCase>(),
       ),
     );
     gh.factory<_i311.AuthBloc>(

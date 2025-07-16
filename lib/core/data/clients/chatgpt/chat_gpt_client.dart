@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
-import '../../constants/constants.dart';
+import 'package:injectable/injectable.dart';
+import 'package:my_dreams/core/constants/constants.dart';
 
+@injectable
 class ChatGptClient {
   final Dio _dio;
 

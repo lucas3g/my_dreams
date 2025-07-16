@@ -1,10 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../domain/usecases/analyze_dream.dart';
 import '../../domain/usecases/get_dreams.dart';
 import 'dream_events.dart';
 import 'dream_states.dart';
 
+@injectable
 class DreamBloc extends Bloc<DreamEvents, DreamStates> {
   final AnalyzeDreamUseCase _analyzeDream;
   final GetDreamsUseCase _getDreams;
@@ -12,9 +14,9 @@ class DreamBloc extends Bloc<DreamEvents, DreamStates> {
   DreamBloc({
     required AnalyzeDreamUseCase analyzeDreamUseCase,
     required GetDreamsUseCase getDreamsUseCase,
-  })  : _analyzeDream = analyzeDreamUseCase,
-        _getDreams = getDreamsUseCase,
-        super(DreamInitialState()) {
+  }) : _analyzeDream = analyzeDreamUseCase,
+       _getDreams = getDreamsUseCase,
+       super(DreamInitialState()) {
     on<SendDreamEvent>(_onSendDream);
     on<GetDreamsEvent>(_onGetDreams);
   }

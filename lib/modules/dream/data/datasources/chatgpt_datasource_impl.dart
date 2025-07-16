@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:my_dreams/core/data/clients/chatgpt/chat_gpt_client.dart';
 
 import 'chatgpt_datasource.dart';
 
+@Injectable(as: ChatGptDatasource)
 class ChatGptDatasourceImpl implements ChatGptDatasource {
   final ChatGptClient _client;
 
@@ -15,7 +17,7 @@ class ChatGptDatasourceImpl implements ChatGptDatasource {
       data: {
         'model': 'gpt-3.5-turbo',
         'messages': [
-          {'role': 'user', 'content': dreamText}
+          {'role': 'user', 'content': dreamText},
         ],
       },
     );
