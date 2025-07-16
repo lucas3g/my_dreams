@@ -16,6 +16,9 @@ import '../../../shared/components/app_snackbar.dart';
 import '../../../shared/components/spacer_height_widget.dart';
 import '../../../shared/components/spacer_width.dart';
 import '../../../shared/themes/app_theme_constants.dart';
+import '../../dream/presentation/controller/dream_bloc.dart';
+import '../../dream/presentation/controller/dream_events.dart';
+import '../../dream/presentation/controller/dream_states.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,6 +29,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AuthBloc _authBloc = getIt<AuthBloc>();
+  final DreamBloc _dreamBloc = getIt<DreamBloc>();
 
   StreamSubscription<AuthStates>? _authSubscription;
 
@@ -58,6 +62,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _listenAuthStates();
+    final user = _user;
+    if (user != null) {
+      _dreamBloc.add(GetDreamsEvent(userId: user.id.value));
+    }
   }
 
   @override
@@ -163,10 +171,47 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               const SpacerHeight(),
-              const Center(child: Text('Home Page')),
+              Expanded(
+                child: BlocBuilder<DreamBloc, DreamStates>(
+                  bloc: _dreamBloc,
+                  builder: (context, state) {
+                    if (state is DreamLoadingState) {
+                      return const Center(
+                        child: AppCircularIndicatorWidget(),
+                      );
+                    }
+                    if (state is DreamListLoadedState) {
+                      if (state.dreams.isEmpty) {
+                        return const Center(child: Text('Nenhum sonho registrado'));
+                      }
+                      return ListView.builder(
+                        itemCount: state.dreams.length,
+                        itemBuilder: (context, index) {
+                          final dream = state.dreams[index];
+                          return ListTile(
+                            title: Text(dream.message.value),
+                            subtitle: Text(dream.answer.value),
+                          );
+                        },
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ),
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Navigator.pushNamed(context, NamedRoutes.dream.route);
+          final user = _user;
+          if (user != null) {
+            _dreamBloc.add(GetDreamsEvent(userId: user.id.value));
+          }
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

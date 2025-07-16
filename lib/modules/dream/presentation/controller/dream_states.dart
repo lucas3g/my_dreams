@@ -1,0 +1,27 @@
+import '../../domain/entities/dream_entity.dart';
+
+abstract class DreamStates {
+  DreamLoadingState loading() => DreamLoadingState();
+  DreamFailureState failure(String message) => DreamFailureState(message);
+  DreamAnalyzedState analyzed(DreamEntity dream) => DreamAnalyzedState(dream);
+  DreamListLoadedState dreams(List<DreamEntity> list) => DreamListLoadedState(list);
+}
+
+class DreamInitialState extends DreamStates {}
+
+class DreamLoadingState extends DreamStates {}
+
+class DreamFailureState extends DreamStates {
+  final String message;
+  DreamFailureState(this.message);
+}
+
+class DreamAnalyzedState extends DreamStates {
+  final DreamEntity dream;
+  DreamAnalyzedState(this.dream);
+}
+
+class DreamListLoadedState extends DreamStates {
+  final List<DreamEntity> dreams;
+  DreamListLoadedState(this.dreams);
+}
