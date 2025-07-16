@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
+import 'package:my_dreams/core/domain/entities/app_assets.dart';
 import 'package:my_dreams/core/domain/entities/named_routes.dart';
+import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
+import 'package:my_dreams/core/constants/constants.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -53,6 +56,30 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                AppAssets.logo,
+                width: context.screenWidth * .5,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Explore seus sonhos conosco',
+                style: context.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 40),
+              const AppCircularIndicatorWidget(),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
