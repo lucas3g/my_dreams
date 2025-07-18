@@ -31,18 +31,10 @@ class DreamBloc extends Bloc<DreamEvents, DreamStates> {
       AnalyzeDreamParams(dreamText: event.dreamText, userId: event.userId),
     );
 
-    result.get((failure) => emit(state.failure(failure.message)), (
-      dream,
-    ) async {
-      var buffer = '';
-      final words = dream.answer.value.split(' ');
-      for (final word in words) {
-        buffer += buffer.isEmpty ? word : ' $word';
-        emit(state.streaming(buffer));
-        await Future.delayed(const Duration(milliseconds: 50));
-      }
-      emit(state.analyzed(dream));
-    });
+    result.get(
+      (failure) => emit(state.failure(failure.message)),
+      (dream) => emit(state.analyzed(dream)),
+    );
   }
 
   Future<void> _onGetDreams(

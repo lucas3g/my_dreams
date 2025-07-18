@@ -45,13 +45,19 @@ class _DreamPageState extends State<DreamPage> {
     });
   }
 
-  void _updateAssistantMessage(String text) {
-    if (_messages.isNotEmpty && !_messages.last.isUser) {
-      _messages[_messages.length - 1] = ChatMessage(text: text, isUser: false);
-    } else {
-      _messages.add(ChatMessage(text: text, isUser: false));
+  Future<void> _startTypingAnimation(String text) async {
+    final words = text.split(' ');
+    var buffer = '';
+    setState(() => _messages.add(ChatMessage(text: '', isUser: false)));
+    for (final word in words) {
+      buffer += buffer.isEmpty ? word : ' $word';
+      setState(() {
+        _messages[_messages.length - 1] =
+            ChatMessage(text: buffer, isUser: false);
+      });
+      _scrollToBottom();
+      await Future.delayed(const Duration(milliseconds: 50));
     }
-    _scrollToBottom();
   }
 
   void _sendDream() {
@@ -81,16 +87,9 @@ class _DreamPageState extends State<DreamPage> {
                 listener: (context, state) {
                   if (state is DreamLoadingState) {
                     setState(() => _isLoading = true);
-                  } else if (state is DreamStreamingState) {
-                    setState(() {
-                      _isLoading = false;
-                      _updateAssistantMessage(state.answer);
-                    });
                   } else if (state is DreamAnalyzedState) {
-                    setState(() {
-                      _isLoading = false;
-                      _updateAssistantMessage(state.dream.answer.value);
-                    });
+                    setState(() => _isLoading = false);
+                    _startTypingAnimation(state.dream.answer.value);
                   } else if (state is DreamFailureState) {
                     setState(() => _isLoading = false);
                     ScaffoldMessenger.of(
