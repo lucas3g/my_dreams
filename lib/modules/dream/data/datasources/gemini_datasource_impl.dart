@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:injectable/injectable.dart';
 import 'package:my_dreams/core/data/clients/gemini/gemini_client.dart';
 

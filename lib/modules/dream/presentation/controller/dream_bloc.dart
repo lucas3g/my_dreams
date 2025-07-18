@@ -1,9 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:my_dreams/core/domain/entities/either_of.dart';
-import 'package:my_dreams/core/domain/entities/failure.dart';
 
-import '../../domain/entities/dream_entity.dart';
 import '../../domain/usecases/analyze_dream.dart';
 import '../../domain/usecases/get_dreams.dart';
 import 'dream_events.dart';
@@ -34,19 +31,18 @@ class DreamBloc extends Bloc<DreamEvents, DreamStates> {
       AnalyzeDreamParams(dreamText: event.dreamText, userId: event.userId),
     );
 
-    result.get(
-      (failure) => emit(state.failure(failure.message)),
-      (dream) async {
-        var buffer = '';
-        final words = dream.answer.value.split(' ');
-        for (final word in words) {
-          buffer += buffer.isEmpty ? word : ' $word';
-          emit(state.streaming(buffer));
-          await Future.delayed(const Duration(milliseconds: 50));
-        }
-        emit(state.analyzed(dream));
-      },
-    );
+    result.get((failure) => emit(state.failure(failure.message)), (
+      dream,
+    ) async {
+      var buffer = '';
+      final words = dream.answer.value.split(' ');
+      for (final word in words) {
+        buffer += buffer.isEmpty ? word : ' $word';
+        emit(state.streaming(buffer));
+        await Future.delayed(const Duration(milliseconds: 50));
+      }
+      emit(state.analyzed(dream));
+    });
   }
 
   Future<void> _onGetDreams(
