@@ -13,13 +13,12 @@ class GeminiDatasourceImpl implements GeminiDatasource {
   @override
   Future<String> getMeaning(String dreamText) async {
     final Response<Map<String, dynamic>> response = await _client.post(
-      '/models/gemini-pro:generateContent',
+      '/models/gemini-2.0-flash:generateContent',
       data: {
         'contents': [
           {
-            'role': 'user',
             'parts': [
-              {'text': dreamText},
+              {'text': 'Fale o significado do meu sonho: $dreamText'},
             ],
           },
         ],
