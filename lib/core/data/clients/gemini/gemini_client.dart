@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_dreams/core/constants/constants.dart';
@@ -13,5 +15,20 @@ class GeminiClient {
 
   Future<Response<T>> post<T>(String path, {Map<String, dynamic>? data}) {
     return _dio.post<T>(path, data: data);
+  }
+
+  Stream<String> postStream(String path, {Map<String, dynamic>? data}) async* {
+    final response = await _dio.post<ResponseBody>(
+      path,
+      data: data,
+      options: Options(responseType: ResponseType.stream),
+    );
+
+    final stream = response.data?.stream;
+    if (stream == null) return;
+
+    await for (final chunk in stream) {
+      yield utf8.decode(chunk);
+    }
   }
 }
