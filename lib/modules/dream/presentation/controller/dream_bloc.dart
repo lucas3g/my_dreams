@@ -1,9 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:my_dreams/core/domain/entities/either_of.dart';
+import 'package:my_dreams/core/domain/entities/failure.dart';
 
+import '../../domain/entities/dream_entity.dart';
 import '../../domain/usecases/analyze_dream.dart';
 import '../../domain/usecases/get_dreams.dart';
-import '../../domain/entities/dream_entity.dart';
 import 'dream_events.dart';
 import 'dream_states.dart';
 
@@ -36,13 +38,10 @@ class DreamBloc extends Bloc<DreamEvents, DreamStates> {
     await emit.forEach<EitherOf<AppFailure, DreamEntity>>(
       stream,
       onData: (result) {
-        return result.get(
-          (failure) => state.failure(failure.message),
-          (dream) {
-            finalDream = dream;
-            return state.streaming(dream.answer.value);
-          },
-        );
+        return result.get((failure) => state.failure(failure.message), (dream) {
+          finalDream = dream;
+          return state.streaming(dream.answer.value);
+        });
       },
     );
 
