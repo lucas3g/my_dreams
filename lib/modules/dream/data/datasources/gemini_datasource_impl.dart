@@ -12,7 +12,7 @@ class GeminiDatasourceImpl implements GeminiDatasource {
   GeminiDatasourceImpl({required GeminiClient client}) : _client = client;
 
   @override
-  Stream<String> getMeaning(String dreamText) async* {
+  Future<String> getMeaning(String dreamText) async {
     final data = {
       'contents': [
         {
@@ -23,25 +23,14 @@ class GeminiDatasourceImpl implements GeminiDatasource {
       ],
     };
 
-    await for (final line in _client.postStream(
-      '/models/gemini-2.0-flash:streamGenerateContent',
+    final response = await _client.post(
+      '/models/gemini-2.0-flash:generateContent',
       data: data,
-    )) {
-      final cleanLine = line.startsWith('data:')
-          ? line.substring(5).trim()
-          : line.trim();
+    );
 
-      if (cleanLine.isEmpty || cleanLine == '[DONE]') continue;
-
-      try {
-        final Map<String, dynamic> json = jsonDecode(cleanLine);
-        final String? text =
-            json['candidates']?[0]?['content']?['parts']?[0]?['text']
-                as String?;
-        if (text != null) yield text;
-      } catch (_) {
-        // ignore invalid lines
-      }
-    }
+    final Map<String, dynamic> json = response.data as Map<String, dynamic>;
+    final String? text =
+        json['candidates']?[0]?['content']?['parts']?[0]?['text'] as String?;
+    return text ?? '';
   }
 }

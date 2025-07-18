@@ -14,15 +14,14 @@ class AnalyzeDreamParams {
 }
 
 @injectable
-class AnalyzeDreamUseCase
-    implements StreamUsecase<DreamEntity, AnalyzeDreamParams> {
+class AnalyzeDreamUseCase implements UseCase<DreamEntity, AnalyzeDreamParams> {
   final DreamRepository _repository;
 
   AnalyzeDreamUseCase({required DreamRepository dreamRepository})
     : _repository = dreamRepository;
 
   @override
-  Stream<EitherOf<AppFailure, DreamEntity>> call(
+  Future<EitherOf<AppFailure, DreamEntity>> call(
     AnalyzeDreamParams params,
   ) {
     return _repository.analyzeDream(

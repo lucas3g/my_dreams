@@ -1,3 +1,3 @@
 abstract class GeminiDatasource {
-  Stream<String> getMeaning(String dreamText);
+  Future<String> getMeaning(String dreamText);
 }
