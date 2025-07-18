@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
+import 'package:my_dreams/shared/components/text_form_field.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 
 import '../presentation/controller/dream_bloc.dart';
@@ -91,9 +92,9 @@ class _DreamPageState extends State<DreamPage> {
                     });
                   } else if (state is DreamFailureState) {
                     setState(() => _isLoading = false);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.message)),
-                    );
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(state.message)));
                   }
                 },
                 child: ListView.builder(
@@ -114,18 +115,22 @@ class _DreamPageState extends State<DreamPage> {
             Row(
               children: [
                 Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      labelText: 'Descreva seu sonho',
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: context.myTheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(
+                        AppThemeConstants.mediumBorderRadius,
+                      ),
                     ),
-                    minLines: 1,
-                    maxLines: 5,
+                    child: AppTextFormField(
+                      controller: _controller,
+                      hint: 'Descreva seu sonho',
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.send),
+                        onPressed: _sendDream,
+                      ),
+                    ),
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: _sendDream,
                 ),
               ],
             ),

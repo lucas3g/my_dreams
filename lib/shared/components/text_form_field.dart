@@ -75,7 +75,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       cursorColor: widget.borderColor ?? context.myTheme.surface,
       maxLines: widget.textArea ? null : 1,
       style: context.textTheme.bodyLarge?.copyWith(
-        color: widget.borderColor ?? context.myTheme.surface,
+        color: widget.borderColor ?? Colors.white,
         decorationColor: Colors.transparent,
         decorationThickness: 0,
       ),
@@ -83,7 +83,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         isDense: true,
         label: widget.title != null ? Text(widget.title!) : null,
         labelStyle: context.textTheme.bodyLarge?.copyWith(
-          color: widget.borderColor ?? context.myTheme.surface,
+          color: widget.borderColor ?? Colors.white,
         ),
         border: OutlineInputBorder(
           borderSide: BorderSide(
@@ -130,8 +130,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
         ),
         hintStyle: context.textTheme.bodyMedium?.copyWith(
           color:
-              widget.borderColor?.withAlpha(150) ??
-              context.myTheme.surface.withAlpha(150),
+              widget.borderColor?.withAlpha(150) ?? Colors.white.withAlpha(150),
         ),
         hintText: widget.hint,
         suffixIcon: widget.hideInput
