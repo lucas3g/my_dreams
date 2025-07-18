@@ -15,7 +15,10 @@ class GeminiDatasourceImpl implements GeminiDatasource {
       'contents': [
         {
           'parts': [
-            {'text': 'Fale o significado do meu sonho: $dreamText'},
+            {
+              'text':
+                  'Fale o significado do meu sonho, faça um resumo pequeno: $dreamText',
+            },
           ],
         },
       ],
