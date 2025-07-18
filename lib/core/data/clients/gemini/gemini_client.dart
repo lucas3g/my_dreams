@@ -27,8 +27,7 @@ class GeminiClient {
     final stream = response.data?.stream;
     if (stream == null) return;
 
-    await for (final chunk in stream) {
-      yield utf8.decode(chunk);
-    }
+    // Aqui está a mudança: decodificação segura da stream UTF-8
+    yield* utf8.decoder.bind(stream);
   }
 }
