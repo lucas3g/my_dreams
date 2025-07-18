@@ -28,17 +28,23 @@ class DreamBloc extends Bloc<DreamEvents, DreamStates> {
   ) async {
     emit(state.loading());
     DreamEntity? finalDream;
-    await for (final result in _analyzeDream(
+
+    final stream = _analyzeDream(
       AnalyzeDreamParams(dreamText: event.dreamText, userId: event.userId),
-    )) {
-      result.get(
-        (failure) => emit(state.failure(failure.message)),
-        (dream) {
-          finalDream = dream;
-          emit(state.streaming(dream.answer.value));
-        },
-      );
-    }
+    );
+
+    await emit.forEach<EitherOf<AppFailure, DreamEntity>>(
+      stream,
+      onData: (result) {
+        return result.get(
+          (failure) => state.failure(failure.message),
+          (dream) {
+            finalDream = dream;
+            return state.streaming(dream.answer.value);
+          },
+        );
+      },
+    );
 
     if (finalDream != null) {
       emit(state.analyzed(finalDream!));
