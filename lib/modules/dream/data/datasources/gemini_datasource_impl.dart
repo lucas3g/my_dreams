@@ -23,18 +23,24 @@ class GeminiDatasourceImpl implements GeminiDatasource {
       ],
     };
 
-    await for (final chunk in _client.postStream(
+    await for (final line in _client.postStream(
       '/models/gemini-2.0-flash:streamGenerateContent',
       data: data,
     )) {
+      final cleanLine = line.startsWith('data:')
+          ? line.substring(5).trim()
+          : line.trim();
+
+      if (cleanLine.isEmpty || cleanLine == '[DONE]') continue;
+
       try {
-        final Map<String, dynamic> json = jsonDecode(chunk);
+        final Map<String, dynamic> json = jsonDecode(cleanLine);
         final String? text =
             json['candidates']?[0]?['content']?['parts']?[0]?['text']
                 as String?;
         if (text != null) yield text;
       } catch (_) {
-        // ignore invalid chunks
+        // ignore invalid lines
       }
     }
   }
