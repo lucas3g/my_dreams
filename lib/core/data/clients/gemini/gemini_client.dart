@@ -17,6 +17,12 @@ class GeminiClient {
     return _dio.post<T>(path, data: data);
   }
 
+  /// Sends a POST request and returns the response body as a stream of lines.
+  ///
+  /// Gemini streaming API returns data as a Server Sent Event (SSE) where each
+  /// event is separated by a new line. To properly handle this format the raw
+  /// byte stream is first decoded using UTF-8 and then split into individual
+  /// lines.
   Stream<String> postStream(String path, {Map<String, dynamic>? data}) async* {
     final response = await _dio.post<ResponseBody>(
       path,
@@ -27,7 +33,7 @@ class GeminiClient {
     final stream = response.data?.stream;
     if (stream == null) return;
 
-    // Aqui está a mudança: decodificação segura da stream UTF-8
-    yield* utf8.decoder.bind(stream);
+    // Decode the UTF-8 bytes and split into lines for SSE parsing.
+    yield* utf8.decoder.bind(stream).transform(const LineSplitter());
   }
 }
