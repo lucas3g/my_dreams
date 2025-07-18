@@ -6,7 +6,7 @@ const double kPadding = 20;
 
 const SUPABASE_URL = String.fromEnvironment('SUPABASE_URL');
 const SUPABASE_ANON_KEY = String.fromEnvironment('SUPABASE_ANON_KEY');
-const CHATGPT_API_KEY = String.fromEnvironment('CHATGPT_API_KEY');
+const GEMINI_API_KEY = String.fromEnvironment('GEMINI_API_KEY');
 
 extension ContextExtensions on BuildContext {
   ColorScheme get myTheme => Theme.of(this).colorScheme;
