@@ -1,0 +1,33 @@
+import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import 'package:my_dreams/core/data/clients/gemini/gemini_client.dart';
+
+import 'gemini_datasource.dart';
+
+@Injectable(as: GeminiDatasource)
+class GeminiDatasourceImpl implements GeminiDatasource {
+  final GeminiClient _client;
+
+  GeminiDatasourceImpl({required GeminiClient client}) : _client = client;
+
+  @override
+  Future<String> getMeaning(String dreamText) async {
+    final Response<Map<String, dynamic>> response = await _client.post(
+      '/models/gemini-pro:generateContent',
+      data: {
+        'contents': [
+          {
+            'role': 'user',
+            'parts': [
+              {'text': dreamText},
+            ],
+          },
+        ],
+      },
+    );
+
+    return response.data?['candidates']?[0]?['content']?['parts']?[0]?['text']
+            as String? ??
+        '';
+  }
+}

@@ -5,19 +5,19 @@ import 'package:my_dreams/modules/dream/domain/entities/dream_exception.dart';
 
 import '../../domain/entities/dream_entity.dart';
 import '../../domain/repositories/dream_repository.dart';
-import '../datasources/chatgpt_datasource.dart';
+import '../datasources/gemini_datasource.dart';
 import '../datasources/dream_datasource.dart';
 
 @Injectable(as: DreamRepository)
 class DreamRepositoryImpl implements DreamRepository {
   final DreamDatasource _datasource;
-  final ChatGptDatasource _chatGpt;
+  final GeminiDatasource _gemini;
 
   DreamRepositoryImpl({
     required DreamDatasource datasource,
-    required ChatGptDatasource chatGptDatasource,
+    required GeminiDatasource geminiDatasource,
   }) : _datasource = datasource,
-       _chatGpt = chatGptDatasource;
+       _gemini = geminiDatasource;
 
   @override
   Future<EitherOf<AppFailure, DreamEntity>> analyzeDream({
@@ -25,7 +25,7 @@ class DreamRepositoryImpl implements DreamRepository {
     required String userId,
   }) async {
     try {
-      final meaning = await _chatGpt.getMeaning(dreamText);
+      final meaning = await _gemini.getMeaning(dreamText);
       final dream = DreamEntity(
         id: 0,
         userId: userId,

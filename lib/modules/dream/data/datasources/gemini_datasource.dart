@@ -1,3 +1,3 @@
-abstract class ChatGptDatasource {
+abstract class GeminiDatasource {
   Future<String> getMeaning(String dreamText);
 }
