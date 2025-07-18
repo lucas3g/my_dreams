@@ -4,7 +4,6 @@ abstract class DreamStates {
   DreamLoadingState loading() => DreamLoadingState();
   DreamFailureState failure(String message) => DreamFailureState(message);
   DreamAnalyzedState analyzed(DreamEntity dream) => DreamAnalyzedState(dream);
-  DreamStreamingState streaming(String answer) => DreamStreamingState(answer);
   DreamListLoadedState dreams(List<DreamEntity> list) =>
       DreamListLoadedState(list);
 }
@@ -29,8 +28,3 @@ class DreamListLoadedState extends DreamStates {
   DreamListLoadedState(this.dreamsList);
 }
 
-class DreamStreamingState extends DreamStates {
-  final String answer;
-
-  DreamStreamingState(this.answer);
-}
