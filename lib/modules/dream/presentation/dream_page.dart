@@ -29,11 +29,19 @@ class _DreamPageState extends State<DreamPage> {
       return const Center(child: CircularProgressIndicator());
     }
 
+    if (state is DreamStreamingState) {
+      return Expanded(
+        child: SingleChildScrollView(
+          child: Text(state.answer),
+        ),
+      );
+    }
+
     if (state is DreamAnalyzedState) {
-      return AnimatedOpacity(
-        opacity: 1,
-        duration: const Duration(milliseconds: 300),
-        child: Text(state.dream.answer.value),
+      return Expanded(
+        child: SingleChildScrollView(
+          child: Text(state.dream.answer.value),
+        ),
       );
     }
 

@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../domain/usecases/analyze_dream.dart';
 import '../../domain/usecases/get_dreams.dart';
+import '../../domain/entities/dream_entity.dart';
 import 'dream_events.dart';
 import 'dream_states.dart';
 
@@ -26,13 +27,22 @@ class DreamBloc extends Bloc<DreamEvents, DreamStates> {
     Emitter<DreamStates> emit,
   ) async {
     emit(state.loading());
-    final result = await _analyzeDream(
+    DreamEntity? finalDream;
+    await for (final result in _analyzeDream(
       AnalyzeDreamParams(dreamText: event.dreamText, userId: event.userId),
-    );
-    result.get(
-      (failure) => emit(state.failure(failure.message)),
-      (dream) => emit(state.analyzed(dream)),
-    );
+    )) {
+      result.get(
+        (failure) => emit(state.failure(failure.message)),
+        (dream) {
+          finalDream = dream;
+          emit(state.streaming(dream.answer.value));
+        },
+      );
+    }
+
+    if (finalDream != null) {
+      emit(state.analyzed(finalDream!));
+    }
   }
 
   Future<void> _onGetDreams(

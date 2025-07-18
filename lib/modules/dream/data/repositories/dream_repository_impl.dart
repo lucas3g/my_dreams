@@ -20,23 +20,38 @@ class DreamRepositoryImpl implements DreamRepository {
        _gemini = geminiDatasource;
 
   @override
-  Future<EitherOf<AppFailure, DreamEntity>> analyzeDream({
+  Stream<EitherOf<AppFailure, DreamEntity>> analyzeDream({
     required String dreamText,
     required String userId,
-  }) async {
+  }) async* {
+    final buffer = StringBuffer();
     try {
-      final meaning = await _gemini.getMeaning(dreamText);
+      await for (final chunk in _gemini.getMeaning(dreamText)) {
+        buffer.write(chunk);
+        yield resolve(
+          DreamEntity(
+            id: 0,
+            userId: userId,
+            message: dreamText,
+            answer: buffer.toString(),
+            createdAt: DateTime.now(),
+          ),
+        );
+      }
+
       final dream = DreamEntity(
         id: 0,
         userId: userId,
         message: dreamText,
-        answer: meaning,
+        answer: buffer.toString(),
         createdAt: DateTime.now(),
       );
+
       await _datasource.saveDream(dream);
-      return resolve(dream);
+
+      yield resolve(dream);
     } catch (e) {
-      return reject(DreamException(e.toString()));
+      yield reject(DreamException(e.toString()));
     }
   }
 

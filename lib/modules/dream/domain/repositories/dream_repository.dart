@@ -3,7 +3,7 @@ import 'package:my_dreams/core/domain/entities/failure.dart';
 import '../entities/dream_entity.dart';
 
 abstract class DreamRepository {
-  Future<EitherOf<AppFailure, DreamEntity>> analyzeDream({
+  Stream<EitherOf<AppFailure, DreamEntity>> analyzeDream({
     required String dreamText,
     required String userId,
   });
