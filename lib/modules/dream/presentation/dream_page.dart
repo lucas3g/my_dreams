@@ -29,6 +29,7 @@ class _DreamPageState extends State<DreamPage> {
   void dispose() {
     _controller.dispose();
     _scrollController.dispose();
+    _bloc.close();
     super.dispose();
   }
 
