@@ -37,7 +37,19 @@ class GeminiDatasourceImpl implements GeminiDatasource {
 
   @override
   Future<String> createImage(String dreamText) async {
-    // TODO: integrate with Gemini API to generate images
-    return 'https://placehold.co/600x400';
+    final data = {
+      'prompt': {
+        'text':
+            'Create an image that represents the following dream: $dreamText',
+      },
+    };
+
+    final response = await _client.post(
+      '/models/gemini-pro:generateImage',
+      data: data,
+    );
+
+    final Map<String, dynamic> json = response.data as Map<String, dynamic>;
+    return json['imageUrl'] as String? ?? '';
   }
 }

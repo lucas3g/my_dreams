@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_dreams/core/constants/constants.dart';
-import 'package:my_dreams/core/domain/entities/app_assets.dart';
+import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 
 class ChatMessage {
@@ -8,11 +8,7 @@ class ChatMessage {
   final bool isUser;
   final String? imageUrl;
 
-  ChatMessage({
-    required this.text,
-    required this.isUser,
-    this.imageUrl,
-  });
+  ChatMessage({required this.text, required this.isUser, this.imageUrl});
 }
 
 class ChatMessageWidget extends StatelessWidget {
@@ -31,7 +27,11 @@ class ChatMessageWidget extends StatelessWidget {
         : context.myTheme.onSecondaryContainer;
 
     final avatar = isUser
-        ? CircleAvatar(backgroundImage: const AssetImage(AppAssets.google))
+        ? CircleAvatar(
+            backgroundImage: NetworkImage(
+              AppGlobal.instance.user?.imageUrl.value ?? '',
+            ),
+          )
         : const CircleAvatar(child: Icon(Icons.android));
 
     final content = Container(
@@ -39,7 +39,9 @@ class ChatMessageWidget extends StatelessWidget {
       padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(AppThemeConstants.mediumBorderRadius),
+        borderRadius: BorderRadius.circular(
+          AppThemeConstants.mediumBorderRadius,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,12 +63,15 @@ class ChatMessageWidget extends StatelessWidget {
     );
 
     return Row(
-      mainAxisAlignment:
-          isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: isUser
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (!isUser) avatar,
+        const SizedBox(width: 10),
         Flexible(child: content),
+        const SizedBox(width: 10),
         if (isUser) avatar,
       ],
     );

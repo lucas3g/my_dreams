@@ -72,7 +72,7 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       textInputAction: widget.textInputAction,
       obscureText: _hideInput,
       controller: widget.controller,
-      cursorColor: widget.borderColor ?? context.myTheme.surface,
+      cursorColor: Colors.white.withAlpha(150),
       maxLines: widget.textArea ? null : 1,
       style: context.textTheme.bodyLarge?.copyWith(
         color: widget.borderColor ?? Colors.white,

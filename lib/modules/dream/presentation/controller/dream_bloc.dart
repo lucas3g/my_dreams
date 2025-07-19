@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/usecases/analyze_dream.dart';
-import '../../domain/usecases/get_dreams.dart';
 import '../../domain/usecases/generate_dream_image.dart';
+import '../../domain/usecases/get_dreams.dart';
 import 'dream_events.dart';
 import 'dream_states.dart';
 
@@ -35,15 +35,14 @@ class DreamBloc extends Bloc<DreamEvents, DreamStates> {
       AnalyzeDreamParams(dreamText: event.dreamText, userId: event.userId),
     );
 
-    result.get(
-      (failure) => emit(state.failure(failure.message)),
-      (dream) async {
-        final imageResult = await _generateImage(dream.message.value);
-        String imageUrl = '';
-        imageResult.get((_) {}, (url) => imageUrl = url);
-        emit(state.analyzed(dream, imageUrl));
-      },
-    );
+    result.get((failure) => emit(state.failure(failure.message)), (
+      dream,
+    ) async {
+      final imageResult = await _generateImage(dream.message.value);
+      String imageUrl = '';
+      imageResult.get((_) {}, (url) => imageUrl = url);
+      return emit(state.analyzed(dream, imageUrl));
+    });
   }
 
   Future<void> _onGetDreams(

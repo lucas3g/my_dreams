@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
+import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/text_form_field.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 
@@ -48,13 +49,19 @@ class _DreamPageState extends State<DreamPage> {
   Future<void> _startTypingAnimation(String text, String imageUrl) async {
     final words = text.split(' ');
     var buffer = '';
-    setState(() =>
-        _messages.add(ChatMessage(text: '', isUser: false, imageUrl: imageUrl)));
+    setState(
+      () => _messages.add(
+        ChatMessage(text: '', isUser: false, imageUrl: imageUrl),
+      ),
+    );
     for (final word in words) {
       buffer += buffer.isEmpty ? word : ' $word';
       setState(() {
-        _messages[_messages.length - 1] =
-            ChatMessage(text: buffer, isUser: false, imageUrl: imageUrl);
+        _messages[_messages.length - 1] = ChatMessage(
+          text: buffer,
+          isUser: false,
+          imageUrl: imageUrl,
+        );
       });
       _scrollToBottom();
       await Future.delayed(const Duration(milliseconds: 50));
@@ -90,7 +97,10 @@ class _DreamPageState extends State<DreamPage> {
                     setState(() => _isLoading = true);
                   } else if (state is DreamAnalyzedState) {
                     setState(() => _isLoading = false);
-                    _startTypingAnimation(state.dream.answer.value, state.imageUrl);
+                    _startTypingAnimation(
+                      state.dream.answer.value,
+                      state.imageUrl,
+                    );
                   } else if (state is DreamFailureState) {
                     setState(() => _isLoading = false);
                     ScaffoldMessenger.of(
@@ -108,11 +118,6 @@ class _DreamPageState extends State<DreamPage> {
                 ),
               ),
             ),
-            if (_isLoading)
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: CircularProgressIndicator(),
-              ),
             Row(
               children: [
                 Expanded(
@@ -125,11 +130,19 @@ class _DreamPageState extends State<DreamPage> {
                     ),
                     child: AppTextFormField(
                       controller: _controller,
-                      hint: 'Descreva seu sonho',
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.send),
-                        onPressed: _sendDream,
-                      ),
+                      readOnly: _isLoading,
+                      hint: !_isLoading
+                          ? 'Descreva seu sonho'
+                          : 'Analisando...',
+                      suffixIcon: !_isLoading
+                          ? IconButton(
+                              icon: const Icon(Icons.send),
+                              onPressed: _sendDream,
+                            )
+                          : Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [AppCircularIndicatorWidget(size: 20)],
+                            ),
                     ),
                   ),
                 ),
