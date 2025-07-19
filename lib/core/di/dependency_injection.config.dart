@@ -99,7 +99,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i933.DreamBloc(
         analyzeDreamUseCase: gh<_i357.AnalyzeDreamUseCase>(),
         getDreamsUseCase: gh<_i1037.GetDreamsUseCase>(),
-        generateDreamImageUseCase: gh<_i708.GenerateDreamImageUseCase>(),
       ),
     );
     gh.factory<_i779.AuthRepository>(

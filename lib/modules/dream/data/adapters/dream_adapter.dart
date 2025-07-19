@@ -7,6 +7,7 @@ class DreamAdapter {
       userId: map['user_id'] as String,
       message: map['description'] as String,
       answer: map['response_ai'] as String,
+      imageUrl: map['image_url'] as String? ?? '',
       createdAt: DateTime.parse(map['created_at'] as String),
     );
   }
@@ -16,6 +17,7 @@ class DreamAdapter {
       'user_id': dream.userId.value,
       'description': dream.message.value,
       'response_ai': dream.answer.value,
+      'image_url': dream.imageUrl.value,
     };
   }
 }
