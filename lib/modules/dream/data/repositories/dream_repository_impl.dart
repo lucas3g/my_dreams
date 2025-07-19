@@ -5,8 +5,8 @@ import 'package:my_dreams/modules/dream/domain/entities/dream_exception.dart';
 
 import '../../domain/entities/dream_entity.dart';
 import '../../domain/repositories/dream_repository.dart';
-import '../datasources/gemini_datasource.dart';
 import '../datasources/dream_datasource.dart';
+import '../datasources/gemini_datasource.dart';
 
 @Injectable(as: DreamRepository)
 class DreamRepositoryImpl implements DreamRepository {
@@ -40,18 +40,6 @@ class DreamRepositoryImpl implements DreamRepository {
       await _datasource.saveDream(dream);
 
       return resolve(dream);
-    } catch (e) {
-      return reject(DreamException(e.toString()));
-    }
-  }
-
-  @override
-  Future<EitherOf<AppFailure, String>> generateDreamImage(
-    String dreamText,
-  ) async {
-    try {
-      final url = await _gemini.createImage(dreamText);
-      return resolve(url);
     } catch (e) {
       return reject(DreamException(e.toString()));
     }

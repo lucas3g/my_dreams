@@ -33,7 +33,6 @@ import '../../modules/dream/data/repositories/dream_repository_impl.dart'
     as _i648;
 import '../../modules/dream/domain/repositories/dream_repository.dart' as _i563;
 import '../../modules/dream/domain/usecases/analyze_dream.dart' as _i357;
-import '../../modules/dream/domain/usecases/generate_dream_image.dart' as _i708;
 import '../../modules/dream/domain/usecases/get_dreams.dart' as _i1037;
 import '../../modules/dream/presentation/controller/dream_bloc.dart' as _i933;
 import '../data/clients/gemini/gemini_client.dart' as _i123;
@@ -83,11 +82,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i357.AnalyzeDreamUseCase>(
       () => _i357.AnalyzeDreamUseCase(
-        dreamRepository: gh<_i563.DreamRepository>(),
-      ),
-    );
-    gh.factory<_i708.GenerateDreamImageUseCase>(
-      () => _i708.GenerateDreamImageUseCase(
         dreamRepository: gh<_i563.DreamRepository>(),
       ),
     );
