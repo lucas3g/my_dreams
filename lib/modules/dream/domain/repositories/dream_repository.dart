@@ -8,5 +8,7 @@ abstract class DreamRepository {
     required String userId,
   });
 
+  Future<EitherOf<AppFailure, String>> generateDreamImage(String dreamText);
+
   Future<EitherOf<AppFailure, List<DreamEntity>>> getDreams(String userId);
 }

@@ -44,6 +44,18 @@ class DreamRepositoryImpl implements DreamRepository {
   }
 
   @override
+  Future<EitherOf<AppFailure, String>> generateDreamImage(
+    String dreamText,
+  ) async {
+    try {
+      final url = await _gemini.createImage(dreamText);
+      return resolve(url);
+    } catch (e) {
+      return reject(DreamException(e.toString()));
+    }
+  }
+
+  @override
   Future<EitherOf<AppFailure, List<DreamEntity>>> getDreams(
     String userId,
   ) async {
