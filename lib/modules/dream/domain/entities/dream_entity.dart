@@ -7,6 +7,7 @@ class DreamEntity extends BaseEntity {
   TextVO userId;
   TextVO message;
   TextVO answer;
+  TextVO imageUrl;
   DateTimeVO createdAt;
 
   DreamEntity({
@@ -14,10 +15,12 @@ class DreamEntity extends BaseEntity {
     required String userId,
     required String message,
     required String answer,
+    required String imageUrl,
     required DateTime createdAt,
   })  : userId = TextVO(userId),
         message = TextVO(message),
         answer = TextVO(answer),
+        imageUrl = TextVO(imageUrl),
         createdAt = DateTimeVO(createdAt),
         super(id: IntVO(id));
 }
