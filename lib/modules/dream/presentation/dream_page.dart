@@ -69,6 +69,8 @@ class _DreamPageState extends State<DreamPage> {
   }
 
   void _sendDream() {
+    context.closeKeyboard();
+
     final user = AppGlobal.instance.user;
     final text = _controller.text.trim();
     if (user == null || text.isEmpty) return;

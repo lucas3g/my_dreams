@@ -27,12 +27,18 @@ class ChatMessageWidget extends StatelessWidget {
         : context.myTheme.onSecondaryContainer;
 
     final avatar = isUser
-        ? CircleAvatar(
-            backgroundImage: NetworkImage(
-              AppGlobal.instance.user?.imageUrl.value ?? '',
+        ? Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(
+                AppGlobal.instance.user?.imageUrl.value ?? '',
+              ),
             ),
           )
-        : const CircleAvatar(child: Icon(Icons.android));
+        : Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: const CircleAvatar(child: Icon(Icons.android)),
+          );
 
     final content = Container(
       margin: const EdgeInsets.symmetric(vertical: 4.0),
@@ -66,7 +72,7 @@ class ChatMessageWidget extends StatelessWidget {
       mainAxisAlignment: isUser
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!isUser) avatar,
         const SizedBox(width: 10),
