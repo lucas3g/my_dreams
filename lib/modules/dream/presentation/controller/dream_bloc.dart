@@ -38,7 +38,7 @@ class DreamBloc extends Bloc<DreamEvents, DreamStates> {
     result.get((failure) => emit(state.failure(failure.message)), (
       dream,
     ) async {
-      final imageResult = await _generateImage(dream.message.value);
+      final imageResult = await _generateImage(dream.answer.value);
       String imageUrl = '';
       imageResult.get((_) {}, (url) => imageUrl = url);
       return emit(state.analyzed(dream, imageUrl));
