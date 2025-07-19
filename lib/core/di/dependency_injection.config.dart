@@ -34,6 +34,7 @@ import '../../modules/dream/data/repositories/dream_repository_impl.dart'
 import '../../modules/dream/domain/repositories/dream_repository.dart' as _i563;
 import '../../modules/dream/domain/usecases/analyze_dream.dart' as _i357;
 import '../../modules/dream/domain/usecases/get_dreams.dart' as _i1037;
+import '../../modules/dream/domain/usecases/generate_dream_image.dart' as _i1100;
 import '../../modules/dream/presentation/controller/dream_bloc.dart' as _i933;
 import '../data/clients/gemini/gemini_client.dart' as _i969;
 import '../data/clients/http/client_http.dart' as _i777;
@@ -93,6 +94,11 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i1037.GetDreamsUseCase(dreamRepository: gh<_i563.DreamRepository>()),
     );
+    gh.factory<_i1100.GenerateDreamImageUseCase>(
+      () => _i1100.GenerateDreamImageUseCase(
+        dreamRepository: gh<_i563.DreamRepository>(),
+      ),
+    );
     gh.factory<_i51.AutoLoginUseCase>(
       () => _i51.AutoLoginUseCase(authRepository: gh<_i779.AuthRepository>()),
     );
@@ -110,6 +116,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i933.DreamBloc(
         analyzeDreamUseCase: gh<_i357.AnalyzeDreamUseCase>(),
         getDreamsUseCase: gh<_i1037.GetDreamsUseCase>(),
+        generateDreamImageUseCase: gh<_i1100.GenerateDreamImageUseCase>(),
       ),
     );
     gh.factory<_i311.AuthBloc>(

@@ -3,7 +3,8 @@ import '../../domain/entities/dream_entity.dart';
 abstract class DreamStates {
   DreamLoadingState loading() => DreamLoadingState();
   DreamFailureState failure(String message) => DreamFailureState(message);
-  DreamAnalyzedState analyzed(DreamEntity dream) => DreamAnalyzedState(dream);
+  DreamAnalyzedState analyzed(DreamEntity dream, String imageUrl) =>
+      DreamAnalyzedState(dream, imageUrl);
   DreamListLoadedState dreams(List<DreamEntity> list) =>
       DreamListLoadedState(list);
 }
@@ -19,7 +20,9 @@ class DreamFailureState extends DreamStates {
 
 class DreamAnalyzedState extends DreamStates {
   final DreamEntity dream;
-  DreamAnalyzedState(this.dream);
+  final String imageUrl;
+
+  DreamAnalyzedState(this.dream, this.imageUrl);
 }
 
 class DreamListLoadedState extends DreamStates {

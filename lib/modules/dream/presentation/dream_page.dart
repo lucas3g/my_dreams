@@ -45,15 +45,16 @@ class _DreamPageState extends State<DreamPage> {
     });
   }
 
-  Future<void> _startTypingAnimation(String text) async {
+  Future<void> _startTypingAnimation(String text, String imageUrl) async {
     final words = text.split(' ');
     var buffer = '';
-    setState(() => _messages.add(ChatMessage(text: '', isUser: false)));
+    setState(() =>
+        _messages.add(ChatMessage(text: '', isUser: false, imageUrl: imageUrl)));
     for (final word in words) {
       buffer += buffer.isEmpty ? word : ' $word';
       setState(() {
         _messages[_messages.length - 1] =
-            ChatMessage(text: buffer, isUser: false);
+            ChatMessage(text: buffer, isUser: false, imageUrl: imageUrl);
       });
       _scrollToBottom();
       await Future.delayed(const Duration(milliseconds: 50));
@@ -89,7 +90,7 @@ class _DreamPageState extends State<DreamPage> {
                     setState(() => _isLoading = true);
                   } else if (state is DreamAnalyzedState) {
                     setState(() => _isLoading = false);
-                    _startTypingAnimation(state.dream.answer.value);
+                    _startTypingAnimation(state.dream.answer.value, state.imageUrl);
                   } else if (state is DreamFailureState) {
                     setState(() => _isLoading = false);
                     ScaffoldMessenger.of(

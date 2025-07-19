@@ -34,4 +34,10 @@ class GeminiDatasourceImpl implements GeminiDatasource {
         json['candidates']?[0]?['content']?['parts']?[0]?['text'] as String?;
     return text ?? '';
   }
+
+  @override
+  Future<String> createImage(String dreamText) async {
+    // TODO: integrate with Gemini API to generate images
+    return 'https://placehold.co/600x400';
+  }
 }
