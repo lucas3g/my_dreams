@@ -23,6 +23,8 @@ class AppTextFormField extends StatefulWidget {
   TextInputAction? textInputAction;
   bool readOnly;
   Widget? suffixIcon;
+  int? maxLines;
+  bool expands;
 
   AppTextFormField({
     super.key,
@@ -43,6 +45,8 @@ class AppTextFormField extends StatefulWidget {
     this.textInputAction,
     this.readOnly = false,
     this.suffixIcon,
+    this.maxLines,
+    this.expands = false,
   });
 
   @override
@@ -73,7 +77,10 @@ class _AppTextFormFieldState extends State<AppTextFormField> {
       obscureText: _hideInput,
       controller: widget.controller,
       cursorColor: Colors.white.withAlpha(150),
-      maxLines: widget.textArea ? null : 1,
+      expands: widget.expands,
+      maxLines: widget.expands
+          ? null
+          : widget.maxLines ?? (widget.textArea ? null : 1),
       style: context.textTheme.bodyLarge?.copyWith(
         color: widget.borderColor ?? Colors.white,
         decorationColor: Colors.transparent,
