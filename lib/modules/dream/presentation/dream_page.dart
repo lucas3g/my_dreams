@@ -88,7 +88,14 @@ class _DreamPageState extends State<DreamPage> {
     return SafeArea(
       top: false,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Novo Sonho')),
+        appBar: AppBar(
+          title: Text(
+            'Novo Significado',
+            style: context.textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(AppThemeConstants.padding),
           child: Column(
