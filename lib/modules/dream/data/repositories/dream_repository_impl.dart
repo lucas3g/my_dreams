@@ -29,12 +29,10 @@ class DreamRepositoryImpl implements DreamRepository {
       //final imageUrl = await _gemini.createImage(answer);
 
       final dream = DreamEntity(
-        id: '',
         userId: userId,
         message: dreamText,
         answer: answer,
         imageUrl: '',
-        createdAt: DateTime.now(),
       );
 
       await _datasource.saveDream(dream);

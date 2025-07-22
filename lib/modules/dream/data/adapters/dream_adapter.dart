@@ -3,12 +3,14 @@ import '../../domain/entities/dream_entity.dart';
 class DreamAdapter {
   static DreamEntity fromMap(Map<String, dynamic> map) {
     return DreamEntity(
-      id: map['id'],
+      id: map['id'] as String?,
       userId: map['user_id'] as String,
       message: map['description'] as String,
       answer: map['response_ai'] as String,
       imageUrl: map['image_url'] as String? ?? '',
-      createdAt: DateTime.parse(map['created_at'] as String),
+      createdAt: map['created_at'] != null
+          ? DateTime.parse(map['created_at'] as String)
+          : null,
     );
   }
 
@@ -23,12 +25,14 @@ class DreamAdapter {
 
   static DreamEntity toEntity(Map<String, dynamic> map) {
     return DreamEntity(
-      id: map['id'] as String,
+      id: map['id'] as String?,
       userId: map['user_id'] as String,
       message: map['description'] as String,
       answer: map['response_ai'] as String,
       imageUrl: map['image_url'] as String? ?? '',
-      createdAt: DateTime.parse(map['created_at'] as String),
+      createdAt: map['created_at'] != null
+          ? DateTime.parse(map['created_at'] as String)
+          : null,
     );
   }
 }
