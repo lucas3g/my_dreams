@@ -3,6 +3,8 @@ import 'package:my_dreams/modules/auth/presentation/auth_page.dart';
 import 'package:my_dreams/modules/splash/presentation/splash_page.dart';
 import 'package:my_dreams/modules/home/presentation/home_page.dart';
 import 'package:my_dreams/modules/dream/presentation/dream_page.dart';
+import 'package:my_dreams/modules/dream/presentation/dream_chat_page.dart';
+import 'package:my_dreams/modules/dream/domain/entities/dream_entity.dart';
 
 import '../domain/entities/named_routes.dart';
 import 'domain/entities/custom_transition.dart';
@@ -21,7 +23,12 @@ class CustomNavigator {
       NamedRoutes.dream.route: (BuildContext context) => const DreamPage(),
     };
 
-    final WidgetBuilder? builder = appRoutes[settings.name];
+    WidgetBuilder? builder = appRoutes[settings.name];
+
+    if (settings.name == NamedRoutes.dreamChat.route) {
+      final dream = settings.arguments as DreamEntity;
+      builder = (BuildContext context) => DreamChatPage(dream: dream);
+    }
 
     if (builder != null) {
       final CustomTransition customTransition = generateAnimation(settings);

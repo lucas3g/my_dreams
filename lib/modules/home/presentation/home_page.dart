@@ -191,7 +191,14 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           final dream = state.dreamsList[index];
 
-                          return DreamCardWidget(dream: dream);
+                          return InkWell(
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              NamedRoutes.dreamChat.route,
+                              arguments: dream,
+                            ),
+                            child: DreamCardWidget(dream: dream),
+                          );
                         },
                       );
                     }

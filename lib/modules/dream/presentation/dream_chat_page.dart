@@ -5,25 +5,18 @@ import 'package:my_dreams/modules/dream/presentation/widgets/chat_message_widget
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/utils/formatters.dart';
 
-class DreamCardWidget extends StatelessWidget {
+class DreamChatPage extends StatelessWidget {
   final DreamEntity dream;
 
-  const DreamCardWidget({super.key, required this.dream});
+  const DreamChatPage({super.key, required this.dream});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: context.myTheme.surface,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-          AppThemeConstants.mediumBorderRadius,
-        ),
-        side: BorderSide(color: context.myTheme.primary),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Scaffold(
+      appBar: AppBar(title: const Text('Sonho')),
+      body: Padding(
+        padding: const EdgeInsets.all(AppThemeConstants.padding),
+        child: ListView(
           children: [
             if (dream.createdAt != null) ...[
               Row(
@@ -43,11 +36,19 @@ class DreamCardWidget extends StatelessWidget {
                   ),
                 ],
               ),
-
               Divider(color: context.myTheme.primary),
             ],
             ChatMessageWidget(
               message: ChatMessage(text: dream.message.value, isUser: true),
+            ),
+            const SizedBox(height: 8),
+            ChatMessageWidget(
+              message: ChatMessage(
+                text: dream.answer.value,
+                isUser: false,
+                imageUrl:
+                    dream.imageUrl.value.isNotEmpty ? dream.imageUrl.value : null,
+              ),
             ),
           ],
         ),
