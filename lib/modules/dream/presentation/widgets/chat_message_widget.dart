@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
+import 'package:my_dreams/shared/utils/rich_text_extensions.dart';
 
 class ChatMessage {
   final String text;
@@ -40,6 +41,11 @@ class ChatMessageWidget extends StatelessWidget {
             child: const CircleAvatar(child: Icon(Icons.android)),
           );
 
+    final baseStyle =
+        context.textTheme.bodyLarge?.copyWith(color: textColor) ??
+            TextStyle(color: textColor);
+    final boldStyle = baseStyle.copyWith(fontWeight: FontWeight.bold);
+
     final content = Container(
       margin: const EdgeInsets.symmetric(vertical: 4.0),
       padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
@@ -52,9 +58,13 @@ class ChatMessageWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            message.text,
-            style: context.textTheme.bodyLarge?.copyWith(color: textColor),
+          RichText(
+            text: TextSpan(
+              children: message.text.parseBold(
+                style: baseStyle,
+                boldStyle: boldStyle,
+              ),
+            ),
           ),
           if (message.imageUrl != null && message.imageUrl!.isNotEmpty)
             Padding(
