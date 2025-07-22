@@ -12,21 +12,40 @@ class DreamCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderColor = context.myTheme.outline;
-
     return Card(
       color: context.myTheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           AppThemeConstants.mediumBorderRadius,
         ),
-        side: BorderSide(color: borderColor),
+        side: BorderSide(color: context.myTheme.primary),
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (dream.createdAt != null) ...[
+              Row(
+                children: [
+                  Text(
+                    'Data: ',
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: context.myTheme.onSurfaceVariant,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    dream.createdAt!.value.diaMesAnoHora(),
+                    style: context.textTheme.bodySmall?.copyWith(
+                      color: context.myTheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+
+              Divider(color: context.myTheme.primary),
+            ],
             ChatMessageWidget(
               message: ChatMessage(text: dream.message.value, isUser: true),
             ),
@@ -40,18 +59,6 @@ class DreamCardWidget extends StatelessWidget {
                     : null,
               ),
             ),
-            if (dream.createdAt != null)
-              Padding(
-                padding:
-                    const EdgeInsets.only(top: AppThemeConstants.halfPadding),
-                child: Text(
-                  dream.createdAt!.value.diaMesAnoHora(),
-                  style: context.textTheme.bodySmall?.copyWith(
-                    color: context.myTheme.onSurfaceVariant,
-                  ),
-                  textAlign: TextAlign.end,
-                ),
-              ),
           ],
         ),
       ),
