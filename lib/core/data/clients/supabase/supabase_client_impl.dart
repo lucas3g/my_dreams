@@ -58,25 +58,26 @@ class SupabaseClientImpl implements ISupabaseClient {
     Map<String, dynamic> filters = const {},
   }) async {
     dynamic data;
+    final selectedColumns = columns.trim() == '*' ? '*' : columns;
 
     if (orderBy == null || orderBy.isEmpty) {
       if (filters.isNotEmpty) {
         data = await _client
             .from(table)
-            .select(columns)
+            .select(selectedColumns)
             .eq(filters.keys.first, filters.values.first);
       } else {
-        data = await _client.from(table).select(columns);
+        data = await _client.from(table).select(selectedColumns);
       }
     } else {
       if (filters.isNotEmpty) {
         data = await _client
             .from(table)
-            .select(columns)
+            .select(selectedColumns)
             .eq(filters.keys.first, filters.values.first)
             .order(orderBy);
       } else {
-        data = await _client.from(table).select(columns).order(orderBy);
+        data = await _client.from(table).select(selectedColumns).order(orderBy);
       }
     }
 

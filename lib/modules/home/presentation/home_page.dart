@@ -19,6 +19,7 @@ import '../../../shared/themes/app_theme_constants.dart';
 import '../../dream/presentation/controller/dream_bloc.dart';
 import '../../dream/presentation/controller/dream_events.dart';
 import '../../dream/presentation/controller/dream_states.dart';
+import 'widgets/dream_card_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -184,15 +185,13 @@ class _HomePageState extends State<HomePage> {
                           child: Text('Nenhum sonho registrado'),
                         );
                       }
-                      return ListView.builder(
+                      return ListView.separated(
                         itemCount: state.dreamsList.length,
+                        separatorBuilder: (_, __) => const SpacerHeight(),
                         itemBuilder: (context, index) {
                           final dream = state.dreamsList[index];
 
-                          return ListTile(
-                            title: Text(dream.message.value),
-                            subtitle: Text(dream.answer.value),
-                          );
+                          return DreamCardWidget(dream: dream);
                         },
                       );
                     }

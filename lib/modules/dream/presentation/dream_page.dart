@@ -133,6 +133,8 @@ class _DreamPageState extends State<DreamPage> {
                     child: AppTextFormField(
                       controller: _controller,
                       readOnly: _isLoading,
+                      textArea: true,
+                      maxLines: 5,
                       hint: !_isLoading
                           ? 'Descreva seu sonho'
                           : 'Analisando...',
