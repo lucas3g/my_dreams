@@ -20,4 +20,15 @@ class DreamAdapter {
       'image_url': dream.imageUrl.value,
     };
   }
+
+  static DreamEntity toEntity(Map<String, dynamic> map) {
+    return DreamEntity(
+      id: map['id'] as String,
+      userId: map['user_id'] as String,
+      message: map['description'] as String,
+      answer: map['response_ai'] as String,
+      imageUrl: map['image_url'] as String? ?? '',
+      createdAt: DateTime.parse(map['created_at'] as String),
+    );
+  }
 }
