@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:my_dreams/core/domain/entities/either_of.dart';
 import 'package:my_dreams/core/domain/entities/failure.dart';
+import 'package:my_dreams/modules/dream/data/adapters/dream_adapter.dart';
 import 'package:my_dreams/modules/dream/domain/entities/dream_exception.dart';
 
 import '../../domain/entities/dream_entity.dart';
@@ -28,12 +29,12 @@ class DreamRepositoryImpl implements DreamRepository {
       final answer = await _gemini.getMeaning(dreamText);
       //final imageUrl = await _gemini.createImage(answer);
 
-      final dream = DreamEntity(
-        userId: userId,
-        message: dreamText,
-        answer: answer,
-        imageUrl: '',
-      );
+      final dream = DreamAdapter.toEntity({
+        'user_id': userId,
+        'description': dreamText,
+        'response_ai': answer,
+        'image_url': '',
+      });
 
       await _datasource.saveDream(dream);
 
