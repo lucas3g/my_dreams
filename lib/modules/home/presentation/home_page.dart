@@ -120,94 +120,92 @@ class _HomePageState extends State<HomePage> {
     final user = _user;
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(AppThemeConstants.padding),
-          child: Column(
-            children: [
-              if (user != null)
-                Card(
-                  color: context.myTheme.primaryContainer,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      AppThemeConstants.mediumBorderRadius,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(
-                      AppThemeConstants.mediumPadding,
-                    ),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: user.imageUrl.value.isNotEmpty
-                              ? NetworkImage(user.imageUrl.value)
-                                    as ImageProvider
-                              : null,
-                          radius: 22,
-                          child: user.imageUrl.value.isEmpty
-                              ? const Icon(Icons.person)
-                              : null,
-                        ),
-                        const SpacerWidth(),
-                        Expanded(
-                          child: Text(
-                            user.name.value,
-                            style: context.textTheme.bodyLarge,
-                          ),
-                        ),
-                        BlocBuilder<AuthBloc, AuthStates>(
-                          bloc: _authBloc,
-                          builder: (context, state) {
-                            return IconButton(
-                              icon: _handleLogoutIcon(state),
-                              onPressed: state is AuthLoadingState
-                                  ? null
-                                  : _confirmLogout,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+      body: Padding(
+        padding: const EdgeInsets.all(AppThemeConstants.padding),
+        child: Column(
+          children: [
+            if (user != null)
+              Card(
+                color: context.myTheme.primaryContainer,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    AppThemeConstants.mediumBorderRadius,
                   ),
                 ),
-              const SpacerHeight(),
-              Expanded(
-                child: BlocBuilder<DreamBloc, DreamStates>(
-                  bloc: _dreamBloc,
-                  builder: (context, state) {
-                    if (state is DreamLoadingState) {
-                      return const Center(child: AppCircularIndicatorWidget());
-                    }
-                    if (state is DreamListLoadedState) {
-                      if (state.dreamsList.isEmpty) {
-                        return const Center(
-                          child: Text('Nenhum sonho registrado'),
-                        );
-                      }
-                      return ListView.separated(
-                        itemCount: state.dreamsList.length,
-                        separatorBuilder: (_, __) => const SpacerHeight(),
-                        itemBuilder: (context, index) {
-                          final dream = state.dreamsList[index];
-
-                          return InkWell(
-                            onTap: () => Navigator.pushNamed(
-                              context,
-                              NamedRoutes.dreamChat.route,
-                              arguments: dream,
-                            ),
-                            child: DreamCardWidget(dream: dream),
+                child: Padding(
+                  padding: const EdgeInsets.all(
+                    AppThemeConstants.mediumPadding,
+                  ),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: user.imageUrl.value.isNotEmpty
+                            ? NetworkImage(user.imageUrl.value) as ImageProvider
+                            : null,
+                        radius: 22,
+                        child: user.imageUrl.value.isEmpty
+                            ? const Icon(Icons.person)
+                            : null,
+                      ),
+                      const SpacerWidth(),
+                      Expanded(
+                        child: Text(
+                          user.name.value,
+                          style: context.textTheme.bodyLarge,
+                        ),
+                      ),
+                      BlocBuilder<AuthBloc, AuthStates>(
+                        bloc: _authBloc,
+                        builder: (context, state) {
+                          return IconButton(
+                            icon: _handleLogoutIcon(state),
+                            onPressed: state is AuthLoadingState
+                                ? null
+                                : _confirmLogout,
                           );
                         },
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            const SpacerHeight(),
+            Expanded(
+              child: BlocBuilder<DreamBloc, DreamStates>(
+                bloc: _dreamBloc,
+                builder: (context, state) {
+                  if (state is DreamLoadingState) {
+                    return const Center(child: AppCircularIndicatorWidget());
+                  }
+                  if (state is DreamListLoadedState) {
+                    if (state.dreamsList.isEmpty) {
+                      return const Center(
+                        child: Text('Nenhum sonho registrado'),
+                      );
+                    }
+                    return ListView.separated(
+                      padding: const EdgeInsets.only(bottom: 120),
+                      itemCount: state.dreamsList.length,
+                      separatorBuilder: (_, __) => const SpacerHeight(),
+                      itemBuilder: (context, index) {
+                        final dream = state.dreamsList[index];
+
+                        return InkWell(
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            NamedRoutes.dreamChat.route,
+                            arguments: dream,
+                          ),
+                          child: DreamCardWidget(dream: dream),
+                        );
+                      },
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(

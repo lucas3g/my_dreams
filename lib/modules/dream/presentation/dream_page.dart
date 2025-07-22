@@ -85,74 +85,78 @@ class _DreamPageState extends State<DreamPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Novo Sonho')),
-      body: Padding(
-        padding: const EdgeInsets.all(AppThemeConstants.padding),
-        child: Column(
-          children: [
-            Expanded(
-              child: BlocListener<DreamBloc, DreamStates>(
-                bloc: _bloc,
-                listener: (context, state) {
-                  if (state is DreamLoadingState) {
-                    setState(() => _isLoading = true);
-                  } else if (state is DreamAnalyzedState) {
-                    setState(() => _isLoading = false);
-                    _startTypingAnimation(
-                      state.dream.answer.value,
-                      state.imageUrl,
-                    );
-                  } else if (state is DreamFailureState) {
-                    setState(() => _isLoading = false);
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(state.message)));
-                  }
-                },
-                child: ListView.builder(
-                  controller: _scrollController,
-                  itemCount: _messages.length,
-                  itemBuilder: (context, index) {
-                    final message = _messages[index];
-                    return ChatMessageWidget(message: message);
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Novo Sonho')),
+        body: Padding(
+          padding: const EdgeInsets.all(AppThemeConstants.padding),
+          child: Column(
+            children: [
+              Expanded(
+                child: BlocListener<DreamBloc, DreamStates>(
+                  bloc: _bloc,
+                  listener: (context, state) {
+                    if (state is DreamLoadingState) {
+                      setState(() => _isLoading = true);
+                    } else if (state is DreamAnalyzedState) {
+                      setState(() => _isLoading = false);
+                      _startTypingAnimation(
+                        state.dream.answer.value,
+                        state.imageUrl,
+                      );
+                    } else if (state is DreamFailureState) {
+                      setState(() => _isLoading = false);
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(state.message)));
+                    }
                   },
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: context.myTheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(
-                        AppThemeConstants.mediumBorderRadius,
-                      ),
-                    ),
-                    child: AppTextFormField(
-                      controller: _controller,
-                      readOnly: _isLoading,
-                      textArea: true,
-                      maxLines: 5,
-                      hint: !_isLoading
-                          ? 'Descreva seu sonho'
-                          : 'Analisando...',
-                      suffixIcon: !_isLoading
-                          ? IconButton(
-                              icon: const Icon(Icons.send),
-                              onPressed: _sendDream,
-                            )
-                          : Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [AppCircularIndicatorWidget(size: 20)],
-                            ),
-                    ),
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      final message = _messages[index];
+                      return ChatMessageWidget(message: message);
+                    },
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: context.myTheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(
+                          AppThemeConstants.mediumBorderRadius,
+                        ),
+                      ),
+                      child: AppTextFormField(
+                        controller: _controller,
+                        readOnly: _isLoading,
+                        textArea: true,
+                        hint: !_isLoading
+                            ? 'Descreva seu sonho'
+                            : 'Analisando...',
+                        suffixIcon: !_isLoading
+                            ? IconButton(
+                                icon: const Icon(Icons.send),
+                                onPressed: _sendDream,
+                              )
+                            : Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  AppCircularIndicatorWidget(size: 20),
+                                ],
+                              ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

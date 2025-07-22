@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
@@ -14,8 +15,13 @@ class ChatMessage {
 
 class ChatMessageWidget extends StatelessWidget {
   final ChatMessage message;
+  final bool showAvatar;
 
-  const ChatMessageWidget({super.key, required this.message});
+  const ChatMessageWidget({
+    super.key,
+    required this.message,
+    this.showAvatar = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +49,7 @@ class ChatMessageWidget extends StatelessWidget {
 
     final baseStyle =
         context.textTheme.bodyLarge?.copyWith(color: textColor) ??
-            TextStyle(color: textColor);
+        TextStyle(color: textColor);
     final boldStyle = baseStyle.copyWith(fontWeight: FontWeight.bold);
 
     final content = Container(
@@ -85,10 +91,10 @@ class ChatMessageWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!isUser) avatar,
-        const SizedBox(width: 10),
+        if (showAvatar) const SizedBox(width: 10),
         Flexible(child: content),
-        const SizedBox(width: 10),
-        if (isUser) avatar,
+        if (showAvatar) const SizedBox(width: 10),
+        if (isUser && showAvatar) avatar,
       ],
     );
   }

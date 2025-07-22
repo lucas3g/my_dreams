@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_dreams/modules/auth/presentation/auth_page.dart';
-import 'package:my_dreams/modules/splash/presentation/splash_page.dart';
-import 'package:my_dreams/modules/home/presentation/home_page.dart';
-import 'package:my_dreams/modules/dream/presentation/dream_page.dart';
-import 'package:my_dreams/modules/dream/presentation/dream_chat_page.dart';
 import 'package:my_dreams/modules/dream/domain/entities/dream_entity.dart';
+import 'package:my_dreams/modules/dream/presentation/dream_chat_page.dart';
+import 'package:my_dreams/modules/dream/presentation/dream_page.dart';
+import 'package:my_dreams/modules/home/presentation/home_page.dart';
+import 'package:my_dreams/modules/splash/presentation/splash_page.dart';
 
 import '../domain/entities/named_routes.dart';
 import 'domain/entities/custom_transition.dart';
@@ -40,7 +40,7 @@ class CustomNavigator {
               Animation<double> animation,
               Animation<double> secondaryAnimation,
             ) {
-              return builder(context);
+              return builder!(context);
             },
         customTransition: customTransition,
         settings: settings,

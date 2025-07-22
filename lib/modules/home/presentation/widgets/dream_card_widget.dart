@@ -48,6 +48,7 @@ class DreamCardWidget extends StatelessWidget {
             ],
             ChatMessageWidget(
               message: ChatMessage(text: dream.message.value, isUser: true),
+              showAvatar: false,
             ),
           ],
         ),
