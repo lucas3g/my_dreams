@@ -29,7 +29,7 @@ class DreamRepositoryImpl implements DreamRepository {
       //final imageUrl = await _gemini.createImage(answer);
 
       final dream = DreamEntity(
-        id: 0,
+        id: '',
         userId: userId,
         message: dreamText,
         answer: answer,
