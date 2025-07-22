@@ -24,18 +24,16 @@ class DreamCardWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ChatMessageWidget(
-              message: ChatMessage(
-                text: dream.message.value,
-                isUser: true,
-              ),
+              message: ChatMessage(text: dream.message.value, isUser: true),
             ),
             const SizedBox(height: 8),
             ChatMessageWidget(
               message: ChatMessage(
                 text: dream.answer.value,
                 isUser: false,
-                imageUrl:
-                    dream.imageUrl.value.isNotEmpty ? dream.imageUrl.value : null,
+                imageUrl: dream.imageUrl.value.isNotEmpty
+                    ? dream.imageUrl.value
+                    : null,
               ),
             ),
           ],
