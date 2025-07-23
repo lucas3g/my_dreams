@@ -17,7 +17,7 @@ class ChatAiDatasourceImpl implements ChatAiDatasource {
 
     if (message.contains('Gerar uma carta de Taro')) {
       message =
-          'Gerar uma carta de Taro, gere de 3 a 5 cartas e exiba "Carta 1: [título] - [descrição], Carta 2: [título] - [descrição], ...".';
+          'Gerar uma carta de Taro, gere de 3 a 5 cartas e exiba "Carta 1: [título], Carta 2: [título], ...". e peça para o usuario escolher uma carta e explique o significado dela.';
     }
 
     final data = {
