@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable
-class AdsService {
+@singleton
+class AdsService extends ChangeNotifier {
   BannerAd? topBanner;
   BannerAd? bottomBanner;
   InterstitialAd? _interstitial;
@@ -14,6 +15,8 @@ class AdsService {
   }
 
   Future<void> _loadBanners() async {
+    topBanner?.dispose();
+    bottomBanner?.dispose();
     topBanner = BannerAd(
       size: AdSize.banner,
       adUnitId: 'ca-app-pub-1898798427054986/9646986739',
@@ -31,6 +34,7 @@ class AdsService {
     );
 
     await bottomBanner?.load();
+    notifyListeners();
   }
 
   Future<void> loadInterstitial() async {
@@ -38,7 +42,10 @@ class AdsService {
       adUnitId: 'ca-app-pub-1898798427054986/1528823562',
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) => _interstitial = ad,
+        onAdLoaded: (ad) {
+          _interstitial = ad;
+          notifyListeners();
+        },
         onAdFailedToLoad: (error) => _interstitial = null,
       ),
     );

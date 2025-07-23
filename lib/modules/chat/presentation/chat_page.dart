@@ -39,12 +39,17 @@ class _ChatPageState extends State<ChatPage> {
       getIt<ParseTarotMessageUseCase>();
   final AdsService _adsService = getIt<AdsService>();
   final PurchaseService _purchase = getIt<PurchaseService>();
+  void _update() {
+    if (mounted) setState(() {});
+  }
   bool _isLoading = false;
   String? _currentConversationId;
 
   @override
   void initState() {
     super.initState();
+    _adsService.addListener(_update);
+    _purchase.addListener(_update);
     _currentConversationId = widget.conversationId;
     if (_currentConversationId != null) {
       _bloc.add(LoadMessagesEvent(conversationId: _currentConversationId!));
@@ -53,6 +58,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void dispose() {
+    _adsService.removeListener(_update);
+    _purchase.removeListener(_update);
     _controller.dispose();
     _scrollController.dispose();
     _bloc.close();
