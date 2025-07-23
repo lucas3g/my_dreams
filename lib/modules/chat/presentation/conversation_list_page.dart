@@ -19,9 +19,11 @@ import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
+import 'package:my_dreams/shared/utils/formatters.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../home/presentation/widgets/conversation_card_widget.dart';
+import '../domain/entities/conversation_entity.dart';
 import 'controller/chat_bloc.dart';
 import 'controller/chat_events.dart';
 import 'controller/chat_states.dart';
@@ -115,6 +117,14 @@ class _HomePageState extends State<HomePage> {
     if (logout == true) {
       _authBloc.add(LogoutAccountEvent());
     }
+  }
+
+  bool _canCreateConversation(List<ConversationEntity> list) {
+    final int limit = _purchase.isPremium ? 5 : 1;
+    final now = DateTime.now();
+    final todayCount = list.where((conv) =>
+        conv.createdAt.value.isSameDate(now)).length;
+    return todayCount < limit;
   }
 
   Widget _handleLogoutIcon(AuthStates state) {
@@ -242,23 +252,37 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          if (!_purchase.isPremium) {
-            await _adsService.showInterstitial();
-          }
+      floatingActionButton: BlocBuilder<ChatBloc, ChatStates>(
+        bloc: _chatBloc,
+        builder: (context, state) {
+          final conversations = state is ChatLoadedConversationsState
+              ? state.conversationsList
+              : <ConversationEntity>[];
+          final canCreate = _canCreateConversation(conversations);
 
-          if (!mounted) return;
+          return FloatingActionButton.extended(
+            onPressed: canCreate
+                ? () async {
+                    if (!_purchase.isPremium) {
+                      await _adsService.showInterstitial();
+                    }
 
-          await Navigator.pushNamed(
-            context,
-            NamedRoutes.conversationChat.route,
+                    if (!mounted) return;
+
+                    await Navigator.pushNamed(
+                      context,
+                      NamedRoutes.conversationChat.route,
+                    );
+
+                    _chatBloc.add(
+                      LoadConversationsEvent(userId: user!.id.value),
+                    );
+                  }
+                : null,
+            label: Text(translate('conversation.new')),
+            icon: const Icon(Icons.add),
           );
-
-          _chatBloc.add(LoadConversationsEvent(userId: user!.id.value));
         },
-        label: Text(translate('conversation.new')),
-        icon: const Icon(Icons.add),
       ),
     );
   }
