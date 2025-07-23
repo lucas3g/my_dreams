@@ -122,8 +122,9 @@ class _HomePageState extends State<HomePage> {
   bool _canCreateConversation(List<ConversationEntity> list) {
     final int limit = _purchase.isPremium ? 5 : 1;
     final now = DateTime.now();
-    final todayCount = list.where((conv) =>
-        conv.createdAt.value.isSameDate(now)).length;
+    final todayCount = list
+        .where((conv) => conv.createdAt.value.isSameDate(now))
+        .length;
     return todayCount < limit;
   }
 
@@ -150,11 +151,14 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(AppThemeConstants.padding),
           child: Column(
             children: [
-              if (!_purchase.isPremium && _adsService.topBanner != null)
+              if (!_purchase.isPremium && _adsService.topBanner != null) ...[
                 SizedBox(
                   height: _adsService.topBanner!.size.height.toDouble(),
                   child: AdWidget(ad: _adsService.topBanner!),
                 ),
+                SizedBox(height: 10),
+              ],
+
               if (user != null)
                 Card(
                   color: context.myTheme.primaryContainer,
