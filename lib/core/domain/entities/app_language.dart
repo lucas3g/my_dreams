@@ -15,7 +15,7 @@ enum AppLanguage {
       case 'en_US':
         return AppLanguage.english;
       default:
-        return AppLanguage.portuguese;
+        return AppLanguage.english;
     }
   }
 }
