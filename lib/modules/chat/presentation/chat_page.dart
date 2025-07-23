@@ -8,6 +8,9 @@ import 'package:my_dreams/shared/components/app_snackbar.dart';
 import 'package:my_dreams/shared/components/custom_button.dart';
 import 'package:my_dreams/shared/components/text_form_field.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:my_dreams/shared/services/ads_service.dart';
+import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../dream/presentation/widgets/chat_message_widget.dart';
@@ -35,6 +38,8 @@ class _ChatPageState extends State<ChatPage> {
   final List<ChatMessage> _messages = [];
   final ParseTarotMessageUseCase _parseTarot =
       getIt<ParseTarotMessageUseCase>();
+  final AdsService _adsService = getIt<AdsService>();
+  final PurchaseService _purchase = getIt<PurchaseService>();
   bool _isLoading = false;
   String? _currentConversationId;
 
@@ -67,11 +72,28 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
-  void _sendMessage() {
+  Future<void> _sendMessage() async {
     context.closeKeyboard();
     final user = AppGlobal.instance.user;
     final text = _controller.text.trim();
     if (user == null || text.isEmpty) return;
+
+    final int limit = _purchase.isPremium ? 5 : 1;
+    final int sent = _messages.where((m) => m.isUser).length;
+    if (sent >= limit) {
+      showAppSnackbar(
+        context,
+        title: 'Limite atingido',
+        message: 'Sua assinatura permite enviar apenas $limit mensagem(s).',
+        type: TypeSnack.error,
+      );
+      return;
+    }
+
+    if (!_purchase.isPremium) {
+      await _adsService.showInterstitial();
+    }
+
     setState(() {
       _messages.add(ChatMessage(text: text, isUser: true));
       _isLoading = true;

@@ -16,6 +16,9 @@ import 'package:my_dreams/shared/components/spacer_height_widget.dart';
 import 'package:my_dreams/shared/components/spacer_width.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:my_dreams/shared/services/ads_service.dart';
+import 'package:my_dreams/shared/services/purchase_service.dart';
 
 import '../../home/presentation/widgets/conversation_card_widget.dart';
 import 'controller/chat_bloc.dart';
@@ -32,6 +35,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final AuthBloc _authBloc = getIt<AuthBloc>();
   final ChatBloc _chatBloc = getIt<ChatBloc>();
+  final AdsService _adsService = getIt<AdsService>();
+  final PurchaseService _purchase = getIt<PurchaseService>();
 
   StreamSubscription<AuthStates>? _authSubscription;
 
@@ -127,6 +132,11 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(AppThemeConstants.padding),
           child: Column(
             children: [
+              if (!_purchase.isPremium && _adsService.topBanner != null)
+                SizedBox(
+                  height: _adsService.topBanner!.size.height.toDouble(),
+                  child: AdWidget(ad: _adsService.topBanner!),
+                ),
               if (user != null)
                 Card(
                   color: context.myTheme.primaryContainer,
@@ -215,12 +225,20 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
+              if (!_purchase.isPremium && _adsService.bottomBanner != null)
+                SizedBox(
+                  height: _adsService.bottomBanner!.size.height.toDouble(),
+                  child: AdWidget(ad: _adsService.bottomBanner!),
+                ),
             ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
+          if (!_purchase.isPremium) {
+            await _adsService.showInterstitial();
+          }
           await Navigator.pushNamed(
             context,
             NamedRoutes.conversationChat.route,
