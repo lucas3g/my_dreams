@@ -91,13 +91,13 @@ class _ChatPageState extends State<ChatPage> {
     final user = AppGlobal.instance.user;
     if (user == null) return;
     setState(() {
-      _messages.add(ChatMessage(text: 'Gerar cartas de Taro', isUser: true));
+      _messages.add(ChatMessage(text: 'Gerar cartas de Tarô', isUser: true));
       _isLoading = true;
     });
     _scrollToBottom();
     _bloc.add(
       SendMessageEvent(
-        content: 'Gerar cartas de Taro',
+        content: 'Gerar cartas de Tarô',
         conversationId: _currentConversationId,
         userId: user.id.value,
       ),
@@ -196,20 +196,20 @@ class _ChatPageState extends State<ChatPage> {
                         }
 
                         final hasTaro = _messages.any(
-                          (msg) => msg.text.contains('Gerar uma carta de Taro'),
+                          (msg) => msg.text.contains('Gerar cartas de Tarô'),
                         );
 
                         if (!hasTaro) {
                           return Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               widget,
                               AppCustomButton(
                                 backgroundColor:
                                     context.myTheme.primaryContainer,
                                 onPressed: _sendTarotMessage,
-                                label: const Text('Gerar uma carta de Taro'),
+                                label: const Text('Gerar cartas de Tarô'),
                               ),
                               const SizedBox(height: 8),
                             ],

@@ -15,9 +15,9 @@ class ChatAiDatasourceImpl implements ChatAiDatasource {
         ? 'Resumo do contexto da conversa: $summary\nUsu\u00E1rio: $prompt'
         : 'Fale o significado do meu sonho, fa\u00E7a um pequeno resumo: $prompt';
 
-    if (message.contains('Gerar uma carta de Taro')) {
+    if (message.contains('Gerar cartas de Tarô')) {
       message =
-          'Gerar uma carta de Taro, gere de 3 a 5 cartas e exiba "Carta 1: [título], Carta 2: [título], ...". e peça para o usuario escolher uma carta e explique o significado dela, mas de somente o significado e termine a conversa.';
+          'Gerar cartas de Tarô, gere de 3 a 5 cartas e exiba "Carta 1: [título], Carta 2: [título], ...". e peça para o usuario escolher uma carta e explique o significado dela, mas de somente o significado e termine a conversa.';
     }
 
     final data = {
