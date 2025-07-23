@@ -10,14 +10,13 @@ import 'package:my_dreams/shared/components/text_form_field.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
-import '../domain/usecases/parse_tarot_message.dart';
-import '../domain/entities/tarot_card_entity.dart';
-import 'widgets/tarot_options_widget.dart';
-
 import '../../dream/presentation/widgets/chat_message_widget.dart';
+import '../domain/entities/tarot_card_entity.dart';
+import '../domain/usecases/parse_tarot_message.dart';
 import 'controller/chat_bloc.dart';
 import 'controller/chat_events.dart';
 import 'controller/chat_states.dart';
+import 'widgets/tarot_options_widget.dart';
 import 'widgets/thinking_message_widget.dart';
 
 class ChatPage extends StatefulWidget {
@@ -34,7 +33,8 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final List<ChatMessage> _messages = [];
-  final ParseTarotMessageUseCase _parseTarot = ParseTarotMessageUseCase();
+  final ParseTarotMessageUseCase _parseTarot =
+      getIt<ParseTarotMessageUseCase>();
   bool _isLoading = false;
   String? _currentConversationId;
 
@@ -196,8 +196,7 @@ class _ChatPageState extends State<ChatPage> {
                         }
 
                         final hasTaro = _messages.any(
-                          (msg) =>
-                              msg.text.contains('Gerar uma carta de Taro'),
+                          (msg) => msg.text.contains('Gerar uma carta de Taro'),
                         );
 
                         if (!hasTaro) {
@@ -210,8 +209,7 @@ class _ChatPageState extends State<ChatPage> {
                                 backgroundColor:
                                     context.myTheme.primaryContainer,
                                 onPressed: _sendTarotMessage,
-                                label:
-                                    const Text('Gerar uma carta de Taro'),
+                                label: const Text('Gerar uma carta de Taro'),
                               ),
                               const SizedBox(height: 8),
                             ],

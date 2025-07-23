@@ -33,6 +33,7 @@ import '../../modules/chat/data/repositories/chat_repository_impl.dart'
 import '../../modules/chat/domain/repositories/chat_repository.dart' as _i165;
 import '../../modules/chat/domain/usecases/get_conversations.dart' as _i134;
 import '../../modules/chat/domain/usecases/get_messages.dart' as _i312;
+import '../../modules/chat/domain/usecases/parse_tarot_message.dart' as _i841;
 import '../../modules/chat/domain/usecases/send_message.dart' as _i864;
 import '../../modules/chat/presentation/controller/chat_bloc.dart' as _i307;
 import '../../modules/dream/data/datasources/dream_datasource.dart' as _i735;
@@ -63,6 +64,9 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
     gh.factory<_i361.Dio>(() => registerModule.dio);
+    gh.factory<_i841.ParseTarotMessageUseCase>(
+      () => _i841.ParseTarotMessageUseCase(),
+    );
     gh.singleton<_i86.ISupabaseClient>(() => _i788.SupabaseClientImpl());
     gh.factory<_i824.ILocalStorage>(() => _i755.SharedPreferencesService());
     gh.factory<_i123.GeminiClient>(

@@ -1,5 +1,7 @@
+import 'package:injectable/injectable.dart';
 import 'package:my_dreams/modules/chat/domain/entities/tarot_card_entity.dart';
 
+@injectable
 class ParseTarotMessageUseCase {
   List<TarotCardEntity> call(String text) {
     final regex = RegExp(
