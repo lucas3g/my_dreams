@@ -23,6 +23,15 @@ import '../../modules/auth/domain/usecases/login_with_google_account.dart'
     as _i854;
 import '../../modules/auth/domain/usecases/logout_account.dart' as _i720;
 import '../../modules/auth/presentation/controller/auth_bloc.dart' as _i311;
+import '../../modules/chat/data/datasources/chat_datasource.dart' as _i335;
+import '../../modules/chat/data/datasources/chat_datasource_impl.dart' as _i209;
+import '../../modules/chat/data/repositories/chat_repository_impl.dart'
+    as _i696;
+import '../../modules/chat/domain/repositories/chat_repository.dart' as _i165;
+import '../../modules/chat/domain/usecases/get_conversations.dart' as _i134;
+import '../../modules/chat/domain/usecases/get_messages.dart' as _i312;
+import '../../modules/chat/domain/usecases/send_message.dart' as _i864;
+import '../../modules/chat/presentation/controller/chat_bloc.dart' as _i307;
 import '../../modules/dream/data/datasources/dream_datasource.dart' as _i735;
 import '../../modules/dream/data/datasources/dream_datasource_impl.dart'
     as _i866;
@@ -80,6 +89,10 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i275.AuthDatasourceImpl(supabaseClient: gh<_i86.ISupabaseClient>()),
     );
+    gh.factory<_i335.ChatDatasource>(
+      () =>
+          _i209.ChatDatasourceImpl(supabaseClient: gh<_i86.ISupabaseClient>()),
+    );
     gh.factory<_i357.AnalyzeDreamUseCase>(
       () => _i357.AnalyzeDreamUseCase(
         dreamRepository: gh<_i563.DreamRepository>(),
@@ -99,6 +112,9 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i817.AuthRepositoryImpl(authDatasource: gh<_i655.AuthDatasource>()),
     );
+    gh.factory<_i165.ChatRepository>(
+      () => _i696.ChatRepositoryImpl(datasource: gh<_i335.ChatDatasource>()),
+    );
     gh.factory<_i51.AutoLoginUseCase>(
       () => _i51.AutoLoginUseCase(authRepository: gh<_i779.AuthRepository>()),
     );
@@ -110,6 +126,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i720.LogoutAccountUsecase>(
       () => _i720.LogoutAccountUsecase(
         authRepository: gh<_i779.AuthRepository>(),
+      ),
+    );
+    gh.factory<_i134.GetConversationsUseCase>(
+      () =>
+          _i134.GetConversationsUseCase(repository: gh<_i165.ChatRepository>()),
+    );
+    gh.factory<_i312.GetMessagesUseCase>(
+      () => _i312.GetMessagesUseCase(repository: gh<_i165.ChatRepository>()),
+    );
+    gh.factory<_i864.SendMessageUseCase>(
+      () => _i864.SendMessageUseCase(repository: gh<_i165.ChatRepository>()),
+    );
+    gh.factory<_i307.ChatBloc>(
+      () => _i307.ChatBloc(
+        getConversationsUseCase: gh<_i134.GetConversationsUseCase>(),
+        getMessagesUseCase: gh<_i312.GetMessagesUseCase>(),
+        sendMessageUseCase: gh<_i864.SendMessageUseCase>(),
       ),
     );
     gh.factory<_i311.AuthBloc>(

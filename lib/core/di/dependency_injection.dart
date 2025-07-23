@@ -7,15 +7,6 @@ import 'package:my_dreams/core/di/dependency_injection.config.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/usecase.dart';
 import 'package:my_dreams/modules/auth/domain/usecases/auto_login.dart';
-import 'package:my_dreams/core/data/clients/supabase/supabase_client_interface.dart';
-import 'package:my_dreams/modules/chat/data/datasources/chat_datasource.dart';
-import 'package:my_dreams/modules/chat/data/datasources/chat_datasource_impl.dart';
-import 'package:my_dreams/modules/chat/data/repositories/chat_repository_impl.dart';
-import 'package:my_dreams/modules/chat/domain/repositories/chat_repository.dart';
-import 'package:my_dreams/modules/chat/domain/usecases/get_conversations.dart';
-import 'package:my_dreams/modules/chat/domain/usecases/get_messages.dart';
-import 'package:my_dreams/modules/chat/domain/usecases/send_message.dart';
-import 'package:my_dreams/modules/chat/presentation/controller/chat_bloc.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -28,24 +19,6 @@ Future<void> configureDependencies() async {
   _initAppGlobal();
 
   getIt.init();
-
-  // Manual registration for chat module
-  getIt
-    ..registerFactory<ChatDatasource>(
-        () => ChatDatasourceImpl(supabaseClient: getIt<ISupabaseClient>()))
-    ..registerFactory<ChatRepository>(
-        () => ChatRepositoryImpl(datasource: getIt<ChatDatasource>()))
-    ..registerFactory<GetConversationsUseCase>(
-        () => GetConversationsUseCase(repository: getIt<ChatRepository>()))
-    ..registerFactory<GetMessagesUseCase>(
-        () => GetMessagesUseCase(repository: getIt<ChatRepository>()))
-    ..registerFactory<SendMessageUseCase>(
-        () => SendMessageUseCase(repository: getIt<ChatRepository>()))
-    ..registerFactory<ChatBloc>(() => ChatBloc(
-          getConversationsUseCase: getIt<GetConversationsUseCase>(),
-          getMessagesUseCase: getIt<GetMessagesUseCase>(),
-          sendMessageUseCase: getIt<SendMessageUseCase>(),
-        ));
 
   await _tryAutoLogin();
 }
