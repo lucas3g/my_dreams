@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:my_dreams/core/domain/entities/app_language.dart';
 import 'package:my_dreams/core/domain/entities/named_routes.dart';
 import 'package:my_dreams/core/routes/app_routes.dart';
 import 'package:my_dreams/core/routes/domain/entities/custom_transition.dart';
@@ -24,9 +25,11 @@ class _AppWidgetState extends State<AppWidget> {
       darkTheme: darkThemeApp,
       themeMode: ThemeMode.dark,
       initialRoute: NamedRoutes.splash.route,
-      supportedLocales: const <Locale>[Locale('pt', 'BR')],
-      locale: const Locale('pt', 'BR'),
-      localizationsDelegates: const <LocalizationsDelegate>[
+      supportedLocales: <Locale>[
+        AppLanguage.portuguese.locale,
+        AppLanguage.english.locale,
+      ],
+      localizationsDelegates: const <LocalizationsDelegate<Object>>[
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

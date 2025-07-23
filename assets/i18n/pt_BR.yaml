@@ -1,0 +1,305 @@
+common:
+  edit: Editar
+  delete: Excluir
+  cancel: Cancelar
+  save: Salvar
+  pricemy: Pricemy
+  close: Fechar
+
+pricemy:
+  slogan:
+    time: CRONOMETRE
+    manage: GERENCIE
+    conquer: CONQUISTE
+
+http:
+  error:
+    genericMessage: Erro no servidor
+    connectionError: Erro de conexão. Verifique sua internet
+    serverError: Erro no servidor
+
+server:
+  noValidToken: Token inválido
+  noValidCredentials: Credenciais inválidas
+  loginError: Erro ao entrar
+  invalidToken: Token inválido
+  blockedUser: Usuário bloqueado
+  expiredToken: Token expirado
+  generalAuthError: Erro de autenticação
+  upsertError: Erro ao salvar
+  userInfoHasNotProvided: Informações do usuário não fornecidas
+  noUserData: Não foi possível obter os dados do usuário
+  invalidInput: Entrada inválida
+  deleteError: Erro ao deletar
+  listError: Erro ao listar
+  notFound: Não encontrado
+  getError: Erro ao carregar
+
+token:
+  error:
+    invalidToken: Token inválido
+
+auth:
+  error:
+    invalidCredentials: Credenciais inválidas
+    noUserData: Não foi possível obter os dados do usuário
+    message: Erro ao autenticar usuário
+    invalidEmail: Email inválido
+    emailAlreadyInUse: Email já está em uso
+    invalidPassword: Credenciais inválidas
+    userNotFound: Usuário não encontrado
+    loginFailed: Falha ao entrar
+    logoutFailed: Falha ao sair
+    registerFailed: Falha ao registrar
+    emailNotVerified: Email não verificado
+    autoLoginFailed: Erro ao entrar automaticamente
+
+  success:
+    registered: Registrado com sucesso
+    verifyEmail: Verifique seu email
+
+  screen:
+    forgotPassword: Esqueci minha senha
+    emailSentMessage: Se o email informado corresponder a um usuário existente, estaremos enviando um email com instruções para recuperar sua conta
+    resendActivationEmail: Reenviar email de ativação
+    byUsingPricemy: Ao usar o Pricemy, você concorda com nossos
+    terms: Termos de uso
+
+payments:
+  error:
+    cacheFailed: Falha ao armazenar pagamentos localmente
+    deleteFailed: Falha ao deletar pagamento
+    upsertLocalFailure: Falha ao armazenar pagamento localmente
+    getFromProjectFailed: Falha ao recuperar pagamentos do projeto
+    getUnsyncedFailed: Falha ao recuperar pagamentos não sincronizados
+    remoteDeleteFailed: Falha ao deletar pagamento no servidor
+    remoteUpsertFailed: Falha ao salvar pagamento no servidor
+    remoteGetFailed: Falha ao recuperar pagamentos do servidor
+    syncFailed: Falha ao sincronizar pagamentos
+    upsertFailed: Falha ao enviar dados do pagamento
+    getFailed: Falha ao coletar pagamentos
+    invalidValue: Valor inválido
+    invalidDate: Data inválida
+
+  screen:
+    value: Valor
+    valueHint: R$ 1.000,00
+    date: Data
+    dateHint: Ex.01/01/2020
+    deletePayment: Excluir pagamento
+    deletePaymentConfirmationText: Tem certeza que deseja excluir este pagamento?
+    historicalPayments: Histórico
+    noPayments: Ainda não há pagamentos
+    addPayment: Adicionar pagamento
+
+projects:
+
+  error:
+    cacheProjectsFailed: Erro ao carregar projetos
+    getProjectsFailed: Erro ao carregar projetos
+    upsertProjectFailed: Erro ao salvar projeto
+    getUnsyncProjectsFailed: Erro ao carregar projetos não sincronizados
+    deleteProjectFailed: Erro ao excluir projeto
+    synchronizeProjectsFailed: Erro ao sincronizar projetos com o servidor
+    dateEndAfterBegin: Data final deve ser maior que a inicial
+    dateBeginMustBeBeforeToday: Data inicial deve ser anterior à atual
+
+  screen:
+    actives: ATIVOS
+    yourProjects: Seus projetos
+    empty: Ainda não há projetos
+    newProject: Novo projeto
+    updateProject: Atualizar projeto
+    hoursWorked: Horas trabalhadas
+    remainingPayment: Valor a receber
+    reimbursedPayment: Valor a ressarcir
+    hourValue: Valor/hora
+    taskDescription: Tarefa
+    total: Total
+    deleteProject: Excluir projeto
+    deleteProjectWarning: Tem certeza que deseja excluir este projeto?
+    deleteYes: Sim, excluir
+    deleteNo: Não, cancelar
+    working: Trabalhando
+    deleteTaskConfirmationText: Tem certeza que deseja excluir esta tarefa?
+
+    popUpMenuItens:
+      addTask: Adicionar Tarefa
+      managePayments: Gerenciar Pagamentos
+      editProject: Editar Projeto
+
+register:
+  error:
+    initRegister: Erro ao iniciar registro
+    updateRegister: Erro ao atualizar registro
+    resendActivationInstructions: Erro ao reenviar instruções de ativação
+    sendRecoverPasswordInstructions: Erro ao enviar instruções de recuperação de senha
+
+validation:
+  double:
+    invalidFormat: formato inválido
+
+  date:
+    invalidFormat: formato inválido
+
+  id:
+    empty: Não pode ser vazio
+
+  int:
+    invalidFormat: formato inválido
+
+  password:
+    empty: Não pode ser vazio
+    tooShort: muito curta (mínimo de 6 caracteres)
+
+  text:
+    empty: Não pode ser vazio
+
+  failure:
+    notFound: Não foram encontradas falhas
+
+  bool:
+    invalidFormat: Valor booleano em formato inválido
+
+inputs:
+
+  value:
+    hint: Ex.R$ 1.000,00
+    error: Valor inválido
+
+  date:
+    hint: Ex.31/12/2020
+    error: Data inválida
+
+  formatters:
+    date:
+      dayMonthYearInputMask: '##/##/####'
+      dayMonthYear: 'dd/MM/yyyy'
+      monthName: 'MMMM'
+      monthYear: 'MMMM/yyyy'
+      hourMinutes: 'HH:mm'
+      monthDay: 'dd/MM'
+      abbrMonthName: 'MMM'
+      abbrWeekDay: 'EEE'
+
+  tasks:
+    chargeTask: Cobrar Tarefa
+
+    hourValue:
+      title: Valor/Hora
+      hint: Informe o valor da hora trabalhada
+
+    dateBegin: Data de início
+    dateEnd: Data fim
+    standartValue: Valor padrão
+    
+    description:
+      title: Descrição (opcional)
+      hint: Descreva a tarefa
+  
+  email:
+    label: Email
+    hint: Informe seu email
+    error:
+      required: Email é obrigatório
+      invalidFormat: Email em formato inválido
+
+  password:
+    label: Senha
+    hint: Informe sua senha
+    dontMatch: Senhas não conferem
+
+  name:
+    label: Nome
+    hint: Informe seu nome
+
+  confirmPassword:
+    label: Confirmar senha
+    hint: Insira novamente sua senha
+
+  projects:
+    title:
+      title: Título do projeto
+      hint: Projeto Pricemy
+
+    hourValue:
+      title: Valor/Hora
+      hint: Informe o valor da hora trabalhada
+
+    dateBegin:
+      title: Data de início
+
+    dateEnd:
+      title: Data fim
+
+buttons:
+  continue:
+    label: Continuar
+
+  enter:
+    label: Entrar
+
+  back:
+    label: Voltar
+
+  signUp:
+    label: Crie uma conta
+
+  projects:
+    create: Criar
+    update: Atualizar
+
+  tasks:
+    save: Salvar
+
+  register:
+    update: Atualizar
+    deleteAccount: Excluir conta
+
+profile:
+  screen:
+    title: Perfil
+    logout: Desconectar conta
+    chooseLanguage: Escolha o idioma
+    version: Versão
+
+tasks:
+  error:
+    upsertFailed: Falha ao enviar dados da tarefa
+    getFailed: Falha ao coletar tarefas
+    deleteFailed: Falha ao deletar tarefa
+    cacheFailed: Falha ao armazenar as tarefas localmente
+    upsertLocalFailure: Falha ao armazenar tarefa localmente
+    deleteTask: Falha ao deletar tarefa
+    getFromProject: Falha ao recuperar tarefas do projeto
+    start: Falha ao iniciar uma tarefa
+    stop: Falha ao interromper a tarefa
+    alreadyStarted: Já existe uma tarefa iniciada
+    noStartedTask: Sem tarefas iniciadas
+    getRunning: Falha ao recuperar tarefa em execução
+    getUnsynced: Falha ao recuperar tarefas não sincronizadas
+    getUnsyncedDeleted: Falha ao recuperar tarefas deletadas não sincronizadas
+    syncFailed: Falha ao sincronizar tarefas
+
+  screen:
+    newTask: Nova tarefa
+    editTask: Editar tarefa
+
+report:
+  title: Relatório
+  name: Nome
+  date: Data
+  hourBegin: Início
+  hourEnd: Fim
+  hourValue: Valor/hora
+  totalHours: Total de horas
+  totalValue: Valor total
+  description: Descrição
+  value: Valor
+  successMessageSavedIn: Relatório salvo em
+  failedMessage: Falha ao salvar relatório
+  resultTitle: Relatório
+  generatedByPricemy: Gerado por Pricemy
+  remainingValue: Valor a receber
+  paidValue: Valor pago
+  generatedIn: Gerado em
