@@ -3,6 +3,8 @@ import 'package:my_dreams/core/data/clients/supabase/supabase_client_interface.d
 import 'package:my_dreams/core/domain/entities/tables_db.dart';
 import 'package:my_dreams/modules/chat/domain/entities/conversation_entity.dart';
 import 'package:my_dreams/modules/chat/domain/entities/message_entity.dart';
+import 'package:my_dreams/modules/chat/data/datasources/chat_ai_datasource.dart';
+import 'package:my_dreams/core/di/dependency_injection.dart';
 
 import '../adapters/conversation_adapter.dart';
 import '../adapters/message_adapter.dart';
@@ -11,9 +13,13 @@ import 'chat_datasource.dart';
 @Injectable(as: ChatDatasource)
 class ChatDatasourceImpl implements ChatDatasource {
   final ISupabaseClient _client;
+  final ChatAiDatasource _ai;
 
-  ChatDatasourceImpl({required ISupabaseClient supabaseClient})
-    : _client = supabaseClient;
+  ChatDatasourceImpl({
+    required ISupabaseClient supabaseClient,
+    ChatAiDatasource? aiDatasource,
+  })  : _client = supabaseClient,
+        _ai = aiDatasource ?? getIt<ChatAiDatasource>();
 
   @override
   Future<List<ConversationEntity>> getConversations(String userId) async {
@@ -87,12 +93,12 @@ class ChatDatasourceImpl implements ChatDatasource {
       data: MessageAdapter.toMap(userMessage)..remove('id'),
     );
 
-    // For simplicity, we just echo content as AI response
+    final aiContent = await _ai.generateAnswer(content);
     final aiMessage = MessageEntity(
       id: '',
       conversationId: convId,
       sender: 'ai',
-      content: 'Echo: $content',
+      content: aiContent,
       createdAt: DateTime.now(),
     );
 

@@ -7,6 +7,9 @@ import 'package:my_dreams/core/di/dependency_injection.config.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/usecase.dart';
 import 'package:my_dreams/modules/auth/domain/usecases/auto_login.dart';
+import 'package:my_dreams/core/data/clients/gemini/gemini_client.dart';
+import 'package:my_dreams/modules/chat/data/datasources/chat_ai_datasource.dart';
+import 'package:my_dreams/modules/chat/data/datasources/chat_ai_datasource_impl.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -19,6 +22,10 @@ Future<void> configureDependencies() async {
   _initAppGlobal();
 
   getIt.init();
+
+  getIt.registerFactory<ChatAiDatasource>(
+    () => ChatAiDatasourceImpl(client: getIt<GeminiClient>()),
+  );
 
   await _tryAutoLogin();
 }
