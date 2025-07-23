@@ -5,6 +5,7 @@ import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/app_snackbar.dart';
+import 'package:my_dreams/shared/components/custom_button.dart';
 import 'package:my_dreams/shared/components/text_form_field.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
@@ -81,6 +82,23 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  void _sendTarotMessage() {
+    final user = AppGlobal.instance.user;
+    if (user == null) return;
+    setState(() {
+      _messages.add(const ChatMessage(text: 'Gerar uma carta de Taro', isUser: true));
+      _isLoading = true;
+    });
+    _scrollToBottom();
+    _bloc.add(
+      SendMessageEvent(
+        content: 'Gerar uma carta de Taro',
+        conversationId: _currentConversationId,
+        userId: user.id.value,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -133,7 +151,22 @@ class _ChatPageState extends State<ChatPage> {
                         return const ThinkingMessageWidget();
                       }
                       final message = _messages[index];
-                      return ChatMessageWidget(message: message);
+                      final widget = ChatMessageWidget(message: message);
+                      if (!message.isUser &&
+                          message.text.toLowerCase().contains('gerar uma carta de taro')) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            widget,
+                            const SizedBox(height: 8),
+                            AppCustomButton(
+                              onPressed: _sendTarotMessage,
+                              label: const Text('Gerar uma carta de Taro'),
+                            ),
+                          ],
+                        );
+                      }
+                      return widget;
                     },
                   ),
                 ),
