@@ -61,17 +61,26 @@ class ChatDatasourceImpl implements ChatDatasource {
     required String content,
   }) async {
     String convId = conversationId ?? '';
+    String summary = '';
     if (conversationId == null) {
       final conv = await _client.insertReturning(
         table: TablesDB.conversations.name,
         data: {
           'user_id': userId,
           'title': content.length > 30 ? content.substring(0, 30) : content,
-          'summary': '',
+          'summary': summary,
         },
       );
       convId = (conv.first)['id'] as String;
     } else {
+      final conv = await _client.select(
+        table: TablesDB.conversations.name,
+        columns: 'summary',
+        filters: {'id': conversationId},
+      );
+      if (conv.isNotEmpty) {
+        summary = conv.first['summary'] as String? ?? '';
+      }
       await _client.update(
         table: TablesDB.conversations.name,
         data: {'updated_at': DateTime.now().toIso8601String()},
@@ -92,7 +101,10 @@ class ChatDatasourceImpl implements ChatDatasource {
       data: MessageAdapter.toMap(userMessage)..remove('id'),
     );
 
-    final aiContent = await _ai.generateAnswer(content);
+    final aiContent = await _ai.generateAnswer(
+      content,
+      summary: summary,
+    );
     final aiMessage = MessageEntity(
       id: '',
       conversationId: convId,
@@ -104,6 +116,19 @@ class ChatDatasourceImpl implements ChatDatasource {
     await _client.insert(
       table: TablesDB.messages.name,
       data: MessageAdapter.toMap(aiMessage)..remove('id'),
+    );
+
+    final newSummary = await _ai.generateConversationSummary(
+      '${summary.isNotEmpty ? '$summary\n' : ''}Usu\u00E1rio: $content\nIA: $aiContent',
+    );
+
+    await _client.update(
+      table: TablesDB.conversations.name,
+      data: {
+        'summary': newSummary,
+        'updated_at': DateTime.now().toIso8601String(),
+      },
+      filters: {'id': convId},
     );
 
     return [userMessage, aiMessage];
