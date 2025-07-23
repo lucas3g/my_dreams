@@ -87,6 +87,7 @@ class SupabaseClientImpl implements ISupabaseClient {
     }
 
     final data = await query;
+
     return data;
   }
 
@@ -96,7 +97,10 @@ class SupabaseClientImpl implements ISupabaseClient {
     required Map<String, dynamic> data,
     required Map<String, dynamic> filters,
   }) async {
-    await _client.from(table).update(data).eq(filters.keys.first, filters.values.first);
+    await _client
+        .from(table)
+        .update(data)
+        .eq(filters.keys.first, filters.values.first);
   }
 
   @override
