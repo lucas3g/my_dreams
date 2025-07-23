@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/di/dependency_injection.dart';
@@ -186,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                           child: Text('Nenhum sonho registrado'),
                         );
                       }
-                      return ListView.separated(
+                      return SuperListView.separated(
                         padding: const EdgeInsets.only(bottom: 80),
                         itemCount: state.dreamsList.length,
                         separatorBuilder: (_, __) => const SpacerHeight(),
@@ -220,7 +221,7 @@ class _HomePageState extends State<HomePage> {
             _dreamBloc.add(GetDreamsEvent(userId: user.id.value));
           }
         },
-        label: const Text('Novo significado'),
+        label: const Text('Novo Significado'),
         icon: const Icon(Icons.add),
       ),
     );

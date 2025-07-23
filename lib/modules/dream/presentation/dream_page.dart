@@ -4,8 +4,10 @@ import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
+import 'package:my_dreams/shared/components/app_snackbar.dart';
 import 'package:my_dreams/shared/components/text_form_field.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
+import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../presentation/controller/dream_bloc.dart';
 import '../presentation/controller/dream_events.dart';
@@ -114,12 +116,15 @@ class _DreamPageState extends State<DreamPage> {
                       );
                     } else if (state is DreamFailureState) {
                       setState(() => _isLoading = false);
-                      ScaffoldMessenger.of(
+                      showAppSnackbar(
                         context,
-                      ).showSnackBar(SnackBar(content: Text(state.message)));
+                        title: 'Ops...',
+                        message: state.message,
+                        type: TypeSnack.error,
+                      );
                     }
                   },
-                  child: ListView.builder(
+                  child: SuperListView.builder(
                     controller: _scrollController,
                     itemCount: _messages.length,
                     itemBuilder: (context, index) {
