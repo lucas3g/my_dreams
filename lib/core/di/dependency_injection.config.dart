@@ -69,8 +69,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i841.ParseTarotMessageUseCase>(
       () => _i841.ParseTarotMessageUseCase(),
     );
-    gh.factory<_i655.AdsService>(() => _i655.AdsService());
-    gh.factory<_i17.PurchaseService>(() => _i17.PurchaseService());
+    gh.singleton<_i655.AdsService>(() => _i655.AdsService());
+    gh.singleton<_i17.PurchaseService>(() => _i17.PurchaseService());
     gh.singleton<_i86.ISupabaseClient>(() => _i788.SupabaseClientImpl());
     gh.factory<_i824.ILocalStorage>(() => _i755.SharedPreferencesService());
     gh.factory<_i123.GeminiClient>(

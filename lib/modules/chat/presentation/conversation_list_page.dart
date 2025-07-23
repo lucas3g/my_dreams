@@ -37,6 +37,9 @@ class _HomePageState extends State<HomePage> {
   final ChatBloc _chatBloc = getIt<ChatBloc>();
   final AdsService _adsService = getIt<AdsService>();
   final PurchaseService _purchase = getIt<PurchaseService>();
+  void _update() {
+    if (mounted) setState(() {});
+  }
 
   StreamSubscription<AuthStates>? _authSubscription;
 
@@ -69,6 +72,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _listenAuthStates();
+    _adsService.addListener(_update);
+    _purchase.addListener(_update);
     final user = _user;
     if (user != null) {
       _chatBloc.add(LoadConversationsEvent(userId: user.id.value));
@@ -77,6 +82,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
+    _adsService.removeListener(_update);
+    _purchase.removeListener(_update);
     _authSubscription?.cancel();
 
     super.dispose();

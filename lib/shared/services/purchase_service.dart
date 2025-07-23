@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/subscription_plan.dart';
 
-@injectable
-class PurchaseService {
+@singleton
+class PurchaseService extends ChangeNotifier {
   final InAppPurchase _iap = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;
 
@@ -27,10 +28,13 @@ class PurchaseService {
           purchase.status == PurchaseStatus.restored) {
         if (purchase.productID == weeklyId) {
           AppGlobal.instance.setPlan(SubscriptionPlan.weekly);
+          notifyListeners();
         } else if (purchase.productID == monthlyId) {
           AppGlobal.instance.setPlan(SubscriptionPlan.monthly);
+          notifyListeners();
         } else if (purchase.productID == annualId) {
           AppGlobal.instance.setPlan(SubscriptionPlan.annual);
+          notifyListeners();
         }
       }
     }
