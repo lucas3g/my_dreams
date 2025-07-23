@@ -5,7 +5,7 @@ import 'package:my_dreams/modules/chat/domain/entities/tarot_card_entity.dart';
 class ParseTarotMessageUseCase {
   List<TarotCardEntity> call(String text) {
     final regex = RegExp(
-      r'(Carta\s*[1-5])\s*:\s*(.*?)(?=(Carta\s*[1-5]\s*:)|\$)',
+      r'(Carta\s*[1-5])\s*[:\-–—]\s*(.*?)(?=(Carta\s*[1-5]\s*[:\-–—])|\$)',
       caseSensitive: false,
       dotAll: true,
     );
