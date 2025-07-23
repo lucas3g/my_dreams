@@ -128,7 +128,10 @@ class _ChatPageState extends State<ChatPage> {
                     itemCount: _messages.length,
                     itemBuilder: (context, index) {
                       final message = _messages[index];
-                      return ChatMessageWidget(message: message);
+                      return ChatMessageWidget(
+                        message: message,
+                        isLoading: _isLoading,
+                      );
                     },
                   ),
                 ),

@@ -129,7 +129,10 @@ class _DreamPageState extends State<DreamPage> {
                     itemCount: _messages.length,
                     itemBuilder: (context, index) {
                       final message = _messages[index];
-                      return ChatMessageWidget(message: message);
+                      return ChatMessageWidget(
+                        message: message,
+                        isLoading: _isLoading,
+                      );
                     },
                   ),
                 ),

@@ -46,8 +46,9 @@ class DreamChatPage extends StatelessWidget {
               message: ChatMessage(
                 text: dream.answer.value,
                 isUser: false,
-                imageUrl:
-                    dream.imageUrl.value.isNotEmpty ? dream.imageUrl.value : null,
+                imageUrl: dream.imageUrl.value.isNotEmpty
+                    ? dream.imageUrl.value
+                    : null,
               ),
             ),
           ],

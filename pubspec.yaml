@@ -49,6 +49,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   super_sliver_list: ^0.4.1
+  flutter_animate: ^4.5.2
 
 dev_dependencies:
   flutter_test:

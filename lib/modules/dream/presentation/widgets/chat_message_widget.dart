@@ -16,11 +16,13 @@ class ChatMessage {
 class ChatMessageWidget extends StatelessWidget {
   final ChatMessage message;
   final bool showAvatar;
+  final bool isLoading;
 
   const ChatMessageWidget({
     super.key,
     required this.message,
     this.showAvatar = true,
+    this.isLoading = false,
   });
 
   @override
