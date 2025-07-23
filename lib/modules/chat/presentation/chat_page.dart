@@ -10,6 +10,7 @@ import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../dream/presentation/widgets/chat_message_widget.dart';
+import 'widgets/thinking_message_widget.dart';
 import 'controller/chat_bloc.dart';
 import 'controller/chat_events.dart';
 import 'controller/chat_states.dart';
@@ -96,6 +97,7 @@ class _ChatPageState extends State<ChatPage> {
                   listener: (context, state) {
                     if (state is ChatLoadingState) {
                       setState(() => _isLoading = true);
+                      _scrollToBottom();
                     } else if (state is ChatLoadedMessagesState) {
                       setState(() => _isLoading = false);
                       _messages
@@ -125,12 +127,14 @@ class _ChatPageState extends State<ChatPage> {
                   },
                   child: SuperListView.builder(
                     controller: _scrollController,
-                    itemCount: _messages.length,
+                    itemCount: _messages.length + (_isLoading ? 1 : 0),
                     itemBuilder: (context, index) {
+                      if (index >= _messages.length) {
+                        return const ThinkingMessageWidget();
+                      }
                       final message = _messages[index];
                       return ChatMessageWidget(
                         message: message,
-                        isLoading: _isLoading,
                       );
                     },
                   ),
