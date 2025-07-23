@@ -7,6 +7,7 @@ import 'package:my_dreams/core/routes/domain/entities/custom_transition.dart';
 import 'package:my_dreams/core/routes/domain/entities/custom_transition_type.dart';
 import 'package:my_dreams/shared/themes/theme.dart';
 import 'package:my_dreams/shared/utils/global_context.dart';
+import 'package:my_dreams/shared/translate/translate.dart';
 
 class AppWidget extends StatefulWidget {
   const AppWidget({super.key});
@@ -19,7 +20,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My Dreams AI',
+      title: translate('app.name'),
       debugShowCheckedModeBanner: false,
       navigatorKey: GlobalContext.navigatorKey,
       darkTheme: darkThemeApp,

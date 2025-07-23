@@ -18,6 +18,7 @@ import 'package:my_dreams/shared/components/spacer_width.dart';
 import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
+import 'package:my_dreams/shared/translate/translate.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../home/presentation/widgets/conversation_card_widget.dart';
@@ -59,7 +60,7 @@ class _HomePageState extends State<HomePage> {
 
         showAppSnackbar(
           context,
-          title: 'Erro',
+          title: translate('common.error'),
           message: state.message,
           type: TypeSnack.error,
         );
@@ -95,16 +96,16 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: context.myTheme.primaryContainer,
-          title: const Text('Sair'),
-          content: const Text('Deseja realmente sair do aplicativo?'),
+          title: Text(translate('conversation.logout.title')),
+          content: Text(translate('conversation.logout.message')),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancelar'),
+              child: Text(translate('conversation.logout.cancel')),
             ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Sair'),
+              child: Text(translate('conversation.logout.confirm')),
             ),
           ],
         );
@@ -200,8 +201,8 @@ class _HomePageState extends State<HomePage> {
                     }
                     if (state is ChatLoadedConversationsState) {
                       if (state.conversationsList.isEmpty) {
-                        return const Center(
-                          child: Text('Nenhum significado encontrado'),
+                        return Center(
+                          child: Text(translate('conversation.empty')),
                         );
                       }
                       return SuperListView.separated(
@@ -256,7 +257,7 @@ class _HomePageState extends State<HomePage> {
 
           _chatBloc.add(LoadConversationsEvent(userId: user!.id.value));
         },
-        label: const Text('Novo Significado'),
+        label: Text(translate('conversation.new')),
         icon: const Icon(Icons.add),
       ),
     );

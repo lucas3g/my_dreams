@@ -13,6 +13,7 @@ import 'package:my_dreams/modules/auth/presentation/controller/auth_states.dart'
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/app_snackbar.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
+import 'package:my_dreams/shared/translate/translate.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -44,7 +45,7 @@ class _AuthPageState extends State<AuthPage> {
 
         showAppSnackbar(
           context,
-          title: 'Erro',
+          title: translate('common.error'),
           message: state.message,
           type: TypeSnack.error,
         );
@@ -62,7 +63,7 @@ class _AuthPageState extends State<AuthPage> {
     }
 
     return Text(
-      'Entrar com o Google',
+      translate('auth.googleButton'),
       style: context.textTheme.bodyLarge?.copyWith(
         fontWeight: FontWeight.bold,
         color: context.myTheme.surface,
@@ -111,14 +112,14 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'Registre aqui os sonhos que você teve',
+                      translate('auth.screen.title'),
                       style: context.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 10),
-                    Text('Descubra significados e compartilhe'),
+                    Text(translate('auth.screen.subtitle')),
                   ],
                 ),
                 const SizedBox(height: 30),
@@ -153,7 +154,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'Seus sonhos, nosso universo.',
+                      translate('auth.screen.footer'),
                       style: context.textTheme.bodyLarge?.copyWith(),
                       textAlign: TextAlign.center,
                     ),

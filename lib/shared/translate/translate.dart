@@ -86,3 +86,15 @@ class I18nTranslate {
     return _applyParams(value, params);
   }
 }
+
+String translate(
+  String key, {
+  Map<String, String>? params,
+  String dictId = 'default',
+}) {
+  return I18nTranslate.instance.translate(
+    key,
+    dictId: dictId,
+    params: params,
+  );
+}

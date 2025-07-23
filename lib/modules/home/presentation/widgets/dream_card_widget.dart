@@ -4,6 +4,7 @@ import 'package:my_dreams/modules/dream/domain/entities/dream_entity.dart';
 import 'package:my_dreams/modules/dream/presentation/widgets/chat_message_widget.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/utils/formatters.dart';
+import 'package:my_dreams/shared/translate/translate.dart';
 
 class DreamCardWidget extends StatelessWidget {
   final DreamEntity dream;
@@ -29,7 +30,7 @@ class DreamCardWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'Data: ',
+                    translate('dream.dateLabel'),
                     style: context.textTheme.bodyMedium?.copyWith(
                       color: context.myTheme.onSurfaceVariant,
                       fontWeight: FontWeight.bold,
