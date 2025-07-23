@@ -10,6 +10,7 @@ import 'package:my_dreams/shared/components/text_form_field.dart';
 import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
+import 'package:my_dreams/shared/translate/translate.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../dream/presentation/widgets/chat_message_widget.dart';
@@ -89,8 +90,11 @@ class _ChatPageState extends State<ChatPage> {
     if (sent >= limit) {
       showAppSnackbar(
         context,
-        title: 'Limite atingido',
-        message: 'Sua assinatura permite enviar apenas $limit mensagem(s).',
+        title: translate('chat.limit.title'),
+        message: translate(
+          'chat.limit.message',
+          params: {'limit': '$limit'},
+        ),
         type: TypeSnack.error,
       );
       return;
@@ -118,14 +122,15 @@ class _ChatPageState extends State<ChatPage> {
   void _sendTarotMessage() {
     final user = AppGlobal.instance.user;
     if (user == null) return;
+    final tarotText = translate('chat.generateTarot');
     setState(() {
-      _messages.add(ChatMessage(text: 'Gerar cartas de Tarô', isUser: true));
+      _messages.add(ChatMessage(text: tarotText, isUser: true));
       _isLoading = true;
     });
     _scrollToBottom();
     _bloc.add(
       SendMessageEvent(
-        content: 'Gerar cartas de Tarô',
+        content: tarotText,
         conversationId: _currentConversationId,
         userId: user.id.value,
       ),
@@ -154,7 +159,7 @@ class _ChatPageState extends State<ChatPage> {
     return SafeArea(
       top: false,
       child: Scaffold(
-        appBar: AppBar(title: const Text('Conversa')),
+        appBar: AppBar(title: Text(translate('chat.screen.title'))),
         body: Padding(
           padding: const EdgeInsets.all(AppThemeConstants.padding),
           child: Column(
@@ -187,7 +192,7 @@ class _ChatPageState extends State<ChatPage> {
                       setState(() => _isLoading = false);
                       showAppSnackbar(
                         context,
-                        title: 'Ops...',
+                        title: translate('common.oops'),
                         message: state.message,
                         type: TypeSnack.error,
                       );
@@ -224,7 +229,8 @@ class _ChatPageState extends State<ChatPage> {
                         }
 
                         final hasTaro = _messages.any(
-                          (msg) => msg.text.contains('Gerar cartas de Tarô'),
+                          (msg) =>
+                              msg.text.contains(translate('chat.generateTarot')),
                         );
 
                         if (!hasTaro) {
@@ -237,7 +243,7 @@ class _ChatPageState extends State<ChatPage> {
                                 backgroundColor:
                                     context.myTheme.primaryContainer,
                                 onPressed: _sendTarotMessage,
-                                label: const Text('Gerar cartas de Tarô'),
+                                label: Text(translate('chat.generateTarot')),
                               ),
                               const SizedBox(height: 8),
                             ],
@@ -266,8 +272,8 @@ class _ChatPageState extends State<ChatPage> {
                         readOnly: _isLoading,
                         textArea: true,
                         hint: !_isLoading
-                            ? 'Digite sua mensagem'
-                            : 'Enviando...',
+                            ? translate('chat.input.hint')
+                            : translate('chat.input.sending'),
                         suffixIcon: !_isLoading
                             ? IconButton(
                                 icon: const Icon(Icons.send),

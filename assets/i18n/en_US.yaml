@@ -1,0 +1,35 @@
+app:
+  name: My Dreams AI
+common:
+  error: Error
+  oops: Oops...
+  cancel: Cancel
+splash:
+  screen:
+    title: Explore your dreams with us
+auth:
+  googleButton: Sign in with Google
+  screen:
+    title: Record the dreams you had here
+    subtitle: Discover meanings and share
+    footer: Your dreams, our universe.
+chat:
+  screen:
+    title: Conversation
+  generateTarot: Generate Tarot cards
+  input:
+    hint: Type your message
+    sending: Sending...
+  limit:
+    title: Limit reached
+    message: Your subscription allows sending only {limit} message(s).
+conversation:
+  logout:
+    title: Logout
+    message: Do you really want to exit the app?
+    cancel: Cancel
+    confirm: Logout
+  empty: No meaning found
+  new: New Meaning
+dream:
+  dateLabel: 'Date: '

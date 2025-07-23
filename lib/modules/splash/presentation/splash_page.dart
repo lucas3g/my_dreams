@@ -5,6 +5,7 @@ import 'package:my_dreams/core/domain/entities/app_assets.dart';
 import 'package:my_dreams/core/domain/entities/named_routes.dart';
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/core/constants/constants.dart';
+import 'package:my_dreams/shared/translate/translate.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -68,7 +69,7 @@ class _SplashPageState extends State<SplashPage> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Explore seus sonhos conosco',
+                translate('splash.screen.title'),
                 style: context.textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
