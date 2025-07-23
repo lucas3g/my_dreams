@@ -71,11 +71,13 @@ class _ChatPageState extends State<ChatPage> {
     });
     _controller.clear();
     _scrollToBottom();
-    _bloc.add(SendMessageEvent(
-      content: text,
-      conversationId: _currentConversationId,
-      userId: user.id.value,
-    ));
+    _bloc.add(
+      SendMessageEvent(
+        content: text,
+        conversationId: _currentConversationId,
+        userId: user.id.value,
+      ),
+    );
   }
 
   @override
@@ -98,10 +100,14 @@ class _ChatPageState extends State<ChatPage> {
                       setState(() => _isLoading = false);
                       _messages
                         ..clear()
-                        ..addAll(state.messagesList.map((e) => ChatMessage(
+                        ..addAll(
+                          state.messagesList.map(
+                            (e) => ChatMessage(
                               text: e.content.value,
                               isUser: e.sender.value == 'user',
-                            )));
+                            ),
+                          ),
+                        );
                       if (state.messagesList.isNotEmpty) {
                         _currentConversationId =
                             state.messagesList.first.conversationId.value;
@@ -141,7 +147,9 @@ class _ChatPageState extends State<ChatPage> {
                         controller: _controller,
                         readOnly: _isLoading,
                         textArea: true,
-                        hint: !_isLoading ? 'Digite sua mensagem' : 'Enviando...',
+                        hint: !_isLoading
+                            ? 'Digite sua mensagem'
+                            : 'Enviando...',
                         suffixIcon: !_isLoading
                             ? IconButton(
                                 icon: const Icon(Icons.send),

@@ -195,11 +195,17 @@ class _HomePageState extends State<HomePage> {
                           final conv = state.conversationsList[index];
 
                           return InkWell(
-                            onTap: () => Navigator.pushNamed(
-                              context,
-                              NamedRoutes.conversationChat.route,
-                              arguments: conv.id.value,
-                            ),
+                            onTap: () async {
+                              await Navigator.pushNamed(
+                                context,
+                                NamedRoutes.conversationChat.route,
+                                arguments: conv.id.value,
+                              );
+
+                              _chatBloc.add(
+                                LoadConversationsEvent(userId: user!.id.value),
+                              );
+                            },
                             child: ConversationCardWidget(conversation: conv),
                           );
                         },
@@ -215,7 +221,12 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          Navigator.pushNamed(context, NamedRoutes.conversationChat.route);
+          await Navigator.pushNamed(
+            context,
+            NamedRoutes.conversationChat.route,
+          );
+
+          _chatBloc.add(LoadConversationsEvent(userId: user!.id.value));
         },
         label: const Text('Novo Significado'),
         icon: const Icon(Icons.add),
