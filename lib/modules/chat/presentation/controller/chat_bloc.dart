@@ -64,9 +64,20 @@ class ChatBloc extends Bloc<ChatEvents, ChatStates> {
         content: event.content,
       ),
     );
-    result.get(
-      (failure) => emit(state.failure(failure.message)),
-      (list) => emit(state.messages(list)),
+
+    await result.get(
+      (failure) async => emit(state.failure(failure.message)),
+      (list) async {
+        final convId = list.first.conversationId.value;
+        final messagesResult = await _getMessages(
+          GetMessagesParams(conversationId: convId),
+        );
+
+        messagesResult.get(
+          (failure) => emit(state.failure(failure.message)),
+          (messages) => emit(state.messages(messages)),
+        );
+      },
     );
   }
 }
