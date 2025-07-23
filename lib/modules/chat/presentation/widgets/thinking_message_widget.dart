@@ -16,20 +16,25 @@ class ThinkingMessageWidget extends StatelessWidget {
       style: context.textTheme.bodyLarge?.copyWith(color: textColor),
     );
 
-    final bubble = Container(
-      margin: const EdgeInsets.symmetric(vertical: 4.0),
-      padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(
-          AppThemeConstants.mediumBorderRadius,
-        ),
-      ),
-      child: text,
-    )
-        .animate(onPlay: (controller) => controller.repeat(reverse: true))
-        .fade(duration: const Duration(milliseconds: 800))
-        .scale(begin: 0.95, end: 1.05, duration: const Duration(milliseconds: 800));
+    final bubble =
+        Container(
+              margin: const EdgeInsets.symmetric(vertical: 4.0),
+              padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(
+                  AppThemeConstants.mediumBorderRadius,
+                ),
+              ),
+              child: text,
+            )
+            .animate(onPlay: (controller) => controller.repeat(reverse: true))
+            .fade(duration: const Duration(milliseconds: 800))
+            .scale(
+              begin: const Offset(0, 0.95),
+              end: const Offset(1.05, 0),
+              duration: const Duration(milliseconds: 800),
+            );
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
