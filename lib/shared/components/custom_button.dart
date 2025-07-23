@@ -31,7 +31,7 @@ class AppCustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    backgroundColor ??= context.myTheme.onPrimary;
+    backgroundColor ??= context.myTheme.primaryContainer;
 
     return icon != null
         ? ElevatedButton.icon(

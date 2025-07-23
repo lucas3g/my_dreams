@@ -11,10 +11,10 @@ import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
-import '../../subscription/presentation/subscription_bottom_sheet.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../dream/presentation/widgets/chat_message_widget.dart';
+import '../../subscription/presentation/subscription_bottom_sheet.dart';
 import '../domain/entities/tarot_card_entity.dart';
 import '../domain/usecases/parse_tarot_message.dart';
 import 'controller/chat_bloc.dart';
@@ -47,7 +47,7 @@ class _ChatPageState extends State<ChatPage> {
 
   bool _isLoading = false;
   bool get _limitReached =>
-      !_purchase.isPremium && _messages.where((m) => m.isUser).length >= 1;
+      !_purchase.isPremium && _messages.where((m) => m.isUser).isNotEmpty;
   String? _currentConversationId;
 
   @override
@@ -225,7 +225,7 @@ class _ChatPageState extends State<ChatPage> {
                           ),
                         );
 
-                        if (!hasTaro) {
+                        if (!hasTaro && !_limitReached) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -254,43 +254,42 @@ class _ChatPageState extends State<ChatPage> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: AppCustomButton(
                     expands: true,
-                    onPressed: () =>
-                        SubscriptionBottomSheet.show(context),
+                    onPressed: () => SubscriptionBottomSheet.show(context),
                     label: Text(translate('chat.limit.button')),
                   ),
                 ),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: context.myTheme.primaryContainer,
-                        borderRadius: BorderRadius.circular(
-                          AppThemeConstants.mediumBorderRadius,
+              if (!_limitReached)
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: context.myTheme.primaryContainer,
+                          borderRadius: BorderRadius.circular(
+                            AppThemeConstants.mediumBorderRadius,
+                          ),
+                        ),
+                        child: AppTextFormField(
+                          controller: _controller,
+                          readOnly: _isLoading,
+                          textArea: true,
+                          hint: !_isLoading
+                              ? translate('chat.input.hint')
+                              : translate('chat.input.sending'),
+                          suffixIcon: !_isLoading
+                              ? IconButton(
+                                  icon: const Icon(Icons.send),
+                                  onPressed: _sendMessage,
+                                )
+                              : const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: AppCircularIndicatorWidget(size: 20),
+                                ),
                         ),
                       ),
-                      child: AppTextFormField(
-                        controller: _controller,
-                        readOnly: _isLoading,
-                        textArea: true,
-                        hint: !_isLoading
-                            ? translate('chat.input.hint')
-                            : translate('chat.input.sending'),
-                        suffixIcon: !_isLoading
-                            ? IconButton(
-                                icon: const Icon(Icons.send),
-                                onPressed: _sendMessage,
-                              )
-                            : const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: AppCircularIndicatorWidget(size: 20),
-                              ),
-                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
             ],
           ),
         ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_dreams/core/constants/constants.dart';
+import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'package:my_dreams/shared/components/custom_button.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
-import 'package:my_dreams/core/di/dependency_injection.dart';
 
 class SubscriptionBottomSheet extends StatelessWidget {
   const SubscriptionBottomSheet({super.key});
@@ -39,6 +39,7 @@ class SubscriptionBottomSheet extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           AppCustomButton(
+            backgroundColor: context.myTheme.primary,
             expands: true,
             onPressed: () {
               Navigator.pop(context);
@@ -48,6 +49,7 @@ class SubscriptionBottomSheet extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           AppCustomButton(
+            backgroundColor: context.myTheme.primary,
             expands: true,
             onPressed: () {
               Navigator.pop(context);
@@ -57,6 +59,7 @@ class SubscriptionBottomSheet extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           AppCustomButton(
+            backgroundColor: context.myTheme.primary,
             expands: true,
             onPressed: () {
               Navigator.pop(context);
