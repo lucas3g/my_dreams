@@ -91,13 +91,13 @@ class _ChatPageState extends State<ChatPage> {
     final user = AppGlobal.instance.user;
     if (user == null) return;
     setState(() {
-      _messages.add(ChatMessage(text: 'Gerar uma carta de Taro', isUser: true));
+      _messages.add(ChatMessage(text: 'Gerar cartas de Taro', isUser: true));
       _isLoading = true;
     });
     _scrollToBottom();
     _bloc.add(
       SendMessageEvent(
-        content: 'Gerar uma carta de Taro',
+        content: 'Gerar cartas de Taro',
         conversationId: _currentConversationId,
         userId: user.id.value,
       ),
