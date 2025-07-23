@@ -11,6 +11,7 @@ import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
+import '../../subscription/presentation/subscription_bottom_sheet.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../dream/presentation/widgets/chat_message_widget.dart';
@@ -45,6 +46,8 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   bool _isLoading = false;
+  bool get _limitReached =>
+      !_purchase.isPremium && _messages.where((m) => m.isUser).length >= 1;
   String? _currentConversationId;
 
   @override
@@ -89,12 +92,6 @@ class _ChatPageState extends State<ChatPage> {
     final int limit = _purchase.isPremium ? 5 : 1;
     final int sent = _messages.where((m) => m.isUser).length;
     if (sent >= limit) {
-      showAppSnackbar(
-        context,
-        title: translate('chat.limit.title'),
-        message: translate('chat.limit.message', params: {'limit': '$limit'}),
-        type: TypeSnack.error,
-      );
       return;
     }
 
@@ -251,6 +248,17 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
               ),
+
+              if (_limitReached)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: AppCustomButton(
+                    expands: true,
+                    onPressed: () =>
+                        SubscriptionBottomSheet.show(context),
+                    label: Text(translate('chat.limit.button')),
+                  ),
+                ),
 
               Row(
                 children: [
