@@ -144,6 +144,9 @@ class _ChatPageState extends State<ChatPage> {
                     }
                   },
                   child: SuperListView.builder(
+                    padding: const EdgeInsets.only(
+                      bottom: AppThemeConstants.padding,
+                    ),
                     controller: _scrollController,
                     itemCount: _messages.length + (_isLoading ? 1 : 0),
                     itemBuilder: (context, index) {
@@ -152,8 +155,12 @@ class _ChatPageState extends State<ChatPage> {
                       }
                       final message = _messages[index];
                       final widget = ChatMessageWidget(message: message);
-                      if (!message.isUser &&
-                          message.text.contains('Gerar uma carta de Taro')) {
+
+                      final hasTaro = _messages.any(
+                        (msg) => msg.text.contains('Gerar uma carta de Taro'),
+                      );
+
+                      if (!message.isUser && !hasTaro) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
