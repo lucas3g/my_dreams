@@ -17,7 +17,7 @@ class ChatAiDatasourceImpl implements ChatAiDatasource {
           'parts': [
             {
               'text':
-                  'Fale o significado do meu sonho, faça um resumo pequeno: $prompt',
+                  'Fale o significado do meu sonho, faça um pequeno resumo: $prompt',
             },
           ],
         },

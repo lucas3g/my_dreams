@@ -71,17 +71,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i777.ClientHttp>(
       () => _i14.DioClientHttpImpl(dio: gh<_i361.Dio>()),
     );
-    gh.factory<_i335.ChatDatasource>(
-      () => _i209.ChatDatasourceImpl(
-        supabaseClient: gh<_i86.ISupabaseClient>(),
-        aiDatasource: gh<_i883.ChatAiDatasource>(),
-      ),
-    );
     gh.factory<_i883.ChatAiDatasource>(
       () => _i514.ChatAiDatasourceImpl(client: gh<_i123.GeminiClient>()),
-    );
-    gh.factory<_i165.ChatRepository>(
-      () => _i696.ChatRepositoryImpl(datasource: gh<_i335.ChatDatasource>()),
     );
     gh.factory<_i735.DreamDatasource>(
       () =>
@@ -94,26 +85,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i563.DreamRepository>(
       () => _i648.DreamRepositoryImpl(datasource: gh<_i735.DreamDatasource>()),
     );
-    gh.factory<_i134.GetConversationsUseCase>(
-      () =>
-          _i134.GetConversationsUseCase(repository: gh<_i165.ChatRepository>()),
-    );
-    gh.factory<_i312.GetMessagesUseCase>(
-      () => _i312.GetMessagesUseCase(repository: gh<_i165.ChatRepository>()),
-    );
-    gh.factory<_i864.SendMessageUseCase>(
-      () => _i864.SendMessageUseCase(repository: gh<_i165.ChatRepository>()),
+    gh.factory<_i335.ChatDatasource>(
+      () => _i209.ChatDatasourceImpl(
+        supabaseClient: gh<_i86.ISupabaseClient>(),
+        aiDatasource: gh<_i883.ChatAiDatasource>(),
+      ),
     );
     gh.factory<_i779.AuthRepository>(
       () =>
           _i817.AuthRepositoryImpl(authDatasource: gh<_i655.AuthDatasource>()),
     );
-    gh.factory<_i307.ChatBloc>(
-      () => _i307.ChatBloc(
-        getConversationsUseCase: gh<_i134.GetConversationsUseCase>(),
-        getMessagesUseCase: gh<_i312.GetMessagesUseCase>(),
-        sendMessageUseCase: gh<_i864.SendMessageUseCase>(),
-      ),
+    gh.factory<_i165.ChatRepository>(
+      () => _i696.ChatRepositoryImpl(datasource: gh<_i335.ChatDatasource>()),
     );
     gh.factory<_i1037.GetDreamsUseCase>(
       () =>
@@ -133,6 +116,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i720.LogoutAccountUsecase>(
       () => _i720.LogoutAccountUsecase(
         authRepository: gh<_i779.AuthRepository>(),
+      ),
+    );
+    gh.factory<_i134.GetConversationsUseCase>(
+      () =>
+          _i134.GetConversationsUseCase(repository: gh<_i165.ChatRepository>()),
+    );
+    gh.factory<_i312.GetMessagesUseCase>(
+      () => _i312.GetMessagesUseCase(repository: gh<_i165.ChatRepository>()),
+    );
+    gh.factory<_i864.SendMessageUseCase>(
+      () => _i864.SendMessageUseCase(repository: gh<_i165.ChatRepository>()),
+    );
+    gh.factory<_i307.ChatBloc>(
+      () => _i307.ChatBloc(
+        getConversationsUseCase: gh<_i134.GetConversationsUseCase>(),
+        getMessagesUseCase: gh<_i312.GetMessagesUseCase>(),
+        sendMessageUseCase: gh<_i864.SendMessageUseCase>(),
       ),
     );
     gh.factory<_i311.AuthBloc>(

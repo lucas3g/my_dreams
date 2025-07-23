@@ -17,10 +17,10 @@ import 'package:my_dreams/shared/components/spacer_width.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
+import '../../home/presentation/widgets/conversation_card_widget.dart';
 import 'controller/chat_bloc.dart';
 import 'controller/chat_events.dart';
 import 'controller/chat_states.dart';
-import '../../home/presentation/widgets/conversation_card_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                         CircleAvatar(
                           backgroundImage: user.imageUrl.value.isNotEmpty
                               ? NetworkImage(user.imageUrl.value)
-                                  as ImageProvider
+                                    as ImageProvider
                               : null,
                           radius: 22,
                           child: user.imageUrl.value.isEmpty
@@ -184,7 +184,7 @@ class _HomePageState extends State<HomePage> {
                     if (state is ChatLoadedConversationsState) {
                       if (state.conversationsList.isEmpty) {
                         return const Center(
-                          child: Text('Nenhuma conversa encontrada'),
+                          child: Text('Nenhum significado encontrado'),
                         );
                       }
                       return SuperListView.separated(
@@ -217,7 +217,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () async {
           Navigator.pushNamed(context, NamedRoutes.conversationChat.route);
         },
-        label: const Text('Nova conversa'),
+        label: const Text('Novo Significado'),
         icon: const Icon(Icons.add),
       ),
     );

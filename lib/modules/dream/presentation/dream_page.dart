@@ -159,7 +159,7 @@ class _DreamPageState extends State<DreamPage> {
                             : Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  AppCircularIndicatorWidget(size: 20),
+                                  AppCircularIndicatorWidget(size: 15),
                                 ],
                               ),
                       ),

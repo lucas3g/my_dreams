@@ -1,10 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:my_dreams/core/data/clients/supabase/supabase_client_interface.dart';
 import 'package:my_dreams/core/domain/entities/tables_db.dart';
+import 'package:my_dreams/modules/chat/data/datasources/chat_ai_datasource.dart';
 import 'package:my_dreams/modules/chat/domain/entities/conversation_entity.dart';
 import 'package:my_dreams/modules/chat/domain/entities/message_entity.dart';
-import 'package:my_dreams/modules/chat/data/datasources/chat_ai_datasource.dart';
-import 'package:my_dreams/core/di/dependency_injection.dart';
 
 import '../adapters/conversation_adapter.dart';
 import '../adapters/message_adapter.dart';
@@ -17,9 +16,9 @@ class ChatDatasourceImpl implements ChatDatasource {
 
   ChatDatasourceImpl({
     required ISupabaseClient supabaseClient,
-    ChatAiDatasource? aiDatasource,
-  })  : _client = supabaseClient,
-        _ai = aiDatasource ?? getIt<ChatAiDatasource>();
+    required ChatAiDatasource aiDatasource,
+  }) : _client = supabaseClient,
+       _ai = aiDatasource;
 
   @override
   Future<List<ConversationEntity>> getConversations(String userId) async {
