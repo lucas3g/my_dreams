@@ -7,10 +7,9 @@ import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/app_snackbar.dart';
 import 'package:my_dreams/shared/components/custom_button.dart';
 import 'package:my_dreams/shared/components/text_form_field.dart';
-import 'package:my_dreams/shared/themes/app_theme_constants.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
+import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../dream/presentation/widgets/chat_message_widget.dart';

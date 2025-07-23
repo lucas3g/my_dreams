@@ -14,14 +14,14 @@ class AdsService {
   void _loadBanners() {
     topBanner = BannerAd(
       size: AdSize.banner,
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      adUnitId: 'ca-app-pub-1898798427054986/9646986739',
       listener: const BannerAdListener(),
       request: const AdRequest(),
     )..load();
 
     bottomBanner = BannerAd(
       size: AdSize.banner,
-      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      adUnitId: 'ca-app-pub-1898798427054986/2817854509',
       listener: const BannerAdListener(),
       request: const AdRequest(),
     )..load();
@@ -29,7 +29,7 @@ class AdsService {
 
   Future<void> loadInterstitial() async {
     await InterstitialAd.load(
-      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      adUnitId: 'ca-app-pub-1898798427054986/1528823562',
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) => _interstitial = ad,
