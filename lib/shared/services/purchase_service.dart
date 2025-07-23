@@ -49,7 +49,10 @@ class PurchaseService extends ChangeNotifier {
 
   bool get isPremium => AppGlobal.instance.isPremium;
 
+  @override
   void dispose() {
     _subscription.cancel();
+
+    super.dispose();
   }
 }

@@ -60,9 +60,11 @@ class AdsService extends ChangeNotifier {
     }
   }
 
+  @override
   void dispose() {
     topBanner?.dispose();
     bottomBanner?.dispose();
     _interstitial?.dispose();
+    super.dispose();
   }
 }
