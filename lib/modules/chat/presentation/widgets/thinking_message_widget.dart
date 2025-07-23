@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:my_dreams/core/constants/constants.dart';
-import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 
 class ThinkingMessageWidget extends StatelessWidget {
   const ThinkingMessageWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = context.myTheme.secondaryContainer;
     final textColor = context.myTheme.onSecondaryContainer;
 
     final text = Text(
@@ -16,28 +14,15 @@ class ThinkingMessageWidget extends StatelessWidget {
       style: context.textTheme.bodyLarge?.copyWith(color: textColor),
     );
 
-    final bubble =
-        Container(
-              margin: const EdgeInsets.symmetric(vertical: 4.0),
-              padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
-              decoration: BoxDecoration(
-                color: backgroundColor,
-                borderRadius: BorderRadius.circular(
-                  AppThemeConstants.mediumBorderRadius,
-                ),
-              ),
-              child: text,
-            )
-            .animate(onPlay: (controller) => controller.repeat(reverse: true))
-            .fade(duration: const Duration(milliseconds: 800))
-            .scale(
-              begin: const Offset(0, 0.95),
-              end: const Offset(1.05, 0),
-              duration: const Duration(milliseconds: 800),
-            );
+    final bubble = text
+        .animate(onPlay: (controller) => controller.repeat())
+        .shimmer(
+          duration: const Duration(seconds: 2),
+          color: context.myTheme.primaryContainer,
+        );
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Padding(
           padding: EdgeInsets.only(top: 5),

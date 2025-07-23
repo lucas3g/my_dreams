@@ -10,10 +10,10 @@ import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../dream/presentation/widgets/chat_message_widget.dart';
-import 'widgets/thinking_message_widget.dart';
 import 'controller/chat_bloc.dart';
 import 'controller/chat_events.dart';
 import 'controller/chat_states.dart';
+import 'widgets/thinking_message_widget.dart';
 
 class ChatPage extends StatefulWidget {
   final String? conversationId;
@@ -133,9 +133,7 @@ class _ChatPageState extends State<ChatPage> {
                         return const ThinkingMessageWidget();
                       }
                       final message = _messages[index];
-                      return ChatMessageWidget(
-                        message: message,
-                      );
+                      return ChatMessageWidget(message: message);
                     },
                   ),
                 ),
