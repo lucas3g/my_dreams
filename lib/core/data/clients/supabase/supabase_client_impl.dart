@@ -51,11 +51,22 @@ class SupabaseClientImpl implements ISupabaseClient {
   }
 
   @override
+  Future<List<dynamic>> insertReturning({
+    required String table,
+    required Map<String, dynamic> data,
+  }) async {
+    final response = await _client.from(table).insert(data).select();
+    return response;
+  }
+
+  @override
   Future<List<dynamic>> select({
     required String table,
     required String columns,
     String? orderBy,
     Map<String, dynamic> filters = const {},
+    int? limit,
+    int? offset,
   }) async {
     dynamic data;
     final selectedColumns = columns.trim() == '*' ? '*' : columns;
@@ -81,7 +92,22 @@ class SupabaseClientImpl implements ISupabaseClient {
       }
     }
 
+    if (limit != null) {
+      final start = offset ?? 0;
+      final end = start + limit - 1;
+      data = data.range(start, end);
+    }
+
     return data;
+  }
+
+  @override
+  Future<void> update({
+    required String table,
+    required Map<String, dynamic> data,
+    required Map<String, dynamic> filters,
+  }) async {
+    await _client.from(table).update(data).eq(filters.keys.first, filters.values.first);
   }
 
   @override

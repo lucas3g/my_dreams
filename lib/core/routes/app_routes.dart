@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_dreams/modules/auth/presentation/auth_page.dart';
-import 'package:my_dreams/modules/dream/domain/entities/dream_entity.dart';
-import 'package:my_dreams/modules/dream/presentation/dream_chat_page.dart';
-import 'package:my_dreams/modules/dream/presentation/dream_page.dart';
+import 'package:my_dreams/modules/chat/presentation/chat_page.dart';
 import 'package:my_dreams/modules/home/presentation/home_page.dart';
 import 'package:my_dreams/modules/splash/presentation/splash_page.dart';
 
@@ -20,14 +18,14 @@ class CustomNavigator {
       NamedRoutes.splash.route: (BuildContext context) => const SplashPage(),
       NamedRoutes.auth.route: (BuildContext context) => const AuthPage(),
       NamedRoutes.home.route: (BuildContext context) => const HomePage(),
-      NamedRoutes.dream.route: (BuildContext context) => const DreamPage(),
+      NamedRoutes.chat.route: (BuildContext context) => const ChatPage(),
     };
 
     WidgetBuilder? builder = appRoutes[settings.name];
 
-    if (settings.name == NamedRoutes.dreamChat.route) {
-      final dream = settings.arguments as DreamEntity;
-      builder = (BuildContext context) => DreamChatPage(dream: dream);
+    if (settings.name == NamedRoutes.conversationChat.route) {
+      final convId = settings.arguments as String?;
+      builder = (BuildContext context) => ChatPage(conversationId: convId);
     }
 
     if (builder != null) {

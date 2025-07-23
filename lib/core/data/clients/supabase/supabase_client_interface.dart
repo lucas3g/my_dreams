@@ -24,11 +24,24 @@ abstract class ISupabaseClient {
     required Map<String, dynamic> data,
   });
 
+  Future<List<dynamic>> insertReturning({
+    required String table,
+    required Map<String, dynamic> data,
+  });
+
   Future<List<dynamic>> select({
     required String table,
     required String columns,
     String? orderBy,
     Map<String, dynamic> filters = const {},
+    int? limit,
+    int? offset,
+  });
+
+  Future<void> update({
+    required String table,
+    required Map<String, dynamic> data,
+    required Map<String, dynamic> filters,
   });
 
   Future<String> getImageUrl({required String bucket, required String path});

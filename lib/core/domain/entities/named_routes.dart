@@ -2,8 +2,8 @@ enum NamedRoutes {
   splash('/'),
   auth('/auth'),
   home('/home'),
-  dream('/dream'),
-  dreamChat('/dream-chat'),
+  chat('/chat'),
+  conversationChat('/conversation-chat'),
   planting('/planting'),
   myPlantings('/my-plantings'),
   impact('/impact');
