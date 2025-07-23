@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:injectable/injectable.dart';
+
 import 'package:my_dreams/core/data/clients/supabase/supabase_client_interface.dart';
 import 'package:my_dreams/core/domain/entities/tables_db.dart';
 import 'package:my_dreams/modules/chat/data/datasources/chat_ai_datasource.dart';
 import 'package:my_dreams/modules/chat/domain/entities/conversation_entity.dart';
 import 'package:my_dreams/modules/chat/domain/entities/message_entity.dart';
+import 'package:my_dreams/core/domain/entities/app_language.dart';
 
 import '../adapters/conversation_adapter.dart';
 import '../adapters/message_adapter.dart';
@@ -101,9 +105,14 @@ class ChatDatasourceImpl implements ChatDatasource {
       data: MessageAdapter.toMap(userMessage)..remove('id'),
     );
 
+    final language = AppLanguage.fromString(
+      PlatformDispatcher.instance.locale.toString(),
+    );
+
     final aiContent = await _ai.generateAnswer(
       content,
       summary: summary,
+      language: language,
     );
     final aiMessage = MessageEntity(
       id: '',
