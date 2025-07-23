@@ -29,12 +29,14 @@ class _ChatPageState extends State<ChatPage> {
   final ScrollController _scrollController = ScrollController();
   final List<ChatMessage> _messages = [];
   bool _isLoading = false;
+  String? _currentConversationId;
 
   @override
   void initState() {
     super.initState();
-    if (widget.conversationId != null) {
-      _bloc.add(LoadMessagesEvent(conversationId: widget.conversationId!));
+    _currentConversationId = widget.conversationId;
+    if (_currentConversationId != null) {
+      _bloc.add(LoadMessagesEvent(conversationId: _currentConversationId!));
     }
   }
 
@@ -71,7 +73,7 @@ class _ChatPageState extends State<ChatPage> {
     _scrollToBottom();
     _bloc.add(SendMessageEvent(
       content: text,
-      conversationId: widget.conversationId,
+      conversationId: _currentConversationId,
       userId: user.id.value,
     ));
   }
@@ -100,6 +102,10 @@ class _ChatPageState extends State<ChatPage> {
                               text: e.content.value,
                               isUser: e.sender.value == 'user',
                             )));
+                      if (state.messagesList.isNotEmpty) {
+                        _currentConversationId =
+                            state.messagesList.first.conversationId.value;
+                      }
                       _scrollToBottom();
                     } else if (state is ChatFailureState) {
                       setState(() => _isLoading = false);
