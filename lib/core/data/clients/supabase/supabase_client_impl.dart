@@ -70,7 +70,8 @@ class SupabaseClientImpl implements ISupabaseClient {
   }) async {
     final selectedColumns = columns.trim() == '*' ? '*' : columns;
 
-    var query = _client.from(table).select(selectedColumns);
+    PostgrestFilterBuilder<List<Map<String, dynamic>>> query =
+        _client.from(table).select(selectedColumns);
 
     if (filters.isNotEmpty) {
       query = query.eq(filters.keys.first, filters.values.first);
