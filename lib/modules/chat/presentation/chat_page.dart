@@ -43,6 +43,7 @@ class _ChatPageState extends State<ChatPage> {
   void _update() {
     if (mounted) setState(() {});
   }
+
   bool _isLoading = false;
   String? _currentConversationId;
 
@@ -91,17 +92,10 @@ class _ChatPageState extends State<ChatPage> {
       showAppSnackbar(
         context,
         title: translate('chat.limit.title'),
-        message: translate(
-          'chat.limit.message',
-          params: {'limit': '$limit'},
-        ),
+        message: translate('chat.limit.message', params: {'limit': '$limit'}),
         type: TypeSnack.error,
       );
       return;
-    }
-
-    if (!_purchase.isPremium) {
-      await _adsService.showInterstitial();
     }
 
     setState(() {
@@ -229,8 +223,9 @@ class _ChatPageState extends State<ChatPage> {
                         }
 
                         final hasTaro = _messages.any(
-                          (msg) =>
-                              msg.text.contains(translate('chat.generateTarot')),
+                          (msg) => msg.text.contains(
+                            translate('chat.generateTarot'),
+                          ),
                         );
 
                         if (!hasTaro) {
