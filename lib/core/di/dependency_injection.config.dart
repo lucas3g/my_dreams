@@ -44,6 +44,8 @@ import '../../modules/dream/data/repositories/dream_repository_impl.dart'
 import '../../modules/dream/domain/repositories/dream_repository.dart' as _i563;
 import '../../modules/dream/domain/usecases/get_dreams.dart' as _i1037;
 import '../../modules/dream/presentation/controller/dream_bloc.dart' as _i933;
+import '../../shared/services/ads_service.dart' as _i655;
+import '../../shared/services/purchase_service.dart' as _i17;
 import '../data/clients/gemini/gemini_client.dart' as _i123;
 import '../data/clients/http/client_http.dart' as _i777;
 import '../data/clients/http/dio_http_client_impl.dart' as _i14;
@@ -67,6 +69,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i841.ParseTarotMessageUseCase>(
       () => _i841.ParseTarotMessageUseCase(),
     );
+    gh.factory<_i655.AdsService>(() => _i655.AdsService());
+    gh.factory<_i17.PurchaseService>(() => _i17.PurchaseService());
     gh.singleton<_i86.ISupabaseClient>(() => _i788.SupabaseClientImpl());
     gh.factory<_i824.ILocalStorage>(() => _i755.SharedPreferencesService());
     gh.factory<_i123.GeminiClient>(

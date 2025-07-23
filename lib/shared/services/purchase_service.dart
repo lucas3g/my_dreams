@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:injectable/injectable.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/subscription_plan.dart';
 
+@injectable
 class PurchaseService {
   final InAppPurchase _iap = InAppPurchase.instance;
   late StreamSubscription<List<PurchaseDetails>> _subscription;

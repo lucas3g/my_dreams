@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
@@ -14,11 +15,10 @@ import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/app_snackbar.dart';
 import 'package:my_dreams/shared/components/spacer_height_widget.dart';
 import 'package:my_dreams/shared/components/spacer_width.dart';
-import 'package:my_dreams/shared/themes/app_theme_constants.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
+import 'package:my_dreams/shared/themes/app_theme_constants.dart';
+import 'package:super_sliver_list/super_sliver_list.dart';
 
 import '../../home/presentation/widgets/conversation_card_widget.dart';
 import 'controller/chat_bloc.dart';
@@ -239,6 +239,9 @@ class _HomePageState extends State<HomePage> {
           if (!_purchase.isPremium) {
             await _adsService.showInterstitial();
           }
+
+          if (!mounted) return;
+
           await Navigator.pushNamed(
             context,
             NamedRoutes.conversationChat.route,

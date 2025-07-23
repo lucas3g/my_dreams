@@ -1,5 +1,7 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable 
 class AdsService {
   BannerAd? topBanner;
   BannerAd? bottomBanner;
