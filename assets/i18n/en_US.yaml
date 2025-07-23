@@ -23,6 +23,12 @@ chat:
   limit:
     title: Limit reached
     message: Your subscription allows sending only {limit} message(s).
+    button: Unlock more messages
+purchase:
+  title: Choose your plan
+  weekly: Weekly Plan
+  monthly: Monthly Plan
+  annual: Annual Plan
 conversation:
   logout:
     title: Logout

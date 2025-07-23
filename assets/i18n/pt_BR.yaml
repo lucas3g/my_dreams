@@ -23,6 +23,12 @@ chat:
   limit:
     title: Limite atingido
     message: Sua assinatura permite enviar apenas {limit} mensagem(s).
+    button: Liberar mais mensagens
+purchase:
+  title: Escolha seu plano
+  weekly: Plano Semanal
+  monthly: Plano Mensal
+  annual: Plano Anual
 conversation:
   logout:
     title: Sair
