@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../../domain/usecases/get_conversations.dart';
 import '../../domain/usecases/get_messages.dart';
 import '../../domain/usecases/send_message.dart';
+import '../../domain/entities/message_entity.dart';
 import 'chat_events.dart';
 import 'chat_states.dart';
 
@@ -24,6 +25,11 @@ class ChatBloc extends Bloc<ChatEvents, ChatStates> {
     on<LoadConversationsEvent>(_onLoadConversations);
     on<LoadMessagesEvent>(_onLoadMessages);
     on<SendMessageEvent>(_onSendMessage);
+  }
+
+  List<MessageEntity> _sortMessages(List<MessageEntity> messages) {
+    return List<MessageEntity>.from(messages)
+      ..sort((a, b) => a.createdAt.value.compareTo(b.createdAt.value));
   }
 
   Future<void> _onLoadConversations(
@@ -48,7 +54,7 @@ class ChatBloc extends Bloc<ChatEvents, ChatStates> {
     );
     result.get(
       (failure) => emit(state.failure(failure.message)),
-      (list) => emit(state.messages(list)),
+      (list) => emit(state.messages(_sortMessages(list))),
     );
   }
 
@@ -75,7 +81,7 @@ class ChatBloc extends Bloc<ChatEvents, ChatStates> {
 
         messagesResult.get(
           (failure) => emit(state.failure(failure.message)),
-          (messages) => emit(state.messages(messages)),
+          (messages) => emit(state.messages(_sortMessages(messages))),
         );
       },
     );
