@@ -68,26 +68,38 @@ class SupabaseClientImpl implements ISupabaseClient {
     int? limit,
     int? offset,
   }) async {
+    PostgrestList data;
+
     final selectedColumns = columns.trim() == '*' ? '*' : columns;
 
-    PostgrestFilterBuilder<List<Map<String, dynamic>>> query =
-        _client.from(table).select(selectedColumns);
-
-    if (filters.isNotEmpty) {
-      query = query.eq(filters.keys.first, filters.values.first);
-    }
-
-    if (orderBy != null && orderBy.isNotEmpty) {
-      query = query.order(orderBy);
+    if (orderBy == null || orderBy.isEmpty) {
+      if (filters.isNotEmpty) {
+        data = await _client
+            .from(table)
+            .select(selectedColumns)
+            .eq(filters.keys.first, filters.values.first);
+      } else {
+        data = await _client.from(table).select(selectedColumns);
+      }
+    } else {
+      if (filters.isNotEmpty) {
+        data = await _client
+            .from(table)
+            .select(selectedColumns)
+            .eq(filters.keys.first, filters.values.first)
+            .order(orderBy);
+      } else {
+        data = await _client.from(table).select(selectedColumns).order(orderBy);
+      }
     }
 
     if (limit != null) {
       final start = offset ?? 0;
       final end = start + limit - 1;
-      query = query.range(start, end);
+      data = data
+          .getRange(start, data.length > end ? end : data.length)
+          .toList();
     }
-
-    final data = await query;
 
     return data;
   }
