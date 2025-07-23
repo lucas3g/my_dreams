@@ -86,7 +86,7 @@ class _ChatPageState extends State<ChatPage> {
     final user = AppGlobal.instance.user;
     if (user == null) return;
     setState(() {
-      _messages.add(const ChatMessage(text: 'Gerar uma carta de Taro', isUser: true));
+      _messages.add(ChatMessage(text: 'Gerar uma carta de Taro', isUser: true));
       _isLoading = true;
     });
     _scrollToBottom();
@@ -153,16 +153,18 @@ class _ChatPageState extends State<ChatPage> {
                       final message = _messages[index];
                       final widget = ChatMessageWidget(message: message);
                       if (!message.isUser &&
-                          message.text.toLowerCase().contains('gerar uma carta de taro')) {
+                          message.text.contains('Gerar uma carta de Taro')) {
                         return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             widget,
-                            const SizedBox(height: 8),
                             AppCustomButton(
+                              backgroundColor: context.myTheme.primaryContainer,
                               onPressed: _sendTarotMessage,
                               label: const Text('Gerar uma carta de Taro'),
                             ),
+                            const SizedBox(height: 8),
                           ],
                         );
                       }
@@ -171,6 +173,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
               ),
+
               Row(
                 children: [
                   Expanded(

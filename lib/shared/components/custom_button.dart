@@ -60,7 +60,6 @@ class AppCustomButton extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: context.myTheme.onPrimaryContainer,
               ),
-              padding: EdgeInsets.zero,
               fixedSize: expands ? Size(context.screenWidth, height) : null,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(radius),
