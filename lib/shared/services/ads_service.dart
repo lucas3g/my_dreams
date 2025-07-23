@@ -1,7 +1,7 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:injectable/injectable.dart';
 
-@injectable 
+@injectable
 class AdsService {
   BannerAd? topBanner;
   BannerAd? bottomBanner;
@@ -9,24 +9,28 @@ class AdsService {
 
   Future<void> init() async {
     await MobileAds.instance.initialize();
-    _loadBanners();
+    await _loadBanners();
     await loadInterstitial();
   }
 
-  void _loadBanners() {
+  Future<void> _loadBanners() async {
     topBanner = BannerAd(
       size: AdSize.banner,
       adUnitId: 'ca-app-pub-1898798427054986/9646986739',
       listener: const BannerAdListener(),
       request: const AdRequest(),
-    )..load();
+    );
+
+    await topBanner?.load();
 
     bottomBanner = BannerAd(
       size: AdSize.banner,
       adUnitId: 'ca-app-pub-1898798427054986/2817854509',
       listener: const BannerAdListener(),
       request: const AdRequest(),
-    )..load();
+    );
+
+    await bottomBanner?.load();
   }
 
   Future<void> loadInterstitial() async {
