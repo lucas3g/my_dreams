@@ -10,7 +10,7 @@ class GeminiClient {
 
   GeminiClient({required Dio dio}) : _dio = dio {
     _dio.options.baseUrl = 'https://generativelanguage.googleapis.com/v1beta';
-    _dio.options.headers['x-goog-api-key'] = GEMINI_API_KEY;
+    _dio.options.headers['x-goog-api-key'] = AppConfig.geminiApiKey;
   }
 
   Future<Response<T>> post<T>(String path, {Map<String, dynamic>? data}) {
