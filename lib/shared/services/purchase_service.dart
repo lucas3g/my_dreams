@@ -45,8 +45,7 @@ class PurchaseService extends ChangeNotifier {
           _controller.add(PurchaseState.success);
         }
       }
-      if (purchase.status == PurchaseStatus.error ||
-          purchase.status == PurchaseStatus.canceled) {
+      if (purchase.status == PurchaseStatus.error) {
         _controller.add(PurchaseState.error);
       }
     }
@@ -60,7 +59,9 @@ class PurchaseService extends ChangeNotifier {
         _controller.add(PurchaseState.error);
         return;
       }
-      final param = PurchaseParam(productDetails: response.productDetails.first);
+      final param = PurchaseParam(
+        productDetails: response.productDetails.first,
+      );
       await _iap.buyNonConsumable(purchaseParam: param);
     } catch (_) {
       _controller.add(PurchaseState.error);

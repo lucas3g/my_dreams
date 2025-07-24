@@ -13,6 +13,7 @@ import 'package:my_dreams/modules/auth/presentation/controller/auth_events.dart'
 import 'package:my_dreams/modules/auth/presentation/controller/auth_states.dart';
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/app_snackbar.dart';
+import 'package:my_dreams/shared/components/custom_button.dart';
 import 'package:my_dreams/shared/components/spacer_height_widget.dart';
 import 'package:my_dreams/shared/components/spacer_width.dart';
 import 'package:my_dreams/shared/services/ads_service.dart';
@@ -102,13 +103,15 @@ class _HomePageState extends State<HomePage> {
           title: Text(translate('conversation.logout.title')),
           content: Text(translate('conversation.logout.message')),
           actions: [
-            TextButton(
+            AppCustomButton(
+              backgroundColor: context.myTheme.primary,
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text(translate('conversation.logout.cancel')),
+              label: Text(translate('conversation.logout.cancel')),
             ),
-            TextButton(
+            AppCustomButton(
+              backgroundColor: context.myTheme.primary,
               onPressed: () => Navigator.of(context).pop(true),
-              child: Text(translate('conversation.logout.confirm')),
+              label: Text(translate('conversation.logout.confirm')),
             ),
           ],
         );

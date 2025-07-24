@@ -59,7 +59,11 @@ class _AuthPageState extends State<AuthPage> {
     }
 
     if (states is AuthSuccessState) {
-      return const Icon(Icons.check, size: 25);
+      return Icon(
+        Icons.check,
+        size: 25,
+        color: context.myTheme.primaryContainer,
+      );
     }
 
     return Text(

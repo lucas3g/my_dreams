@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_dreams/core/di/dependency_injection.config.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
-import 'package:my_dreams/core/domain/entities/subscription_plan.dart';
 import 'package:my_dreams/core/domain/entities/usecase.dart';
 import 'package:my_dreams/modules/auth/domain/usecases/auto_login.dart';
 
@@ -44,9 +42,9 @@ Dio _dioFactory() {
 void _initAppGlobal() {
   AppGlobal(user: null);
 
-  if (kDebugMode) {
-    AppGlobal.instance.setPlan(SubscriptionPlan.annual);
-  }
+  // if (kDebugMode) {
+  //   AppGlobal.instance.setPlan(SubscriptionPlan.annual);
+  // }
 }
 
 Future<void> _tryAutoLogin() async {

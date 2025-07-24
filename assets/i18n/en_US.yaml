@@ -40,6 +40,6 @@ conversation:
     cancel: Cancel
     confirm: Logout
   empty: No meaning found
-  new: New Meaning
+  new: New Dream
 dream:
   dateLabel: 'Date: '
