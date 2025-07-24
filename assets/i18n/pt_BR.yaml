@@ -30,6 +30,9 @@ purchase:
   weekly: Plano Semanal
   monthly: Plano Mensal
   annual: Plano Anual
+  loading: Processando compra...
+  success: Compra realizada com sucesso!
+  error: Falha ao realizar a compra.
 conversation:
   logout:
     title: Sair
