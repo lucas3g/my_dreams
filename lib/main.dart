@@ -8,5 +8,4 @@ void main() async {
   await I18nTranslate.create(loader: TranslateLoader(basePath: 'assets/i18n'));
 
   runApp(const AppWidget());
-  // Dependencies are loaded in the splash page.
 }

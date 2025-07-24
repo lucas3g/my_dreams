@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_dreams/core/init/app_initializer.dart';
+import 'package:my_dreams/core/domain/entities/named_routes.dart';
 
 import 'splash_content.dart';
-import 'splash_page.dart';
 
 class InitialSplashPage extends StatefulWidget {
   const InitialSplashPage({super.key});
@@ -13,8 +12,6 @@ class InitialSplashPage extends StatefulWidget {
 }
 
 class _InitialSplashPageState extends State<InitialSplashPage> {
-  bool _showMainSplash = false;
-
   @override
   void initState() {
     super.initState();
@@ -30,18 +27,19 @@ class _InitialSplashPageState extends State<InitialSplashPage> {
   }
 
   Future<void> _loadDependencies() async {
-    await initializeAppDependencies();
+    await Future.delayed(const Duration(milliseconds: 350));
 
     if (!mounted) return;
 
-    setState(() => _showMainSplash = true);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      NamedRoutes.splash.route,
+      (route) => false,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
-      child: _showMainSplash ? const SplashPage() : const SplashContent(),
-    );
+    return const SplashContent();
   }
 }

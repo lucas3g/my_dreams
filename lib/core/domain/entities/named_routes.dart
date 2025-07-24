@@ -1,6 +1,6 @@
 enum NamedRoutes {
   initialSplash('/initial-splash'),
-  splash('/'),
+  splash('/splash'),
   auth('/auth'),
   home('/home'),
   chat('/chat'),
