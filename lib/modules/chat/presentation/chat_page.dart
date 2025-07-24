@@ -13,13 +13,13 @@ import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
-import '../../dream/presentation/widgets/chat_message_widget.dart';
 import '../../subscription/presentation/subscription_bottom_sheet.dart';
 import '../domain/entities/tarot_card_entity.dart';
 import '../domain/usecases/parse_tarot_message.dart';
 import 'controller/chat_bloc.dart';
 import 'controller/chat_events.dart';
 import 'controller/chat_states.dart';
+import 'widgets/chat_message_widget.dart';
 import 'widgets/tarot_options_widget.dart';
 import 'widgets/thinking_message_widget.dart';
 
@@ -283,7 +283,7 @@ class _ChatPageState extends State<ChatPage> {
                                 )
                               : const Padding(
                                   padding: EdgeInsets.all(8.0),
-                                  child: AppCircularIndicatorWidget(size: 20),
+                                  child: AppCircularIndicatorWidget(size: 10),
                                 ),
                         ),
                       ),

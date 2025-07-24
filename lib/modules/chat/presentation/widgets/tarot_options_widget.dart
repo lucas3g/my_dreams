@@ -16,17 +16,21 @@ class TarotOptionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 8,
-      children: cards
-          .map(
-            (card) => AppCustomButton(
-              backgroundColor: context.myTheme.primaryContainer,
-              onPressed: () => onSelected(card),
-              label: Text(card.title),
-            ),
-          )
-          .toList(),
+    return SizedBox(
+      width: context.screenWidth,
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 8,
+        children: cards
+            .map(
+              (card) => AppCustomButton(
+                backgroundColor: context.myTheme.primaryContainer,
+                onPressed: () => onSelected(card),
+                label: Text(card.title),
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }

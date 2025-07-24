@@ -36,16 +36,9 @@ import '../../modules/chat/domain/usecases/get_messages.dart' as _i312;
 import '../../modules/chat/domain/usecases/parse_tarot_message.dart' as _i841;
 import '../../modules/chat/domain/usecases/send_message.dart' as _i864;
 import '../../modules/chat/presentation/controller/chat_bloc.dart' as _i307;
-import '../../modules/dream/data/datasources/dream_datasource.dart' as _i735;
-import '../../modules/dream/data/datasources/dream_datasource_impl.dart'
-    as _i866;
-import '../../modules/dream/data/repositories/dream_repository_impl.dart'
-    as _i648;
-import '../../modules/dream/domain/repositories/dream_repository.dart' as _i563;
-import '../../modules/dream/domain/usecases/get_dreams.dart' as _i1037;
-import '../../modules/dream/presentation/controller/dream_bloc.dart' as _i933;
 import '../../shared/services/ads_service.dart' as _i655;
 import '../../shared/services/purchase_service.dart' as _i17;
+import '../../shared/services/remote_config_service.dart' as _i662;
 import '../data/clients/gemini/gemini_client.dart' as _i123;
 import '../data/clients/http/client_http.dart' as _i777;
 import '../data/clients/http/dio_http_client_impl.dart' as _i14;
@@ -71,6 +64,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i655.AdsService>(() => _i655.AdsService());
     gh.singleton<_i17.PurchaseService>(() => _i17.PurchaseService());
+    gh.singleton<_i662.RemoteConfigService>(() => _i662.RemoteConfigService());
     gh.singleton<_i86.ISupabaseClient>(() => _i788.SupabaseClientImpl());
     gh.factory<_i824.ILocalStorage>(() => _i755.SharedPreferencesService());
     gh.factory<_i123.GeminiClient>(
@@ -82,16 +76,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i883.ChatAiDatasource>(
       () => _i514.ChatAiDatasourceImpl(client: gh<_i123.GeminiClient>()),
     );
-    gh.factory<_i735.DreamDatasource>(
-      () =>
-          _i866.DreamDatasourceImpl(supabaseClient: gh<_i86.ISupabaseClient>()),
-    );
     gh.factory<_i655.AuthDatasource>(
       () =>
           _i275.AuthDatasourceImpl(supabaseClient: gh<_i86.ISupabaseClient>()),
-    );
-    gh.factory<_i563.DreamRepository>(
-      () => _i648.DreamRepositoryImpl(datasource: gh<_i735.DreamDatasource>()),
     );
     gh.factory<_i335.ChatDatasource>(
       () => _i209.ChatDatasourceImpl(
@@ -105,13 +92,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i165.ChatRepository>(
       () => _i696.ChatRepositoryImpl(datasource: gh<_i335.ChatDatasource>()),
-    );
-    gh.factory<_i1037.GetDreamsUseCase>(
-      () =>
-          _i1037.GetDreamsUseCase(dreamRepository: gh<_i563.DreamRepository>()),
-    );
-    gh.factory<_i933.DreamBloc>(
-      () => _i933.DreamBloc(getDreamsUseCase: gh<_i1037.GetDreamsUseCase>()),
     );
     gh.factory<_i51.AutoLoginUseCase>(
       () => _i51.AutoLoginUseCase(authRepository: gh<_i779.AuthRepository>()),

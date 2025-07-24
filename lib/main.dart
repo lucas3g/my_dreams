@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_dreams/app_widget.dart';
-import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
+import 'package:my_dreams/core/domain/entities/app_config.dart';
 import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:my_dreams/shared/services/remote_config_service.dart';
@@ -14,9 +14,7 @@ void main() async {
 
   await Firebase.initializeApp();
 
-  await configureDependencies();
-
-  final RemoteConfigService remoteConfig = getIt<RemoteConfigService>();
+  final RemoteConfigService remoteConfig = RemoteConfigService();
   await remoteConfig.init();
 
   await Supabase.initialize(
@@ -24,9 +22,9 @@ void main() async {
     anonKey: AppConfig.supabaseAnonKey,
   );
 
-  await I18nTranslate.create(
-    loader: TranslateLoader(basePath: 'assets/i18n'),
-  );
+  await configureDependencies();
+
+  await I18nTranslate.create(loader: TranslateLoader(basePath: 'assets/i18n'));
 
   final AdsService ads = getIt<AdsService>();
   await ads.init();

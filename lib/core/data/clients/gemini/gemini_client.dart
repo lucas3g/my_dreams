@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:my_dreams/core/constants/constants.dart';
+import 'package:my_dreams/core/domain/entities/app_config.dart';
 
 @injectable
 class GeminiClient {

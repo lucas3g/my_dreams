@@ -22,11 +22,11 @@ import 'package:my_dreams/shared/translate/translate.dart';
 import 'package:my_dreams/shared/utils/formatters.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
-import '../../home/presentation/widgets/conversation_card_widget.dart';
 import '../domain/entities/conversation_entity.dart';
 import 'controller/chat_bloc.dart';
 import 'controller/chat_events.dart';
 import 'controller/chat_states.dart';
+import 'widgets/conversation_card_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   final ChatBloc _chatBloc = getIt<ChatBloc>();
   final AdsService _adsService = getIt<AdsService>();
   final PurchaseService _purchase = getIt<PurchaseService>();
+
   void _update() {
     if (mounted) setState(() {});
   }
