@@ -12,6 +12,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await I18nTranslate.create(loader: TranslateLoader(basePath: 'assets/i18n'));
+
   await Firebase.initializeApp();
 
   final RemoteConfigService remoteConfig = RemoteConfigService();
@@ -23,8 +25,6 @@ void main() async {
   );
 
   await configureDependencies();
-
-  await I18nTranslate.create(loader: TranslateLoader(basePath: 'assets/i18n'));
 
   final AdsService ads = getIt<AdsService>();
   await ads.init();
