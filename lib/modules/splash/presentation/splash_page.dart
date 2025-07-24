@@ -4,6 +4,7 @@ import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/domain/entities/app_assets.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/named_routes.dart';
+import 'package:my_dreams/core/init/app_initializer.dart';
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
@@ -23,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _init() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await initializeAppDependencies();
 
     if (!mounted) return;
 
