@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/domain/entities/app_assets.dart';
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
@@ -28,7 +29,9 @@ class SplashContent extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 40),
-                const AppCircularIndicatorWidget(),
+                const AppCircularIndicatorWidget().animate().fade(
+                  duration: const Duration(milliseconds: 300),
+                ),
               ],
             ),
           ),

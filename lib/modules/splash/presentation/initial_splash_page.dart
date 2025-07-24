@@ -27,7 +27,7 @@ class _InitialSplashPageState extends State<InitialSplashPage> {
   }
 
   Future<void> _loadDependencies() async {
-    await Future.delayed(const Duration(milliseconds: 350));
+    await Future.delayed(const Duration(milliseconds: 500));
 
     if (!mounted) return;
 
