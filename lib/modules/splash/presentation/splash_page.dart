@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/named_routes.dart';
 import 'package:my_dreams/core/init/app_initializer.dart';
-import 'package:my_dreams/shared/translate/translate.dart';
 
 import 'splash_content.dart';
 
