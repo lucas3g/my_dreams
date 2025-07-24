@@ -30,6 +30,9 @@ purchase:
   weekly: Weekly Plan
   monthly: Monthly Plan
   annual: Annual Plan
+  loading: Processing purchase...
+  success: Purchase completed successfully!
+  error: Failed to complete the purchase.
 conversation:
   logout:
     title: Logout
