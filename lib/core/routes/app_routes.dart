@@ -3,6 +3,7 @@ import 'package:my_dreams/modules/auth/presentation/auth_page.dart';
 import 'package:my_dreams/modules/chat/presentation/chat_page.dart';
 import 'package:my_dreams/modules/home/presentation/home_page.dart';
 import 'package:my_dreams/modules/splash/presentation/splash_page.dart';
+import 'package:my_dreams/modules/splash/presentation/initial_splash_page.dart';
 import 'package:my_dreams/modules/subscription/presentation/subscription_page.dart';
 
 import '../domain/entities/named_routes.dart';
@@ -16,6 +17,8 @@ class CustomNavigator {
 
   Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     final Map<String, WidgetBuilder> appRoutes = <String, WidgetBuilder>{
+      NamedRoutes.initialSplash.route:
+          (BuildContext context) => const InitialSplashPage(),
       NamedRoutes.splash.route: (BuildContext context) => const SplashPage(),
       NamedRoutes.auth.route: (BuildContext context) => const AuthPage(),
       NamedRoutes.home.route: (BuildContext context) => const HomePage(),
