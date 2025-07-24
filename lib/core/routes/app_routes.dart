@@ -3,6 +3,7 @@ import 'package:my_dreams/modules/auth/presentation/auth_page.dart';
 import 'package:my_dreams/modules/chat/presentation/chat_page.dart';
 import 'package:my_dreams/modules/home/presentation/home_page.dart';
 import 'package:my_dreams/modules/splash/presentation/splash_page.dart';
+import 'package:my_dreams/modules/subscription/presentation/subscription_page.dart';
 
 import '../domain/entities/named_routes.dart';
 import 'domain/entities/custom_transition.dart';
@@ -19,6 +20,8 @@ class CustomNavigator {
       NamedRoutes.auth.route: (BuildContext context) => const AuthPage(),
       NamedRoutes.home.route: (BuildContext context) => const HomePage(),
       NamedRoutes.chat.route: (BuildContext context) => const ChatPage(),
+      NamedRoutes.subscription.route:
+          (BuildContext context) => const SubscriptionPage(),
     };
 
     WidgetBuilder? builder = appRoutes[settings.name];
