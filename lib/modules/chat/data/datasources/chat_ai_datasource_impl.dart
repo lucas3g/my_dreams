@@ -20,14 +20,15 @@ class ChatAiDatasourceImpl implements ChatAiDatasource {
 
     String message = summary != null && summary.isNotEmpty
         ? isEnglish
-            ? 'Conversation context summary: $summary\nUser: $prompt'
-            : 'Resumo do contexto da conversa: $summary\nUsu\u00E1rio: $prompt'
+              ? 'Conversation context summary: $summary\nUser: $prompt'
+              : 'Resumo do contexto da conversa: $summary\nUsu\u00E1rio: $prompt'
         : isEnglish
-            ? 'Explain the meaning of my dream, provide a short summary: $prompt'
-            : 'Fale o significado do meu sonho, fa\u00E7a um pequeno resumo: $prompt';
+        ? 'Explain the meaning of my dream, provide a short summary, always answer in English: $prompt'
+        : 'Fale o significado do meu sonho, fa\u00E7a um pequeno resumo, responda sempre em Português: $prompt';
 
-    final tarotCommand =
-        isEnglish ? 'Generate Tarot cards' : 'Gerar cartas de Tarô';
+    final tarotCommand = isEnglish
+        ? 'Generate Tarot cards'
+        : 'Gerar cartas de Tarô';
 
     if (message.contains(tarotCommand)) {
       message = isEnglish

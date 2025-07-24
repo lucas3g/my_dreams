@@ -191,6 +191,15 @@ class _HomePageState extends State<HomePage> {
                             style: context.textTheme.bodyLarge,
                           ),
                         ),
+                        IconButton(
+                          icon: const Icon(Icons.settings),
+                          onPressed: () async {
+                            await Navigator.pushNamed(
+                              context,
+                              NamedRoutes.subscription.route,
+                            );
+                          },
+                        ),
                         BlocBuilder<AuthBloc, AuthStates>(
                           bloc: _authBloc,
                           builder: (context, state) {
