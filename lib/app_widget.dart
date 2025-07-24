@@ -25,7 +25,7 @@ class _AppWidgetState extends State<AppWidget> {
       navigatorKey: GlobalContext.navigatorKey,
       darkTheme: darkThemeApp,
       themeMode: ThemeMode.dark,
-      initialRoute: NamedRoutes.splash.route,
+      initialRoute: NamedRoutes.initialSplash.route,
       supportedLocales: <Locale>[
         AppLanguage.portuguese.locale,
         AppLanguage.english.locale,
