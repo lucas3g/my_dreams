@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_dreams/core/data/clients/gemini/gemini_client.dart';
 import 'package:my_dreams/core/domain/entities/app_language.dart';
@@ -59,11 +60,21 @@ class ChatAiDatasourceImpl implements ChatAiDatasource {
 
   @override
   Future<String> generateConversationSummary(String context) async {
+    final language = AppLanguage.fromString(
+      PlatformDispatcher.instance.locale.toString(),
+    );
+
+    final bool isEnglish = language == AppLanguage.english;
+
     final data = {
       'contents': [
         {
           'parts': [
-            {'text': 'Resuma brevemente a conversa: $context'},
+            {
+              'text': isEnglish
+                  ? 'Briefly summarize the conversation: $context'
+                  : 'Resuma brevemente a conversa: $context',
+            },
           ],
         },
       ],
