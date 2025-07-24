@@ -13,7 +13,7 @@ import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
-import '../../subscription/presentation/subscription_bottom_sheet.dart';
+import 'package:my_dreams/core/domain/entities/named_routes.dart';
 import '../domain/entities/tarot_card_entity.dart';
 import '../domain/usecases/parse_tarot_message.dart';
 import 'controller/chat_bloc.dart';
@@ -254,7 +254,10 @@ class _ChatPageState extends State<ChatPage> {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: AppCustomButton(
                     expands: true,
-                    onPressed: () => SubscriptionBottomSheet.show(context),
+                    onPressed: () => Navigator.pushNamed(
+                      context,
+                      NamedRoutes.subscription.route,
+                    ),
                     label: Text(translate('chat.limit.button')),
                   ),
                 ),
