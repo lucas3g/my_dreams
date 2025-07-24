@@ -16,6 +16,7 @@ auth:
 chat:
   screen:
     title: Conversation
+    thinking: Thinking...
   generateTarot: Generate Tarot cards
   input:
     hint: Type your message

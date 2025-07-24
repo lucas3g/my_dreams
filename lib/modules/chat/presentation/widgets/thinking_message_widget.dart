@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:my_dreams/core/constants/constants.dart';
+import 'package:my_dreams/shared/translate/translate.dart';
 
 class ThinkingMessageWidget extends StatelessWidget {
   const ThinkingMessageWidget({super.key});
@@ -10,7 +11,7 @@ class ThinkingMessageWidget extends StatelessWidget {
     final textColor = context.myTheme.onSecondaryContainer;
 
     final text = Text(
-      'Pensando...',
+      translate('chat.screen.thinking'),
       style: context.textTheme.bodyLarge?.copyWith(color: textColor),
     );
 
