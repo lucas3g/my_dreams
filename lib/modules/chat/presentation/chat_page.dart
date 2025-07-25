@@ -7,6 +7,7 @@ import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/app_snackbar.dart';
 import 'package:my_dreams/shared/components/custom_button.dart';
 import 'package:my_dreams/shared/components/text_form_field.dart';
+import 'package:my_dreams/core/domain/entities/app_config.dart';
 import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
@@ -89,7 +90,8 @@ class _ChatPageState extends State<ChatPage> {
     final text = _controller.text.trim();
     if (user == null || text.isEmpty) return;
 
-    final int limit = _purchase.isPremium ? 5 : 1;
+    final int limit =
+        _purchase.isPremium ? AppConfig.premiumLimit : 1;
     final int sent = _messages.where((m) => m.isUser).length;
     if (sent >= limit) {
       return;
