@@ -95,6 +95,15 @@ class _ChatPageState extends State<ChatPage> {
         : 1;
     final int sent = _messages.where((m) => m.isUser).length;
     if (sent >= limit) {
+      showAppSnackbar(
+        context,
+        title: translate('chat.limit.title'),
+        message: translate(
+          'chat.limit.message',
+          params: {'limit': limit.toString()},
+        ),
+        type: TypeSnack.warning,
+      );
       return;
     }
 

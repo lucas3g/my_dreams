@@ -33,8 +33,8 @@ class ChatAiDatasourceImpl implements ChatAiDatasource {
 
     if (message.contains(tarotCommand)) {
       message = isEnglish
-          ? 'Generate Tarot cards, generate from 3 to 5 cards and display "Card 1: [title], Card 2: [title], ...", the titles must not contain **. Ask the user to choose one card and explain only its meaning, then finish the conversation.'
-          : 'Gerar cartas de Tarô, gere de 3 a 5 cartas e exiba "Carta 1: [título], Carta 2: [título], ...", os títulos não devem conter ** e peça para o usuario escolher uma carta e explique o significado dela, mas de somente o significado e termine a conversa.';
+          ? 'Generate Tarot cards, generate from 3 to 5 cards and display "Card 1: [title], Card 2: [title], ...", the titles must not contain **. Ask the user to choose one card and explain only its meaning.'
+          : 'Gerar cartas de Tarô, gere de 3 a 5 cartas e exiba "Carta 1: [título], Carta 2: [título], ...", os títulos não devem conter ** e peça para o usuario escolher uma carta e explique o significado dela, mas de somente o significado.';
     }
 
     final data = {
