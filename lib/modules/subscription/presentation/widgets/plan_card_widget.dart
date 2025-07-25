@@ -119,7 +119,13 @@ class PlanCardWidget extends StatelessWidget {
             ...benefits.map(
               (b) => Padding(
                 padding: const EdgeInsets.only(bottom: 4),
-                child: Text('• $b', style: context.textTheme.bodyMedium),
+                child: Text(
+                  '• $b',
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
               ),
             ),
             Align(

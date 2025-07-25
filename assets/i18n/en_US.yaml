@@ -50,5 +50,6 @@ conversation:
     confirm: Logout
   empty: No meaning found
   new: New Dream
+  subscribeButton: Subscribe
 dream:
   dateLabel: 'Date: '

@@ -50,5 +50,6 @@ conversation:
     confirm: Sair
   empty: Nenhum significado encontrado
   new: Novo Significado
+  subscribeButton: Assinar
 dream:
   dateLabel: 'Data: '

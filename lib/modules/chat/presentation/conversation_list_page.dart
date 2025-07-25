@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
+import 'package:my_dreams/core/domain/entities/app_assets.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/named_routes.dart';
 import 'package:my_dreams/modules/auth/domain/entities/user_entity.dart';
@@ -194,15 +195,7 @@ class _HomePageState extends State<HomePage> {
                             style: context.textTheme.bodyLarge,
                           ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.settings),
-                          onPressed: () async {
-                            await Navigator.pushNamed(
-                              context,
-                              NamedRoutes.subscription.route,
-                            );
-                          },
-                        ),
+
                         BlocBuilder<AuthBloc, AuthStates>(
                           bloc: _authBloc,
                           builder: (context, state) {
@@ -269,51 +262,73 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      floatingActionButton: BlocBuilder<ChatBloc, ChatStates>(
-        bloc: _chatBloc,
-        builder: (context, state) {
-          final conversations = state is ChatLoadedConversationsState
-              ? state.conversationsList
-              : <ConversationEntity>[];
-          final canCreate = _canCreateConversation(conversations);
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(left: AppThemeConstants.padding + 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Visibility(
+              visible: !_purchase.isPremium,
+              child: AppCustomButton(
+                onPressed: () async {
+                  await Navigator.pushNamed(
+                    context,
+                    NamedRoutes.subscription.route,
+                  );
+                },
+                label: Text(translate('conversation.subscribeButton')),
+                icon: Image.asset(AppAssets.crown, width: 25, height: 25),
+              ),
+            ),
+            BlocBuilder<ChatBloc, ChatStates>(
+              bloc: _chatBloc,
+              builder: (context, state) {
+                final conversations = state is ChatLoadedConversationsState
+                    ? state.conversationsList
+                    : <ConversationEntity>[];
+                final canCreate = _canCreateConversation(conversations);
 
-          return FloatingActionButton.extended(
-            onPressed: canCreate
-                ? () async {
-                    if (!_purchase.isPremium) {
-                      await _adsService.showInterstitial();
-                    }
+                return FloatingActionButton.extended(
+                  heroTag: 'new-conversation',
+                  onPressed: canCreate
+                      ? () async {
+                          if (!_purchase.isPremium) {
+                            await _adsService.showInterstitial();
+                          }
 
-                    if (!mounted) return;
+                          if (!mounted) return;
 
-                    await Navigator.pushNamed(
-                      context,
-                      NamedRoutes.conversationChat.route,
-                    );
+                          await Navigator.pushNamed(
+                            context,
+                            NamedRoutes.conversationChat.route,
+                          );
 
-                    _chatBloc.add(
-                      LoadConversationsEvent(userId: user!.id.value),
-                    );
-                  }
-                : () async {
-                    showAppSnackbar(
-                      context,
-                      title: translate('chat.limit.title'),
-                      message: translate('chat.limit.button'),
-                      type: TypeSnack.help,
-                    );
+                          _chatBloc.add(
+                            LoadConversationsEvent(userId: user!.id.value),
+                          );
+                        }
+                      : () async {
+                          showAppSnackbar(
+                            context,
+                            title: translate('chat.limit.title'),
+                            message: translate('chat.limit.button'),
+                            type: TypeSnack.help,
+                          );
 
-                    await Future.delayed(const Duration(seconds: 1));
+                          await Future.delayed(const Duration(seconds: 1));
 
-                    await Navigator.pushNamed(
-                      context,
-                      NamedRoutes.subscription.route,
-                    );
-                  },
-            label: Text(translate('conversation.new')),
-            icon: const Icon(Icons.add),
-          );
-        },
+                          await Navigator.pushNamed(
+                            context,
+                            NamedRoutes.subscription.route,
+                          );
+                        },
+                  label: Text(translate('conversation.new')),
+                  icon: const Icon(Icons.add),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
