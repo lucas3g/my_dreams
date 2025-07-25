@@ -14,17 +14,22 @@ class PurchaseService extends ChangeNotifier {
   final StreamController<PurchaseState> _controller =
       StreamController<PurchaseState>.broadcast();
 
+  final Map<String, String> _prices = {};
+
   static const String weeklyId = 'weekly_plan';
   static const String monthlyId = 'monthly_plan';
   static const String annualId = 'annual_plan';
 
   Stream<PurchaseState> get stream => _controller.stream;
 
+  String priceFor(String id) => _prices[id] ?? '';
+
   Future<void> init() async {
     final bool available = await _iap.isAvailable();
     if (!available) return;
     _subscription = _iap.purchaseStream.listen(_onPurchaseUpdated);
     await _iap.restorePurchases();
+    await _loadPrices();
   }
 
   void _onPurchaseUpdated(List<PurchaseDetails> purchases) {
@@ -48,6 +53,22 @@ class PurchaseService extends ChangeNotifier {
       if (purchase.status == PurchaseStatus.error) {
         _controller.add(PurchaseState.error);
       }
+    }
+  }
+
+  Future<void> _loadPrices() async {
+    try {
+      final response = await _iap.queryProductDetails({
+        weeklyId,
+        monthlyId,
+        annualId,
+      });
+      for (final product in response.productDetails) {
+        _prices[product.id] = product.price;
+      }
+      notifyListeners();
+    } catch (_) {
+      // ignore errors
     }
   }
 

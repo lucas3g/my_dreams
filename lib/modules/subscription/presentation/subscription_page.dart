@@ -85,7 +85,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             const SizedBox(height: 16),
             PlanCardWidget(
               title: translate('purchase.weekly'),
-              price: translate('purchase.weeklyPrice'),
+              price: _purchase.priceFor(PurchaseService.weeklyId).isNotEmpty
+                  ? _purchase.priceFor(PurchaseService.weeklyId)
+                  : translate('purchase.weeklyPrice'),
               benefits: [translate('purchase.weeklyBenefits')],
               isActive: AppGlobal.instance.plan == SubscriptionPlan.weekly,
               onTap: () => _purchase.buy(PurchaseService.weeklyId),
@@ -93,7 +95,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             const SizedBox(height: 8),
             PlanCardWidget(
               title: translate('purchase.monthly'),
-              price: translate('purchase.monthlyPrice'),
+              price: _purchase.priceFor(PurchaseService.monthlyId).isNotEmpty
+                  ? _purchase.priceFor(PurchaseService.monthlyId)
+                  : translate('purchase.monthlyPrice'),
               benefits: [translate('purchase.monthlyBenefits')],
               isActive: AppGlobal.instance.plan == SubscriptionPlan.monthly,
               onTap: () => _purchase.buy(PurchaseService.monthlyId),
@@ -101,7 +105,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             const SizedBox(height: 8),
             PlanCardWidget(
               title: translate('purchase.annual'),
-              price: translate('purchase.annualPrice'),
+              price: _purchase.priceFor(PurchaseService.annualId).isNotEmpty
+                  ? _purchase.priceFor(PurchaseService.annualId)
+                  : translate('purchase.annualPrice'),
               benefits: [translate('purchase.annualBenefits')],
               isActive: AppGlobal.instance.plan == SubscriptionPlan.annual,
               onTap: () => _purchase.buy(PurchaseService.annualId),
