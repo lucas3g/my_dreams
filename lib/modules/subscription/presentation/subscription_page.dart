@@ -67,71 +67,66 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(translate('purchase.title'))),
-      body: Padding(
-        padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (_state == PurchaseState.loading)
-              const Center(child: AppCircularIndicatorWidget()),
-            Text(
-              translate(
-                'purchase.current',
-                params: {
-                  'plan': translate('purchase.${AppGlobal.instance.plan.name}'),
-                },
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            PlanCardWidget(
-              title: translate('purchase.weekly'),
-              price: _purchase.priceFor(PurchaseService.weeklyId),
-              oldPrice: PriceUtils.addAmount(
-                _purchase.priceFor(PurchaseService.weeklyId),
-                2,
-              ),
-              benefits: [
-                translate('purchase.removeAds'),
-                translate('purchase.fiveDreamMeanings'),
-                translate('purchase.tarotCards'),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 10),
+              if (_state == PurchaseState.loading) ...[
+                const Center(child: AppCircularIndicatorWidget()),
+                const SizedBox(height: 10),
               ],
-              isActive: AppGlobal.instance.plan == SubscriptionPlan.weekly,
-              onTap: () => _purchase.buy(PurchaseService.weeklyId),
-            ),
-            const SizedBox(height: 8),
-            PlanCardWidget(
-              title: translate('purchase.monthly'),
-              price: _purchase.priceFor(PurchaseService.monthlyId),
-              oldPrice: PriceUtils.addAmount(
-                _purchase.priceFor(PurchaseService.monthlyId),
-                15,
+              PlanCardWidget(
+                title: translate('purchase.weekly'),
+                price: _purchase.priceFor(PurchaseService.weeklyId),
+                oldPrice: PriceUtils.addAmount(
+                  _purchase.priceFor(PurchaseService.weeklyId),
+                  2,
+                ),
+                benefits: [
+                  translate('purchase.removeAds'),
+                  translate('purchase.fiveDreamMeanings'),
+                  translate('purchase.tarotCards'),
+                ],
+                isActive: AppGlobal.instance.plan == SubscriptionPlan.weekly,
+                onTap: () => _purchase.buy(PurchaseService.weeklyId),
               ),
-              benefits: [
-                translate('purchase.removeAds'),
-                translate('purchase.fiveDreamMeanings'),
-                translate('purchase.tarotCards'),
-              ],
-              isActive: AppGlobal.instance.plan == SubscriptionPlan.monthly,
-              onTap: () => _purchase.buy(PurchaseService.monthlyId),
-            ),
-            const SizedBox(height: 8),
-            PlanCardWidget(
-              title: translate('purchase.annual'),
-              price: _purchase.priceFor(PurchaseService.annualId),
-              oldPrice: PriceUtils.addAmount(
-                _purchase.priceFor(PurchaseService.annualId),
-                50,
+              const SizedBox(height: 8),
+              PlanCardWidget(
+                title: translate('purchase.monthly'),
+                price: _purchase.priceFor(PurchaseService.monthlyId),
+                oldPrice: PriceUtils.addAmount(
+                  _purchase.priceFor(PurchaseService.monthlyId),
+                  15,
+                ),
+                benefits: [
+                  translate('purchase.removeAds'),
+                  translate('purchase.fiveDreamMeanings'),
+                  translate('purchase.tarotCards'),
+                ],
+                isActive: AppGlobal.instance.plan == SubscriptionPlan.monthly,
+                onTap: () => _purchase.buy(PurchaseService.monthlyId),
               ),
-              benefits: [
-                translate('purchase.removeAds'),
-                translate('purchase.fiveDreamMeanings'),
-                translate('purchase.tarotCards'),
-              ],
-              isActive: AppGlobal.instance.plan == SubscriptionPlan.annual,
-              onTap: () => _purchase.buy(PurchaseService.annualId),
-            ),
-          ],
+              const SizedBox(height: 8),
+              PlanCardWidget(
+                title: translate('purchase.annual'),
+                price: _purchase.priceFor(PurchaseService.annualId),
+                oldPrice: PriceUtils.addAmount(
+                  _purchase.priceFor(PurchaseService.annualId),
+                  50,
+                ),
+                benefits: [
+                  translate('purchase.removeAds'),
+                  translate('purchase.fiveDreamMeanings'),
+                  translate('purchase.tarotCards'),
+                ],
+                isActive: AppGlobal.instance.plan == SubscriptionPlan.annual,
+                onTap: () => _purchase.buy(PurchaseService.annualId),
+              ),
+            ],
+          ),
         ),
       ),
     );

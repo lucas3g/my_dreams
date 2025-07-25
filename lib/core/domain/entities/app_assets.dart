@@ -4,6 +4,7 @@ class AppAssets {
   static const String logo = 'assets/images/logo.png';
   static const String google = 'assets/images/google.png';
   static const String marker = 'assets/images/marker.png';
+  static const String crown = 'assets/images/crown.png';
 
   //Lottie files
   static const String lottieSuccess = 'assets/lotties/success.json';

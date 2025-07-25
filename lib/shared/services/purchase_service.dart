@@ -53,6 +53,9 @@ class PurchaseService extends ChangeNotifier {
       if (purchase.status == PurchaseStatus.error) {
         _controller.add(PurchaseState.error);
       }
+      if (purchase.status == PurchaseStatus.canceled) {
+        _controller.add(PurchaseState.canceled);
+      }
     }
   }
 

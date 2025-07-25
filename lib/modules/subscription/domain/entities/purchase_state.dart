@@ -1,1 +1,1 @@
-enum PurchaseState { idle, loading, success, error }
+enum PurchaseState { idle, loading, success, error, canceled }
