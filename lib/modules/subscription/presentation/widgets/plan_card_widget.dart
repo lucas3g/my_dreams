@@ -22,8 +22,8 @@ class PlanCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: isActive
-          ? context.myTheme.primaryContainer
-          : context.myTheme.surface,
+          ? context.myTheme.primary
+          : context.myTheme.primaryContainer,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           AppThemeConstants.mediumBorderRadius,
@@ -43,25 +43,16 @@ class PlanCardWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Text(
-                      title,
-                      style: context.textTheme.titleMedium,
-                    ),
+                    child: Text(title, style: context.textTheme.titleMedium),
                   ),
-                  Text(
-                    price,
-                    style: context.textTheme.titleMedium,
-                  ),
+                  Text(price, style: context.textTheme.titleMedium),
                 ],
               ),
               const SizedBox(height: 8),
               ...benefits.map(
                 (b) => Padding(
                   padding: const EdgeInsets.only(bottom: 4),
-                  child: Text(
-                    '• $b',
-                    style: context.textTheme.bodyMedium,
-                  ),
+                  child: Text('• $b', style: context.textTheme.bodyMedium),
                 ),
               ),
             ],
