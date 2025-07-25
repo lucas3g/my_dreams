@@ -88,7 +88,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               price: _purchase.priceFor(PurchaseService.weeklyId).isNotEmpty
                   ? _purchase.priceFor(PurchaseService.weeklyId)
                   : translate('purchase.weeklyPrice'),
-              benefits: [translate('purchase.weeklyBenefits')],
+              oldPrice: translate('purchase.weeklyOldPrice'),
+              benefits: [
+                translate('purchase.removeAds'),
+                translate('purchase.fiveDreamMeanings'),
+                translate('purchase.tarotCards'),
+              ],
               isActive: AppGlobal.instance.plan == SubscriptionPlan.weekly,
               onTap: () => _purchase.buy(PurchaseService.weeklyId),
             ),
@@ -98,7 +103,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               price: _purchase.priceFor(PurchaseService.monthlyId).isNotEmpty
                   ? _purchase.priceFor(PurchaseService.monthlyId)
                   : translate('purchase.monthlyPrice'),
-              benefits: [translate('purchase.monthlyBenefits')],
+              oldPrice: translate('purchase.monthlyOldPrice'),
+              benefits: [
+                translate('purchase.removeAds'),
+                translate('purchase.fiveDreamMeanings'),
+                translate('purchase.tarotCards'),
+              ],
               isActive: AppGlobal.instance.plan == SubscriptionPlan.monthly,
               onTap: () => _purchase.buy(PurchaseService.monthlyId),
             ),
@@ -108,7 +118,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               price: _purchase.priceFor(PurchaseService.annualId).isNotEmpty
                   ? _purchase.priceFor(PurchaseService.annualId)
                   : translate('purchase.annualPrice'),
-              benefits: [translate('purchase.annualBenefits')],
+              oldPrice: translate('purchase.annualOldPrice'),
+              benefits: [
+                translate('purchase.removeAds'),
+                translate('purchase.fiveDreamMeanings'),
+                translate('purchase.tarotCards'),
+              ],
               isActive: AppGlobal.instance.plan == SubscriptionPlan.annual,
               onTap: () => _purchase.buy(PurchaseService.annualId),
             ),

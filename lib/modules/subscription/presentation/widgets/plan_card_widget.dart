@@ -5,6 +5,7 @@ import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 class PlanCardWidget extends StatelessWidget {
   final String title;
   final String price;
+  final String? oldPrice;
   final List<String> benefits;
   final VoidCallback onTap;
   final bool isActive;
@@ -15,6 +16,7 @@ class PlanCardWidget extends StatelessWidget {
     required this.price,
     required this.benefits,
     required this.onTap,
+    this.oldPrice,
     this.isActive = false,
   });
 
@@ -45,7 +47,27 @@ class PlanCardWidget extends StatelessWidget {
                   Expanded(
                     child: Text(title, style: context.textTheme.titleMedium),
                   ),
-                  Text(price, style: context.textTheme.titleMedium),
+                  if (oldPrice != null && oldPrice!.isNotEmpty)
+                    Text.rich(
+                      TextSpan(
+                        text: price,
+                        style: context.textTheme.titleMedium,
+                        children: [
+                          TextSpan(
+                            text: ' de ',
+                            style: context.textTheme.bodyMedium,
+                          ),
+                          TextSpan(
+                            text: oldPrice,
+                            style: context.textTheme.bodyMedium?.copyWith(
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  else
+                    Text(price, style: context.textTheme.titleMedium),
                 ],
               ),
               const SizedBox(height: 8),
