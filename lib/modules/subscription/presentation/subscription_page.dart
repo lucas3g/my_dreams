@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'dart:async';
+import 'package:my_dreams/core/domain/entities/app_global.dart';
+import 'package:my_dreams/core/domain/entities/subscription_plan.dart';
+import 'widgets/plan_card_widget.dart';
 
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/app_snackbar.dart';
@@ -23,9 +26,14 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   StreamSubscription<PurchaseState>? _subscription;
   PurchaseState _state = PurchaseState.idle;
 
+  void _updatePlan() {
+    if (mounted) setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
+    _purchase.addListener(_updatePlan);
     _subscription = _purchase.stream.listen((state) {
       if (!mounted) return;
       setState(() => _state = state);
@@ -51,6 +59,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   @override
   void dispose() {
     _subscription?.cancel();
+    _purchase.removeListener(_updatePlan);
     super.dispose();
   }
 
@@ -65,34 +74,41 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           children: [
             if (_state == PurchaseState.loading)
               const Center(child: AppCircularIndicatorWidget()),
-            const Spacer(),
-            AppCustomButton(
-              backgroundColor: context.myTheme.primary,
-              expands: true,
-              onPressed: _state == PurchaseState.loading
-                  ? null
-                  : () => _purchase.buy(PurchaseService.weeklyId),
-              label: Text(translate('purchase.weekly')),
+            Text(
+              translate(
+                'purchase.current',
+                params: {
+                  'plan': translate(
+                    'purchase.' + AppGlobal.instance.plan.name,
+                  ),
+                },
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            PlanCardWidget(
+              title: translate('purchase.weekly'),
+              price: translate('purchase.weeklyPrice'),
+              benefits: [translate('purchase.weeklyBenefits')],
+              isActive: AppGlobal.instance.plan == SubscriptionPlan.weekly,
+              onTap: () => _purchase.buy(PurchaseService.weeklyId),
             ),
             const SizedBox(height: 8),
-            AppCustomButton(
-              backgroundColor: context.myTheme.primary,
-              expands: true,
-              onPressed: _state == PurchaseState.loading
-                  ? null
-                  : () => _purchase.buy(PurchaseService.monthlyId),
-              label: Text(translate('purchase.monthly')),
+            PlanCardWidget(
+              title: translate('purchase.monthly'),
+              price: translate('purchase.monthlyPrice'),
+              benefits: [translate('purchase.monthlyBenefits')],
+              isActive: AppGlobal.instance.plan == SubscriptionPlan.monthly,
+              onTap: () => _purchase.buy(PurchaseService.monthlyId),
             ),
             const SizedBox(height: 8),
-            AppCustomButton(
-              backgroundColor: context.myTheme.primary,
-              expands: true,
-              onPressed: _state == PurchaseState.loading
-                  ? null
-                  : () => _purchase.buy(PurchaseService.annualId),
-              label: Text(translate('purchase.annual')),
+            PlanCardWidget(
+              title: translate('purchase.annual'),
+              price: translate('purchase.annualPrice'),
+              benefits: [translate('purchase.annualBenefits')],
+              isActive: AppGlobal.instance.plan == SubscriptionPlan.annual,
+              onTap: () => _purchase.buy(PurchaseService.annualId),
             ),
-            const Spacer(),
           ],
         ),
       ),
