@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool _canCreateConversation(List<ConversationEntity> list) {
-    final int limit = _purchase.isPremium ? AppConfig.weeklypremiumLimit : 1;
+    final int limit = _purchase.isPremium ? AppConfig.premiumLimit : 1;
     final now = DateTime.now();
     final todayCount = list
         .where((conv) => conv.createdAt.value.isSameDate(now))

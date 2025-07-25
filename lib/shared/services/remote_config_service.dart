@@ -33,7 +33,7 @@ class RemoteConfigService {
 
     final premiumLimit = _remoteConfig.getInt('PREMIUM_LIMIT');
     if (premiumLimit > 0) {
-      AppConfig.weeklypremiumLimit = premiumLimit;
+      AppConfig.premiumLimit = premiumLimit;
     }
   }
 }
