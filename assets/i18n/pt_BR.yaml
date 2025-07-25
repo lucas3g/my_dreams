@@ -32,6 +32,7 @@ purchase:
   annual: Plano Anual
   free: Plano Gratuito
   removeAds: Remover anúncios
+  dreamsPerDay: '{limit} sonhos por dia'
   fiveDreamMeanings: 5 significados dos sonhos
   tarotCards: Gerar cartas de Tarô
   current: Plano atual - {plan}

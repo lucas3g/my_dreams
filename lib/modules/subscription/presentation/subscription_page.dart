@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/subscription_plan.dart';
+import 'package:my_dreams/core/domain/entities/app_config.dart';
 import 'package:my_dreams/modules/subscription/domain/entities/purchase_state.dart';
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/app_snackbar.dart';
@@ -87,7 +88,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 ),
                 benefits: [
                   translate('purchase.removeAds'),
-                  translate('purchase.fiveDreamMeanings'),
+                  translate(
+                    'purchase.dreamsPerDay',
+                    params: {'limit': '${AppConfig.limitForPlan(SubscriptionPlan.weekly)}'},
+                  ),
                   translate('purchase.tarotCards'),
                 ],
                 isActive: AppGlobal.instance.plan == SubscriptionPlan.weekly,
@@ -103,7 +107,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 ),
                 benefits: [
                   translate('purchase.removeAds'),
-                  translate('purchase.fiveDreamMeanings'),
+                  translate(
+                    'purchase.dreamsPerDay',
+                    params: {'limit': '${AppConfig.limitForPlan(SubscriptionPlan.monthly)}'},
+                  ),
                   translate('purchase.tarotCards'),
                 ],
                 isActive: AppGlobal.instance.plan == SubscriptionPlan.monthly,
@@ -119,7 +126,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 ),
                 benefits: [
                   translate('purchase.removeAds'),
-                  translate('purchase.fiveDreamMeanings'),
+                  translate(
+                    'purchase.dreamsPerDay',
+                    params: {'limit': '${AppConfig.limitForPlan(SubscriptionPlan.annual)}'},
+                  ),
                   translate('purchase.tarotCards'),
                 ],
                 isActive: AppGlobal.instance.plan == SubscriptionPlan.annual,
