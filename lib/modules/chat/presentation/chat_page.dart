@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
+import 'package:my_dreams/core/domain/entities/app_config.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
+import 'package:my_dreams/core/domain/entities/named_routes.dart';
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/app_snackbar.dart';
 import 'package:my_dreams/shared/components/custom_button.dart';
 import 'package:my_dreams/shared/components/text_form_field.dart';
-import 'package:my_dreams/core/domain/entities/app_config.dart';
 import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
-import 'package:my_dreams/core/domain/entities/named_routes.dart';
 import '../domain/entities/tarot_card_entity.dart';
 import '../domain/usecases/parse_tarot_message.dart';
 import 'controller/chat_bloc.dart';
@@ -90,8 +90,7 @@ class _ChatPageState extends State<ChatPage> {
     final text = _controller.text.trim();
     if (user == null || text.isEmpty) return;
 
-    final int limit =
-        _purchase.isPremium ? AppConfig.premiumLimit : 1;
+    final int limit = _purchase.isPremium ? AppConfig.weeklypremiumLimit : 1;
     final int sent = _messages.where((m) => m.isUser).length;
     if (sent >= limit) {
       return;
