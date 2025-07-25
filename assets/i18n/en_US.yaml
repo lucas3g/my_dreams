@@ -37,7 +37,7 @@ purchase:
   weeklyBenefits: Unlimited chats for 7 days
   monthlyBenefits: Unlimited chats for 30 days
   annualBenefits: Unlimited chats for 1 year
-  current: Current plan: {plan}
+  current: Current plan - {plan}
   loading: Processing purchase...
   success: Purchase completed successfully!
   error: Failed to complete the purchase.

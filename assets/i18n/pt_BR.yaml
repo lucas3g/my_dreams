@@ -37,7 +37,7 @@ purchase:
   weeklyBenefits: Acesso por 7 dias, conversas ilimitadas
   monthlyBenefits: Acesso por 30 dias, conversas ilimitadas
   annualBenefits: Acesso por 1 ano, conversas ilimitadas
-  current: Plano atual: {plan}
+  current: Plano atual - {plan}
   loading: Processando compra...
   success: Compra realizada com sucesso!
   error: Falha ao realizar a compra.
