@@ -267,18 +267,15 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Visibility(
-              visible: !_purchase.isPremium,
-              child: AppCustomButton(
-                onPressed: () async {
-                  await Navigator.pushNamed(
-                    context,
-                    NamedRoutes.subscription.route,
-                  );
-                },
-                label: Text(translate('conversation.subscribeButton')),
-                icon: Image.asset(AppAssets.crown, width: 25, height: 25),
-              ),
+            AppCustomButton(
+              onPressed: () async {
+                await Navigator.pushNamed(
+                  context,
+                  NamedRoutes.subscription.route,
+                );
+              },
+              label: Text(translate('conversation.subscribeButton')),
+              icon: Image.asset(AppAssets.crown, width: 25, height: 25),
             ),
             BlocBuilder<ChatBloc, ChatStates>(
               bloc: _chatBloc,
