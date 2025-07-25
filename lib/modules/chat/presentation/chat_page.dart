@@ -46,9 +46,25 @@ class _ChatPageState extends State<ChatPage> {
     if (mounted) setState(() {});
   }
 
+  void _showLimitSnackbar() {
+    showAppSnackbar(
+      context,
+      title: translate('chat.limit.title'),
+      message: translate(
+        'chat.limit.message',
+        params: {'limit': _messageLimit.toString()},
+      ),
+      type: TypeSnack.warning,
+    );
+  }
+
   bool _isLoading = false;
-  bool get _limitReached =>
-      !_purchase.isPremium && _messages.where((m) => m.isUser).isNotEmpty;
+  int get _messagesSent => _messages.where((m) => m.isUser).length;
+  int get _messageLimit => _purchase.isPremium
+      ? AppConfig.limitForPlan(AppGlobal.instance.plan)
+      : 1;
+  bool get _hasMessageLimit => _messagesSent < _messageLimit;
+  bool get _limitReached => !_hasMessageLimit;
   String? _currentConversationId;
 
   @override
@@ -90,20 +106,8 @@ class _ChatPageState extends State<ChatPage> {
     final text = _controller.text.trim();
     if (user == null || text.isEmpty) return;
 
-    final int limit = _purchase.isPremium
-        ? AppConfig.limitForPlan(AppGlobal.instance.plan)
-        : 1;
-    final int sent = _messages.where((m) => m.isUser).length;
-    if (sent >= limit) {
-      showAppSnackbar(
-        context,
-        title: translate('chat.limit.title'),
-        message: translate(
-          'chat.limit.message',
-          params: {'limit': limit.toString()},
-        ),
-        type: TypeSnack.warning,
-      );
+    if (!_hasMessageLimit) {
+      _showLimitSnackbar();
       return;
     }
 
@@ -125,6 +129,10 @@ class _ChatPageState extends State<ChatPage> {
   void _sendTarotMessage() {
     final user = AppGlobal.instance.user;
     if (user == null) return;
+    if (!_hasMessageLimit) {
+      _showLimitSnackbar();
+      return;
+    }
     final tarotText = translate('chat.generateTarot');
     setState(() {
       _messages.add(ChatMessage(text: tarotText, isUser: true));
@@ -143,6 +151,10 @@ class _ChatPageState extends State<ChatPage> {
   void _sendTarotCard(TarotCardEntity card) {
     final user = AppGlobal.instance.user;
     if (user == null) return;
+    if (!_hasMessageLimit) {
+      _showLimitSnackbar();
+      return;
+    }
     setState(() {
       _messages.add(ChatMessage(text: card.description, isUser: true));
       _isLoading = true;
@@ -216,7 +228,7 @@ class _ChatPageState extends State<ChatPage> {
 
                       if (!message.isUser) {
                         final cards = _parseTarot(message.text);
-                        if (cards.isNotEmpty) {
+                        if (cards.isNotEmpty && _hasMessageLimit) {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
