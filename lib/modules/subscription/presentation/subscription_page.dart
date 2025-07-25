@@ -10,6 +10,7 @@ import 'package:my_dreams/shared/components/app_snackbar.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
+import 'package:my_dreams/shared/utils/price_utils.dart';
 
 import 'widgets/plan_card_widget.dart';
 
@@ -85,10 +86,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             const SizedBox(height: 16),
             PlanCardWidget(
               title: translate('purchase.weekly'),
-              price: _purchase.priceFor(PurchaseService.weeklyId).isNotEmpty
-                  ? _purchase.priceFor(PurchaseService.weeklyId)
-                  : translate('purchase.weeklyPrice'),
-              oldPrice: translate('purchase.weeklyOldPrice'),
+              price: _purchase.priceFor(PurchaseService.weeklyId),
+              oldPrice: PriceUtils.addAmount(
+                _purchase.priceFor(PurchaseService.weeklyId),
+                2,
+              ),
               benefits: [
                 translate('purchase.removeAds'),
                 translate('purchase.fiveDreamMeanings'),
@@ -100,10 +102,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             const SizedBox(height: 8),
             PlanCardWidget(
               title: translate('purchase.monthly'),
-              price: _purchase.priceFor(PurchaseService.monthlyId).isNotEmpty
-                  ? _purchase.priceFor(PurchaseService.monthlyId)
-                  : translate('purchase.monthlyPrice'),
-              oldPrice: translate('purchase.monthlyOldPrice'),
+              price: _purchase.priceFor(PurchaseService.monthlyId),
+              oldPrice: PriceUtils.addAmount(
+                _purchase.priceFor(PurchaseService.monthlyId),
+                15,
+              ),
               benefits: [
                 translate('purchase.removeAds'),
                 translate('purchase.fiveDreamMeanings'),
@@ -115,10 +118,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             const SizedBox(height: 8),
             PlanCardWidget(
               title: translate('purchase.annual'),
-              price: _purchase.priceFor(PurchaseService.annualId).isNotEmpty
-                  ? _purchase.priceFor(PurchaseService.annualId)
-                  : translate('purchase.annualPrice'),
-              oldPrice: translate('purchase.annualOldPrice'),
+              price: _purchase.priceFor(PurchaseService.annualId),
+              oldPrice: PriceUtils.addAmount(
+                _purchase.priceFor(PurchaseService.annualId),
+                50,
+              ),
               benefits: [
                 translate('purchase.removeAds'),
                 translate('purchase.fiveDreamMeanings'),
