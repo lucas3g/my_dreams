@@ -30,6 +30,14 @@ purchase:
   weekly: Weekly Plan
   monthly: Monthly Plan
   annual: Annual Plan
+  free: Free Plan
+  weeklyPrice: "$4.99"
+  monthlyPrice: "$9.99"
+  annualPrice: "$49.99"
+  weeklyBenefits: Unlimited chats for 7 days
+  monthlyBenefits: Unlimited chats for 30 days
+  annualBenefits: Unlimited chats for 1 year
+  current: Current plan: {plan}
   loading: Processing purchase...
   success: Purchase completed successfully!
   error: Failed to complete the purchase.
