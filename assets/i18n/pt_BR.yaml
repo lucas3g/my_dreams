@@ -51,5 +51,6 @@ conversation:
   empty: Nenhum significado encontrado
   new: Novo Significado
   subscribeButton: Assinar
-dream:
-  dateLabel: 'Data: '
+  upgradeButton: Upgrade do plano
+  dream:
+    dateLabel: 'Data: '
