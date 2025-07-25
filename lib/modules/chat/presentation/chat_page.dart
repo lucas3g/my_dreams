@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'package:my_dreams/core/domain/entities/app_config.dart';
@@ -60,9 +61,8 @@ class _ChatPageState extends State<ChatPage> {
 
   bool _isLoading = false;
   int get _messagesSent => _messages.where((m) => m.isUser).length;
-  int get _messageLimit => _purchase.isPremium
-      ? AppConfig.limitForPlan(AppGlobal.instance.plan)
-      : 1;
+  int get _messageLimit =>
+      _purchase.isPremium ? AppConfig.limitForPlan(AppGlobal.instance.plan) : 1;
   bool get _hasMessageLimit => _messagesSent < _messageLimit;
   bool get _limitReached => !_hasMessageLimit;
   String? _currentConversationId;
@@ -179,6 +179,17 @@ class _ChatPageState extends State<ChatPage> {
           padding: const EdgeInsets.all(AppThemeConstants.padding),
           child: Column(
             children: [
+              if (!_purchase.isPremium && _adsService.bottomBanner != null)
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: _adsService.bottomBanner!.size.height.toDouble(),
+                      child: AdWidget(ad: _adsService.bottomBanner!),
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                ),
               Expanded(
                 child: BlocListener<ChatBloc, ChatStates>(
                   bloc: _bloc,

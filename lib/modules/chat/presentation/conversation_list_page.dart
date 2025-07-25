@@ -262,11 +262,6 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
-              // if (!_purchase.isPremium && _adsService.bottomBanner != null)
-              //   SizedBox(
-              //     height: _adsService.bottomBanner!.size.height.toDouble(),
-              //     child: AdWidget(ad: _adsService.bottomBanner!),
-              //   ),
             ],
           ),
         ),
