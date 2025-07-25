@@ -48,7 +48,23 @@ class UserDrawerWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: AppThemeConstants.mediumPadding),
+            Padding(
+              padding: const EdgeInsets.all(AppThemeConstants.padding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    translate(AppGlobal.instance.user!.name.value),
+                    style: context.textTheme.headlineSmall?.copyWith(
+                      color: context.myTheme.onPrimaryContainer,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Divider(color: context.myTheme.primary),
+                ],
+              ),
+            ),
+
             if (buildSubscribeButton() != null) ...[
               buildSubscribeButton()!,
               const SizedBox(height: AppThemeConstants.mediumPadding),
