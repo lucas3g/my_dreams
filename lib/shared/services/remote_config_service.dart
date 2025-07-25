@@ -30,5 +30,10 @@ class RemoteConfigService {
     if (geminiKey.isNotEmpty) {
       AppConfig.geminiApiKey = geminiKey;
     }
+
+    final premiumLimit = _remoteConfig.getInt('PREMIUM_LIMIT');
+    if (premiumLimit > 0) {
+      AppConfig.premiumLimit = premiumLimit;
+    }
   }
 }
