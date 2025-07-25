@@ -1,18 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:my_dreams/core/constants/constants.dart';
-import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:my_dreams/core/di/dependency_injection.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/subscription_plan.dart';
-import 'widgets/plan_card_widget.dart';
-
+import 'package:my_dreams/modules/subscription/domain/entities/purchase_state.dart';
 import 'package:my_dreams/shared/components/app_circular_indicator_widget.dart';
 import 'package:my_dreams/shared/components/app_snackbar.dart';
-import 'package:my_dreams/shared/components/custom_button.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
-import 'package:my_dreams/modules/subscription/domain/entities/purchase_state.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
+
+import 'widgets/plan_card_widget.dart';
 
 class SubscriptionPage extends StatefulWidget {
   const SubscriptionPage({super.key});
@@ -78,9 +77,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               translate(
                 'purchase.current',
                 params: {
-                  'plan': translate(
-                    'purchase.' + AppGlobal.instance.plan.name,
-                  ),
+                  'plan': translate('purchase.${AppGlobal.instance.plan.name}'),
                 },
               ),
               textAlign: TextAlign.center,
