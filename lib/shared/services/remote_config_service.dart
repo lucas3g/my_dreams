@@ -1,6 +1,7 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:injectable/injectable.dart';
 import 'package:my_dreams/core/domain/entities/app_config.dart';
+import 'package:my_dreams/core/domain/entities/subscription_plan.dart';
 
 @singleton
 class RemoteConfigService {
@@ -31,9 +32,19 @@ class RemoteConfigService {
       AppConfig.geminiApiKey = geminiKey;
     }
 
-    final premiumLimit = _remoteConfig.getInt('PREMIUM_LIMIT');
-    if (premiumLimit > 0) {
-      AppConfig.premiumLimit = premiumLimit;
+    final weeklyLimit = _remoteConfig.getInt('WEEKLY_PREMIUM_LIMIT');
+    if (weeklyLimit > 0) {
+      AppConfig.updateLimitForPlan(SubscriptionPlan.weekly, weeklyLimit);
+    }
+
+    final monthlyLimit = _remoteConfig.getInt('MONTHLY_PREMIUM_LIMIT');
+    if (monthlyLimit > 0) {
+      AppConfig.updateLimitForPlan(SubscriptionPlan.monthly, monthlyLimit);
+    }
+
+    final annualLimit = _remoteConfig.getInt('ANNUAL_PREMIUM_LIMIT');
+    if (annualLimit > 0) {
+      AppConfig.updateLimitForPlan(SubscriptionPlan.annual, annualLimit);
     }
   }
 }
