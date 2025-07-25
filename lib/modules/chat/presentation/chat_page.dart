@@ -90,7 +90,9 @@ class _ChatPageState extends State<ChatPage> {
     final text = _controller.text.trim();
     if (user == null || text.isEmpty) return;
 
-    final int limit = _purchase.isPremium ? AppConfig.premiumLimit : 1;
+    final int limit = _purchase.isPremium
+        ? AppConfig.limitForPlan(AppGlobal.instance.plan)
+        : 1;
     final int sent = _messages.where((m) => m.isUser).length;
     if (sent >= limit) {
       return;
