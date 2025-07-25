@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_dreams/core/domain/entities/named_routes.dart';
+import 'package:my_dreams/core/constants/constants.dart';
+import 'package:my_dreams/core/domain/entities/app_assets.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
+import 'package:my_dreams/core/domain/entities/named_routes.dart';
 import 'package:my_dreams/core/domain/entities/subscription_plan.dart';
 import 'package:my_dreams/shared/components/custom_button.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
@@ -13,28 +15,29 @@ class UserDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final plan = AppGlobal.instance.plan;
 
-    Widget? _buildSubscribeButton() {
+    Widget? buildSubscribeButton() {
       if (plan == SubscriptionPlan.annual) {
         return null;
       }
 
-      final label = plan == SubscriptionPlan.weekly || plan == SubscriptionPlan.monthly
+      final label =
+          plan == SubscriptionPlan.weekly || plan == SubscriptionPlan.monthly
           ? translate('conversation.upgradeButton')
           : translate('conversation.subscribeButton');
 
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppThemeConstants.padding),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppThemeConstants.padding,
+        ),
         child: AppCustomButton(
           backgroundColor: context.myTheme.primary,
           expands: true,
           onPressed: () async {
             Navigator.pop(context);
-            await Navigator.pushNamed(
-              context,
-              NamedRoutes.subscription.route,
-            );
+            await Navigator.pushNamed(context, NamedRoutes.subscription.route);
           },
           label: Text(label),
+          icon: Image.asset(AppAssets.crown, width: 20, height: 20),
         ),
       );
     }
@@ -46,8 +49,8 @@ class UserDrawerWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: AppThemeConstants.mediumPadding),
-            if (_buildSubscribeButton() != null) ...[
-              _buildSubscribeButton()!,
+            if (buildSubscribeButton() != null) ...[
+              buildSubscribeButton()!,
               const SizedBox(height: AppThemeConstants.mediumPadding),
             ],
           ],

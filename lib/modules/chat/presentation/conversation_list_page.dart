@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:my_dreams/core/constants/constants.dart';
 import 'package:my_dreams/core/di/dependency_injection.dart';
-import 'package:my_dreams/core/domain/entities/app_assets.dart';
+import 'package:my_dreams/core/domain/entities/app_config.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/named_routes.dart';
 import 'package:my_dreams/modules/auth/domain/entities/user_entity.dart';
@@ -19,7 +19,6 @@ import 'package:my_dreams/shared/components/spacer_height_widget.dart';
 import 'package:my_dreams/shared/components/spacer_width.dart';
 import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
-import 'package:my_dreams/core/domain/entities/app_config.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
 import 'package:my_dreams/shared/utils/formatters.dart';
@@ -128,8 +127,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool _canCreateConversation(List<ConversationEntity> list) {
-    final int limit =
-        _purchase.isPremium ? AppConfig.premiumLimit : 1;
+    final int limit = _purchase.isPremium ? AppConfig.premiumLimit : 1;
     final now = DateTime.now();
     final todayCount = list
         .where((conv) => conv.createdAt.value.isSameDate(now))
@@ -171,7 +169,7 @@ class _HomePageState extends State<HomePage> {
               ],
 
               if (user != null)
-                InkWell(
+                GestureDetector(
                   onTap: () => _scaffoldKey.currentState?.openDrawer(),
                   child: Card(
                     color: context.myTheme.primaryContainer,
@@ -185,37 +183,38 @@ class _HomePageState extends State<HomePage> {
                         AppThemeConstants.mediumPadding,
                       ),
                       child: Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: user.imageUrl.value.isNotEmpty
-                              ? NetworkImage(user.imageUrl.value)
-                                    as ImageProvider
-                              : null,
-                          radius: 22,
-                          child: user.imageUrl.value.isEmpty
-                              ? const Icon(Icons.person)
-                              : null,
-                        ),
-                        const SpacerWidth(),
-                        Expanded(
-                          child: Text(
-                            user.name.value,
-                            style: context.textTheme.bodyLarge,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: user.imageUrl.value.isNotEmpty
+                                ? NetworkImage(user.imageUrl.value)
+                                      as ImageProvider
+                                : null,
+                            radius: 22,
+                            child: user.imageUrl.value.isEmpty
+                                ? const Icon(Icons.person)
+                                : null,
                           ),
-                        ),
+                          const SpacerWidth(),
+                          Expanded(
+                            child: Text(
+                              user.name.value,
+                              style: context.textTheme.bodyLarge,
+                            ),
+                          ),
 
-                        BlocBuilder<AuthBloc, AuthStates>(
-                          bloc: _authBloc,
-                          builder: (context, state) {
-                            return IconButton(
-                              icon: _handleLogoutIcon(state),
-                              onPressed: state is AuthLoadingState
-                                  ? null
-                                  : _confirmLogout,
-                            );
-                          },
-                        ),
-                      ],
+                          BlocBuilder<AuthBloc, AuthStates>(
+                            bloc: _authBloc,
+                            builder: (context, state) {
+                              return IconButton(
+                                icon: _handleLogoutIcon(state),
+                                onPressed: state is AuthLoadingState
+                                    ? null
+                                    : _confirmLogout,
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -270,60 +269,52 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(left: AppThemeConstants.padding + 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            BlocBuilder<ChatBloc, ChatStates>(
-              bloc: _chatBloc,
-              builder: (context, state) {
-                final conversations = state is ChatLoadedConversationsState
-                    ? state.conversationsList
-                    : <ConversationEntity>[];
-                final canCreate = _canCreateConversation(conversations);
+      floatingActionButton: BlocBuilder<ChatBloc, ChatStates>(
+        bloc: _chatBloc,
+        builder: (context, state) {
+          final conversations = state is ChatLoadedConversationsState
+              ? state.conversationsList
+              : <ConversationEntity>[];
+          final canCreate = _canCreateConversation(conversations);
 
-                return FloatingActionButton.extended(
-                  heroTag: 'new-conversation',
-                  onPressed: canCreate
-                      ? () async {
-                          if (!_purchase.isPremium) {
-                            await _adsService.showInterstitial();
-                          }
+          return FloatingActionButton.extended(
+            heroTag: 'new-conversation',
+            onPressed: canCreate
+                ? () async {
+                    if (!_purchase.isPremium) {
+                      await _adsService.showInterstitial();
+                    }
 
-                          if (!mounted) return;
+                    if (!mounted) return;
 
-                          await Navigator.pushNamed(
-                            context,
-                            NamedRoutes.conversationChat.route,
-                          );
+                    await Navigator.pushNamed(
+                      context,
+                      NamedRoutes.conversationChat.route,
+                    );
 
-                          _chatBloc.add(
-                            LoadConversationsEvent(userId: user!.id.value),
-                          );
-                        }
-                      : () async {
-                          showAppSnackbar(
-                            context,
-                            title: translate('chat.limit.title'),
-                            message: translate('chat.limit.button'),
-                            type: TypeSnack.help,
-                          );
+                    _chatBloc.add(
+                      LoadConversationsEvent(userId: user!.id.value),
+                    );
+                  }
+                : () async {
+                    showAppSnackbar(
+                      context,
+                      title: translate('chat.limit.title'),
+                      message: translate('chat.limit.button'),
+                      type: TypeSnack.help,
+                    );
 
-                          await Future.delayed(const Duration(seconds: 1));
+                    await Future.delayed(const Duration(seconds: 1));
 
-                          await Navigator.pushNamed(
-                            context,
-                            NamedRoutes.subscription.route,
-                          );
-                        },
-                  label: Text(translate('conversation.new')),
-                  icon: const Icon(Icons.add),
-                );
-              },
-            ),
-          ],
-        ),
+                    await Navigator.pushNamed(
+                      context,
+                      NamedRoutes.subscription.route,
+                    );
+                  },
+            label: Text(translate('conversation.new')),
+            icon: const Icon(Icons.add),
+          );
+        },
       ),
     );
   }
