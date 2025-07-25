@@ -34,9 +34,6 @@ purchase:
   removeAds: Remove ads
   fiveDreamMeanings: 5 dream meanings
   tarotCards: Generate Tarot cards
-  weeklyBenefits: Unlimited chats for 7 days
-  monthlyBenefits: Unlimited chats for 30 days
-  annualBenefits: Unlimited chats for 1 year
   current: Current plan - {plan}
   loading: Processing purchase...
   success: Purchase completed successfully!

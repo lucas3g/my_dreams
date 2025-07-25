@@ -34,9 +34,6 @@ purchase:
   removeAds: Remover anúncios
   fiveDreamMeanings: 5 significados dos sonhos
   tarotCards: Gerar cartas de Tarô
-  weeklyBenefits: Acesso por 7 dias, conversas ilimitadas
-  monthlyBenefits: Acesso por 30 dias, conversas ilimitadas
-  annualBenefits: Acesso por 1 ano, conversas ilimitadas
   current: Plano atual - {plan}
   loading: Processando compra...
   success: Compra realizada com sucesso!
