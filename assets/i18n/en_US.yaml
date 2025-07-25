@@ -51,5 +51,6 @@ conversation:
   empty: No meaning found
   new: New Dream
   subscribeButton: Subscribe
-dream:
-  dateLabel: 'Date: '
+  upgradeButton: Upgrade plan
+  dream:
+    dateLabel: 'Date: '

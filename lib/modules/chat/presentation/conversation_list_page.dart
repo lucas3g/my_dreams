@@ -30,6 +30,7 @@ import 'controller/chat_bloc.dart';
 import 'controller/chat_events.dart';
 import 'controller/chat_states.dart';
 import 'widgets/conversation_card_widget.dart';
+import 'widgets/user_drawer_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -43,6 +44,7 @@ class _HomePageState extends State<HomePage> {
   final ChatBloc _chatBloc = getIt<ChatBloc>();
   final AdsService _adsService = getIt<AdsService>();
   final PurchaseService _purchase = getIt<PurchaseService>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _update() {
     if (mounted) setState(() {});
@@ -152,6 +154,8 @@ class _HomePageState extends State<HomePage> {
     final user = _user;
 
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: const UserDrawerWidget(),
       body: SafeArea(
         bottom: false,
         child: Padding(
@@ -167,18 +171,20 @@ class _HomePageState extends State<HomePage> {
               ],
 
               if (user != null)
-                Card(
-                  color: context.myTheme.primaryContainer,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      AppThemeConstants.mediumBorderRadius,
+                InkWell(
+                  onTap: () => _scaffoldKey.currentState?.openDrawer(),
+                  child: Card(
+                    color: context.myTheme.primaryContainer,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        AppThemeConstants.mediumBorderRadius,
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(
-                      AppThemeConstants.mediumPadding,
-                    ),
-                    child: Row(
+                    child: Padding(
+                      padding: const EdgeInsets.all(
+                        AppThemeConstants.mediumPadding,
+                      ),
+                      child: Row(
                       children: [
                         CircleAvatar(
                           backgroundImage: user.imageUrl.value.isNotEmpty
@@ -267,18 +273,8 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(left: AppThemeConstants.padding + 20),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            AppCustomButton(
-              onPressed: () async {
-                await Navigator.pushNamed(
-                  context,
-                  NamedRoutes.subscription.route,
-                );
-              },
-              label: Text(translate('conversation.subscribeButton')),
-              icon: Image.asset(AppAssets.crown, width: 25, height: 25),
-            ),
             BlocBuilder<ChatBloc, ChatStates>(
               bloc: _chatBloc,
               builder: (context, state) {
