@@ -41,6 +41,7 @@ purchase:
   loading: Processing purchase...
   success: Purchase completed successfully!
   error: Failed to complete the purchase.
+  subscribeButton: Subscribe for
 conversation:
   logout:
     title: Logout

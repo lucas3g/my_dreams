@@ -295,7 +295,21 @@ class _HomePageState extends State<HomePage> {
                       LoadConversationsEvent(userId: user!.id.value),
                     );
                   }
-                : null,
+                : () async {
+                    showAppSnackbar(
+                      context,
+                      title: translate('chat.limit.title'),
+                      message: translate('chat.limit.button'),
+                      type: TypeSnack.help,
+                    );
+
+                    await Future.delayed(const Duration(seconds: 1));
+
+                    await Navigator.pushNamed(
+                      context,
+                      NamedRoutes.subscription.route,
+                    );
+                  },
             label: Text(translate('conversation.new')),
             icon: const Icon(Icons.add),
           );

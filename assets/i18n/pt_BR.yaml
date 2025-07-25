@@ -41,6 +41,7 @@ purchase:
   loading: Processando compra...
   success: Compra realizada com sucesso!
   error: Falha ao realizar a compra.
+  subscribeButton: Assinar por
 conversation:
   logout:
     title: Sair

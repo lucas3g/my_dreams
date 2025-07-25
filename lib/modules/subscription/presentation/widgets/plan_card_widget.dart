@@ -34,104 +34,103 @@ class PlanCardWidget extends StatelessWidget {
           AppThemeConstants.mediumBorderRadius,
         ),
       ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(
-          AppThemeConstants.mediumBorderRadius,
-        ),
-        onTap: isActive ? null : onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Visibility(
-                visible: isActive,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      translate(
-                        'purchase.current',
-                        params: {'plan': ''},
-                      ).replaceAll('-', ''),
-                      style: context.textTheme.bodyLarge?.copyWith(
+      child: Padding(
+        padding: const EdgeInsets.all(AppThemeConstants.mediumPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Visibility(
+              visible: isActive,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    translate(
+                      'purchase.current',
+                      params: {'plan': ''},
+                    ).replaceAll('-', ''),
+                    style: context.textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (title.contains('Weekly'))
+                  Image.asset(AppAssets.crown, width: 20, height: 20),
+                if (title.contains('Monthly')) ...[
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(AppAssets.crown, width: 20, height: 20),
+                      Image.asset(AppAssets.crown, width: 20, height: 20),
+                    ],
+                  ),
+                ],
+                if (title.contains('Annual')) ...[
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(AppAssets.crown, width: 20, height: 20),
+                      Image.asset(AppAssets.crown, width: 20, height: 20),
+                      Image.asset(AppAssets.crown, width: 20, height: 20),
+                    ],
+                  ),
+                ],
+                SizedBox(
+                  height: 8,
+                  child: VerticalDivider(color: Colors.white),
+                ),
+                Text(title, style: context.textTheme.titleMedium),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (oldPrice != null && oldPrice!.isNotEmpty)
+                  Text.rich(
+                    TextSpan(
+                      text: price,
+                      style: context.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (title.contains('Weekly'))
-                    Image.asset(AppAssets.crown, width: 20, height: 20),
-                  if (title.contains('Monthly')) ...[
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        Image.asset(AppAssets.crown, width: 20, height: 20),
-                        Image.asset(AppAssets.crown, width: 20, height: 20),
+                        TextSpan(
+                          text: ' de ',
+                          style: context.textTheme.bodyMedium,
+                        ),
+                        TextSpan(
+                          text: oldPrice,
+                          style: context.textTheme.bodyMedium?.copyWith(
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
                       ],
                     ),
-                  ],
-                  if (title.contains('Annual')) ...[
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(AppAssets.crown, width: 20, height: 20),
-                        Image.asset(AppAssets.crown, width: 20, height: 20),
-                        Image.asset(AppAssets.crown, width: 20, height: 20),
-                      ],
-                    ),
-                  ],
-                  SizedBox(
-                    height: 10,
-                    child: VerticalDivider(color: Colors.white),
-                  ),
-                  Text(title, style: context.textTheme.titleMedium),
-                ],
+                  )
+                else
+                  Text(price, style: context.textTheme.titleMedium),
+              ],
+            ),
+            const SizedBox(height: 8),
+            ...benefits.map(
+              (b) => Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text('• $b', style: context.textTheme.bodyMedium),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (oldPrice != null && oldPrice!.isNotEmpty)
-                    Text.rich(
-                      TextSpan(
-                        text: price,
-                        style: context.textTheme.titleMedium,
-                        children: [
-                          TextSpan(
-                            text: ' de ',
-                            style: context.textTheme.bodyMedium,
-                          ),
-                          TextSpan(
-                            text: oldPrice,
-                            style: context.textTheme.bodyMedium?.copyWith(
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  else
-                    Text(price, style: context.textTheme.titleMedium),
-                ],
-              ),
-              const SizedBox(height: 8),
-              ...benefits.map(
-                (b) => Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Text('• $b', style: context.textTheme.bodyMedium),
-                ),
-              ),
-              AppCustomButton(
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: AppCustomButton(
                 backgroundColor: context.myTheme.primary,
-                label: Text(price),
-                onPressed: () {},
+                label: Text('${translate('purchase.subscribeButton')} $price'),
+                onPressed: isActive ? null : onTap,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
