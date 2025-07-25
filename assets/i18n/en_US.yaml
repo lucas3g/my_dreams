@@ -31,12 +31,6 @@ purchase:
   monthly: Monthly Plan
   annual: Annual Plan
   free: Free Plan
-  weeklyPrice: "$4.99"
-  monthlyPrice: "$9.99"
-  annualPrice: "$49.99"
-  weeklyOldPrice: "$5.99"
-  monthlyOldPrice: "$12.99"
-  annualOldPrice: "$59.99"
   removeAds: Remove ads
   fiveDreamMeanings: 5 dream meanings
   tarotCards: Generate Tarot cards

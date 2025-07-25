@@ -31,12 +31,6 @@ purchase:
   monthly: Plano Mensal
   annual: Plano Anual
   free: Plano Gratuito
-  weeklyPrice: "R$ 4,99"
-  monthlyPrice: "R$ 9,99"
-  annualPrice: "R$ 49,99"
-  weeklyOldPrice: "R$ 6,99"
-  monthlyOldPrice: "R$ 12,99"
-  annualOldPrice: "R$ 59,99"
   removeAds: Remover anúncios
   fiveDreamMeanings: 5 significados dos sonhos
   tarotCards: Gerar cartas de Tarô
