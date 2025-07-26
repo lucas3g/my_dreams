@@ -45,31 +45,56 @@ class UserDrawerWidget extends StatelessWidget {
     return Drawer(
       backgroundColor: context.myTheme.primaryContainer,
       child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(AppThemeConstants.padding),
-              child: Column(
+        child: Padding(
+          padding: const EdgeInsets.all(AppThemeConstants.padding),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    translate(AppGlobal.instance.user!.name.value),
-                    style: context.textTheme.headlineSmall?.copyWith(
-                      color: context.myTheme.onPrimaryContainer,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundImage: NetworkImage(
+                          AppGlobal.instance.user!.imageUrl.value,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          translate(AppGlobal.instance.user!.name.value),
+                          style: context.textTheme.headlineSmall?.copyWith(
+                            color: context.myTheme.onPrimaryContainer,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Divider(color: context.myTheme.primary),
+                  if (buildSubscribeButton() != null) ...[
+                    buildSubscribeButton()!,
+                    const SizedBox(height: AppThemeConstants.mediumPadding),
+                  ],
                 ],
               ),
-            ),
 
-            if (buildSubscribeButton() != null) ...[
-              buildSubscribeButton()!,
-              const SizedBox(height: AppThemeConstants.mediumPadding),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Divider(color: context.myTheme.primary),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [Text('Version')],
+                  ),
+                ],
+              ),
             ],
-          ],
+          ),
         ),
       ),
     );

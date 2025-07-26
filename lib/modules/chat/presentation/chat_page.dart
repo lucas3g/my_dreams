@@ -296,7 +296,7 @@ class _ChatPageState extends State<ChatPage> {
                     label: Text(translate('chat.limit.button')),
                   ),
                 ),
-              if (!_limitReached)
+              if (!_limitReached) ...[
                 Row(
                   children: [
                     Expanded(
@@ -328,6 +328,15 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                   ],
                 ),
+                SizedBox(height: 5),
+                Text(
+                  translate('chat.screen.aboutChat'),
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: context.myTheme.outline,
+                  ),
+                ),
+              ],
             ],
           ),
         ),

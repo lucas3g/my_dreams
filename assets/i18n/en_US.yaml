@@ -17,6 +17,7 @@ chat:
   screen:
     title: Conversation
     thinking: Thinking...
+    aboutChat: DreamsAI can make mistakes. Check important info.
   generateTarot: Generate Tarot cards
   input:
     hint: Type your message
