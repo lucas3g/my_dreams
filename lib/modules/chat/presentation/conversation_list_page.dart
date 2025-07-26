@@ -19,6 +19,7 @@ import 'package:my_dreams/shared/components/spacer_height_widget.dart';
 import 'package:my_dreams/shared/components/spacer_width.dart';
 import 'package:my_dreams/shared/services/ads_service.dart';
 import 'package:my_dreams/shared/services/purchase_service.dart';
+import 'package:my_dreams/shared/services/review_service.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
 import 'package:my_dreams/shared/utils/formatters.dart';
@@ -43,6 +44,7 @@ class _HomePageState extends State<HomePage> {
   final ChatBloc _chatBloc = getIt<ChatBloc>();
   final AdsService _adsService = getIt<AdsService>();
   final PurchaseService _purchase = getIt<PurchaseService>();
+  final ReviewService _reviewService = getIt<ReviewService>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _update() {
@@ -50,6 +52,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   StreamSubscription<AuthStates>? _authSubscription;
+  StreamSubscription<ChatStates>? _chatSubscription;
+  bool _reviewRequested = false;
 
   UserEntity? get _user => AppGlobal.instance.user;
 
@@ -75,11 +79,23 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _listenChatStates() {
+    _chatSubscription = _chatBloc.stream.listen((state) async {
+      if (state is ChatLoadedConversationsState &&
+          state.conversationsList.isNotEmpty &&
+          !_reviewRequested) {
+        _reviewRequested = true;
+        await _reviewService.requestReview();
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
     _listenAuthStates();
+    _listenChatStates();
     _adsService.addListener(_update);
     _purchase.addListener(_update);
     final user = _user;
@@ -93,6 +109,7 @@ class _HomePageState extends State<HomePage> {
     _adsService.removeListener(_update);
     _purchase.removeListener(_update);
     _authSubscription?.cancel();
+    _chatSubscription?.cancel();
 
     super.dispose();
   }
