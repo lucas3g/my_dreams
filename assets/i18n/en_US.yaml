@@ -4,6 +4,7 @@ common:
   error: Error
   oops: Oops...
   cancel: Cancel
+  version: 'Version: {version}'
 splash:
   screen:
     title: Explore your dreams with us
