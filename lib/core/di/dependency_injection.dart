@@ -7,6 +7,7 @@ import 'package:my_dreams/core/di/dependency_injection.config.dart';
 import 'package:my_dreams/core/domain/entities/app_global.dart';
 import 'package:my_dreams/core/domain/entities/usecase.dart';
 import 'package:my_dreams/modules/auth/domain/usecases/auto_login.dart';
+import 'package:my_dreams/shared/services/review_service.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -19,6 +20,9 @@ Future<void> configureDependencies() async {
   _initAppGlobal();
 
   getIt.init();
+
+  // Manually registered services that do not depend on code generation
+  getIt.registerSingleton<ReviewService>(ReviewService());
 
   await _tryAutoLogin();
 }
