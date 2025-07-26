@@ -34,7 +34,7 @@ purchase:
   annual: Annual Plan
   free: Free Plan
   removeAds: Remove ads
-  dreamsPerDay: '{limit} dreams per day or {limit} messages per day with AI'
+  dreamsPerDay: '{limit} dreams per day with {limit} messages with AI'
   fiveDreamMeanings: 5 dream meanings
   tarotCards: Generate Tarot cards
   current: Current plan - {plan}
