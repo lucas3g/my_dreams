@@ -7,6 +7,7 @@ import 'package:my_dreams/core/domain/entities/subscription_plan.dart';
 import 'package:my_dreams/shared/components/custom_button.dart';
 import 'package:my_dreams/shared/themes/app_theme_constants.dart';
 import 'package:my_dreams/shared/translate/translate.dart';
+import 'package:my_dreams/shared/services/app_info_service.dart';
 
 class UserDrawerWidget extends StatelessWidget {
   const UserDrawerWidget({super.key});
@@ -87,9 +88,22 @@ class UserDrawerWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Divider(color: context.myTheme.primary),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [Text('Version')],
+                  FutureBuilder<String>(
+                    future: AppInfoService.instance.getVersion(),
+                    builder: (context, snapshot) {
+                      final version = snapshot.data ?? '';
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            translate(
+                              'common.version',
+                              params: {'version': version},
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
